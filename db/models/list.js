@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     List.belongsTo(models.User, {
       foreignKey: 'userId'
     })
+    List.belongsTo(models.Jinglelist, { foreignKey: 'listId'});
   };
   return List;
 };

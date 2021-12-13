@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     listId: DataTypes.INTEGER
   }, {});
   Jinglelist.associate = function(models) {
-    // associations can be defined here
+    Jinglelist.hasMany(models.Jingle, { foreignKey: 'jingleId'});
+    Jinglelist.hasMany(models.List, { foreignKey: 'listId' });
   };
   return Jinglelist;
 };

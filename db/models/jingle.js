@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Jingle.associate = function(models) {
     // associations can be defined here
+    Jingle.belongsTo(models.Jinglelist, { foreignKey: 'jingleId'});
+    Jingle.hasMany(models.Review, { foreignKey: 'jingleId'})
   };
   return Jingle;
 };

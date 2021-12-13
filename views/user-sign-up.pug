@@ -1,1 +1,14 @@
 extends layout.pug
+
+include utils.pug
+
+block content
+    form(method='post' action='/user/sign-up')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        +field('Name', 'name', name, 'text', 'Name')
+        +field('Email address', 'email', email, 'text', 'you@yours.com')
+        +field('Password', 'password', password, 'password')
+        input(type='submit' value='Sign Up')
+    div
+        p Already a member?
+        a(href='/user/login') Sign in

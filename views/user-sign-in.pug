@@ -1,0 +1,16 @@
+extends layout.pug
+
+include utils.pug
+
+block content
+    h1 Sign in to jollyJingles
+
+
+    form(method='post' action='/users/sign-in')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        +field('Email address', 'email', email, 'email', 'you@yours.com')
+        +field('Password', 'password', password, 'password')
+        input(type='submit' value='Sign in')
+    div
+        p Not a member?
+            a(href='/users/sign-up') Sign up

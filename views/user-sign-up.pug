@@ -6,7 +6,7 @@ block content
     h1 Sign Up for jollyJingles
     p Sign up to see your friend's favorite jingles, get recommendations, and join a community of jolly jinglers.
 
-    form(method='post' action='/user/sign-up')
+    form(method='post' action='/users/sign-up')
         input(type='hidden' name='_csrf' value=csrfToken)
         +field('Name', 'name', name, 'text', 'Name')
         +field('Email address', 'email', email, 'text', 'you@yours.com')
@@ -14,4 +14,4 @@ block content
         input(type='submit' value='Sign Up')
     div
         p Already a member?
-            a(href='/user/login') Sign in
+            a(href='/users/sign-in') Sign in

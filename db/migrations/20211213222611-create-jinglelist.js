@@ -9,10 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       jingleId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: { model: 'Jingles'}
       },
       listId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: { model: 'Lists'}
       },
       createdAt: {
         allowNull: false,

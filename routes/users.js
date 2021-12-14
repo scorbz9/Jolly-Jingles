@@ -63,7 +63,7 @@ router.post('/sign-up', csrfProtection, signUpValidators, asyncHandler( async (r
     user.hashedPassword = hashedPassword;
 
     await user.save();
-
+    loginUser(req, res, user);
     // TODO - Redirect to user page (redirect to / temporarily)
     res.redirect('/')
   } else {
@@ -139,7 +139,6 @@ router.post('/sign-out', async (req, res, next) => {
   logoutUser(req, res);
   res.redirect('/')
 });
-
 
 
 module.exports = router;

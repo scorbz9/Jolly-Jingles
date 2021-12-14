@@ -98,6 +98,8 @@ const signInValidators = [
     .withMessage("Password must be less than 50 characters.")
 ];
 
+console.log('yo')
+
 /* POST /sign-in - Perform login */
 router.post('/sign-in', csrfProtection, signInValidators, asyncHandler( async (req, res, next) => {
   const { email, password } = req.body;

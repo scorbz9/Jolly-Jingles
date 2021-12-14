@@ -4,7 +4,8 @@ const { csrfProtection, asyncHandler } = require('./utils');
 const db = require('../db/models')
 const { check, validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
-const { loginUser, logoutUser } = require('../auth')
+const { loginUser, logoutUser } = require('../auth');
+const jingle = require('../db/models/jingle');
 
 /* GET /sign-up page */
 router.get('/sign-up', csrfProtection, asyncHandler( async (req, res, next) => {
@@ -141,6 +142,7 @@ router.post('/sign-out', async (req, res, next) => {
   res.redirect('/')
 });
 
+
 /* GET /users/:userId - Get 'myJingles' page */
 router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const userId = req.params.userId;
@@ -159,24 +161,65 @@ router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res, next)
     csrfToken: req.csrfToken(),
     title: 'My Jingles',
     user,
-   // list
+    // list
   });
 }));
 
+const addJingleListValidator =
+  check('listName')
+    .exists({ checkFalsy: true })
+
+
 // POST /users/:userId/jingleLists - add a new jingleList to jingleLists
-router.post('/users/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
+router.post('/:userId(\\d+)/jingleLists', addJingleListValidator, asyncHandler(async (req, res, next) => {
+  // Update below based on view implementation
+  const { name } = req.body
   const userId = req.params.userId;
+  console.log(name)
 
-  const user = await db.User.findByPk(userId)
+  const validationErrors = validationResult(req)
 
-  res.render()
+  if (validationErrors.isEmpty()) {
+    const newJingleList = await db.List.create({
+      name,
+      userId
+    });
+
+    const updatedJingleLists = await db.List.findAll( { where: { userId } } );
+
+    res.send('temp1')
+    // res.render('jinglelists', { token: csrfToken(), updatedJingleLists })
+  } else {
+    // alert('Please provide a name for the new list.')
+    res.send('temp2')
+  }
 }));
 
 
-// GET /users/:userId/jingleLists/jingleListId - Display information for a particular jingleList
-router.get('/users/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+// GET /users/:userId/jingleLists/:jingleListId - Display information for a particular jingleList
+router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   console.log('placeholder1')
 }));
 
+// DELETE /users/:userId/jingleLists/:jingleListId - Delete a particular jingleList
+router.delete('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', asyncHandler(async (req, res, next) => {
+  console.log(req.params.jingleListId)
+  const jingleListId = req.params.jingleListId;
+
+  // Below needs testing still
+  const listToDestroy = await db.JingleList.findByPk(jingleListId, {
+    include: [
+      db.Jingle,
+      db.List,
+    ]
+  })
+
+  await listToDestroy.destroy();
+}));
+
+// DELETE /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Remove a jingle from a particular jingle list
+router.delete('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\d+)', asyncHandler(async (req, res, next) => {
+
+}));
 
 module.exports = router;

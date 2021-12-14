@@ -7,9 +7,13 @@ const bcrypt = require('bcryptjs')
 const { loginUser, logoutUser } = require('../auth')
 
 /* GET /sign-up page */
-router.get('/sign-up', csrfProtection, (req, res, next) => {
-  res.render('user-sign-up', { csrfToken: req.csrfToken(), title: 'Sign up' } )
-});
+router.get('/sign-up', csrfProtection, asyncHandler( async (req, res, next) => {
+
+  const user = await db.User.build({
+
+  })
+  res.render('user-sign-up', { csrfToken: req.csrfToken(), title: 'Sign up',  user } )
+}));
 
 
 const signUpValidators = [
@@ -98,7 +102,6 @@ const signInValidators = [
     .withMessage("Password must be less than 50 characters.")
 ];
 
-console.log('yo')
 
 /* POST /sign-in - Perform login */
 router.post('/sign-in', csrfProtection, signInValidators, asyncHandler( async (req, res, next) => {
@@ -124,6 +127,7 @@ router.post('/sign-in', csrfProtection, signInValidators, asyncHandler( async (r
     errors = validationErrors.array().map(error => error.msg)
     res.render('user-sign-in', {
       errors,
+      email,
       csrfToken: req.csrfToken(),
       title: 'Sign in'
     })
@@ -132,7 +136,8 @@ router.post('/sign-in', csrfProtection, signInValidators, asyncHandler( async (r
 
 /* POST /sign-out - Perform logout */
 router.post('/sign-out', async (req, res, next) => {
-
+  logoutUser(req, res);
+  res.redirect('/')
 });
 
 

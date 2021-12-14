@@ -4,6 +4,7 @@ const { csrfProtection, asyncHandler } = require('./utils');
 const db = require('../db/models')
 const { check, validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
+const { loginUser, logoutUser } = require('../auth')
 
 /* GET /sign-up page */
 router.get('/sign-up', csrfProtection, (req, res, next) => {
@@ -19,10 +20,10 @@ const signUpValidators = [
     .withMessage('Name must be less than 50 characters.'),
   check('email')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide a email.')
-    .isEmail()
-    .withMessage("Please provide a valid email address.")
+    .withMessage('Please provide an email.')
     .isLength({ max: 255 })
+    // TODO - Figure out how to make only 1 error message appear for invalid email when submitted empty email field.
+    .isEmail()
     .withMessage("Please provide a valid email address.")
     .custom((value) => {
       return db.User.findOne({ where: { email: value } })
@@ -65,6 +66,7 @@ router.post('/sign-up', csrfProtection, signUpValidators, asyncHandler( async (r
     const errors = validationErrors.array().map(error => error.msg)
     res.render('user-sign-up', {
       csrfToken: req.csrfToken(),
+      user,
       errors,
       title: 'Sign up'
     })
@@ -81,10 +83,50 @@ router.get('/sign-in', csrfProtection, async (req, res, next) => {
   })
 });
 
-/* POST /sign-in - Perform login */
-router.post('/sign-in', csrfProtection, async (req, res, next) => {
+const signInValidators = [
+  check('email')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide an email.')
+    .isLength({ max: 255 })
+    // TODO - Figure out how to make only 1 error message appear for invalid email when submitted empty email field.
+    .isEmail()
+    .withMessage("Please provide a valid email address."),
+  check('password')
+    .exists({ checkFalsy: true })
+    .withMessage("Please provide a password.")
+    .isLength({ max: 50 })
+    .withMessage("Password must be less than 50 characters.")
+];
 
-});
+/* POST /sign-in - Perform login */
+router.post('/sign-in', csrfProtection, signInValidators, asyncHandler( async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const validationErrors = validationResult(req);
+  let errors = [];
+
+  if (validationErrors.isEmpty()) {
+    const user = await db.User.findOne( { where: { email } } )
+
+    if (user !== null) {
+      const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString())
+
+      if (passwordMatch) {
+        loginUser(req, res, user)
+        return res.redirect('/')
+      }
+    }
+      errors.push("Sign in attempt failed.")
+
+  } else {
+    errors = validationErrors.array().map(error => error.msg)
+    res.render('user-sign-in', {
+      errors,
+      csrfToken: req.csrfToken(),
+      title: 'Sign in'
+    })
+  }
+}));
 
 /* POST /sign-out - Perform logout */
 router.post('/sign-out', async (req, res, next) => {

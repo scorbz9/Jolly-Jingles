@@ -125,13 +125,14 @@ router.post('/sign-in', csrfProtection, signInValidators, asyncHandler( async (r
 
   } else {
     errors = validationErrors.array().map(error => error.msg)
-    res.render('user-sign-in', {
-      errors,
-      email,
-      csrfToken: req.csrfToken(),
-      title: 'Sign in'
-    })
   }
+
+  res.render('user-sign-in', {
+    errors,
+    email,
+    csrfToken: req.csrfToken(),
+    title: 'Sign in'
+  })
 }));
 
 /* POST /sign-out - Perform logout */
@@ -140,5 +141,17 @@ router.post('/sign-out', async (req, res, next) => {
   res.redirect('/')
 });
 
+/* GET /users/:userId - Get 'myJingles' page */
+router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+  const userId = req.url.params;
+  console.log(userId, req.url.params)
+  const user = await db.User.findByPk(userId)
+  // TODO replace 'placeholder' with name for myJingles view
+  // TODO include authoriation so only a logged in user can access their own page
+  res.render('placeholder.pug', {
+    csrfToken: req.csrfToken(),
+    title: 'My Jingles'
+  });
+}));
 
 module.exports = router;

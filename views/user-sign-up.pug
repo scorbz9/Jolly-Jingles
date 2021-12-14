@@ -9,9 +9,9 @@ block content
 
     form(method='post' action='/users/sign-up')
         input(type='hidden' name='_csrf' value=csrfToken)
-        +field('Name', 'name', name, 'text', 'Name')
-        +field('Email address', 'email', email, 'text', 'you@yours.com')
-        +field('Password', 'password', password, 'password')
+        +field('Name', 'name', user.name, 'text', 'Name')
+        +field('Email address', 'email', user.email, 'email', 'you@yours.com')
+        +field('Password', 'password', user.password, 'password')
         input(type='submit' value='Sign Up')
     div
         p Already a member?

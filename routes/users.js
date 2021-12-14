@@ -179,10 +179,9 @@ router.post('/:userId(\\d+)/jingleLists', addJingleListValidator, asyncHandler(a
 
   const validationErrors = validationResult(req)
 
-  if (validationErrors.isEmpty()) {
+  if (!validationErrors.isEmpty()) {
     const newJingleList = await db.List.create({
-      name,
-      userId
+      name
     });
 
     const updatedJingleLists = await db.List.findAll( { where: { userId } } );

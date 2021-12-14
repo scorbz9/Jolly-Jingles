@@ -143,15 +143,40 @@ router.post('/sign-out', async (req, res, next) => {
 
 /* GET /users/:userId - Get 'myJingles' page */
 router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
-  const userId = req.url.params;
-  console.log(userId, req.url.params)
+  const userId = req.params.userId;
+
   const user = await db.User.findByPk(userId)
+
   // TODO replace 'placeholder' with name for myJingles view
-  // TODO include authoriation so only a logged in user can access their own page
+  // TODO include authorization so only a logged in user can access their own page
+  // TODO load in the jingles that were previously saved by user
+
+  // Must go through two tables User -> List -> JingleList -> Jingles
+  const lists = await db.List.findAll({ where: { userId }})
+  const jinglelist = await db.Jinglelist.findAll
+
   res.render('placeholder.pug', {
     csrfToken: req.csrfToken(),
-    title: 'My Jingles'
+    title: 'My Jingles',
+    user,
+   // list
   });
 }));
+
+// POST /users/:userId/jingleLists - add a new jingleList to jingleLists
+router.post('/users/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
+  const userId = req.params.userId;
+
+  const user = await db.User.findByPk(userId)
+
+  res.render()
+}));
+
+
+// GET /users/:userId/jingleLists/jingleListId - Display information for a particular jingleList
+router.get('/users/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+  console.log('placeholder1')
+}));
+
 
 module.exports = router;

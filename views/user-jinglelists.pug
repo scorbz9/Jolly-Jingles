@@ -12,9 +12,12 @@ block content
                 a.list-tag(href="") List1
                     each list in lists
                         a(href="")= list.name
+                if addJingleListError
+                    p Please provide a name for the list.
                 form(method='post' action=`/users/${userId}/jingleLists`)
-                    input(type='text' id='add-jingle-form-submit' class='add-jingle-form-submit' value=listName)
-                    input#add-list-butt(type='submit' value='Add List')
+                    input(type="hidden" name="_csrf" value=csrfToken)
+                    input(type='text' name="name" id="list-name-field" value=name)
+                    input(type='submit' value='Add List')
                 //- not using explore-butt styling
                 a#add-list-butt(href="") Explore
             div.jingles-container

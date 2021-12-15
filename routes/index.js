@@ -10,7 +10,7 @@ const asyncHandler = (handler) => {
 
 router.get('/', asyncHandler(async(req, res) => {
   const jingles = await Jingle.findAll()
-  console.log(jingles)
+  // console.log(jingles)
   const { image, name, artist, avgRating} = req.body;
   res.render('explore', {title: 'explore', jingles })
 }))

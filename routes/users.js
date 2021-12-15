@@ -164,7 +164,9 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     csrfToken: req.csrfToken(),
     title: 'My Jingles',
     user,
-    // list
+    lists,
+    jingles,
+    userId
   });
 }));
 
@@ -176,25 +178,28 @@ const addJingleListValidator =
 // POST /users/:userId/jingleLists - add a new jingleList to jingleLists
 router.post('/:userId(\\d+)/jingleLists', addJingleListValidator, asyncHandler(async (req, res, next) => {
   // Update below based on view implementation
-  const { name } = req.body
-  const userId = req.params.userId;
-  console.log(name)
+  console.log(req.body)
+  const { listName } = req.body;
+  const userId = parseInt(req.params.userId, 10);
 
-  const validationErrors = validationResult(req)
+  const validationErrors = validationResult(req);
 
   if (!validationErrors.isEmpty()) {
-    const newJingleList = await db.List.create({
-      name,
+    const newJingleListItem = await db.List.create({
+      name: listName,
       userId
     });
 
     const updatedJingleLists = await db.List.findAll( { where: { userId } } );
-
-    res.send('temp1')
-    // res.render('jinglelists', { token: csrfToken(), updatedJingleLists })
+    console.log(userId)
+    res.render('user-jinglelists.pug', {
+      token: csrfToken(),
+      updatedJingleLists,
+      userId,
+      listName
+    });
   } else {
-    // alert('Please provide a name for the new list.')
-    res.send('temp2')
+    alert('Please provide a name for the new list.')
   }
 }));
 

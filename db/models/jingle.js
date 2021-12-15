@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   Jingle.associate = function(models) {
     // associations can be defined here
     Jingle.belongsToMany(models.List, {
-      through: 'JingleLists',
+      through: 'Jinglelists',
       otherKey: 'listId',
       foreignKey: 'jingleId'
     });

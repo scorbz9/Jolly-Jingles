@@ -11,9 +11,10 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     console.log(req.params.id)
     console.log(id)
     const jingle = await db.Jingle.findByPk(id);
+    console.log(jingle)
     if (jingle) {
     console.log(jingle.name);
-    res.render('index', { title: jingle.name})
+    res.render('index', {title: jingle.name})
     } else {
         res.status(404)
         res.send('Page Not Found');

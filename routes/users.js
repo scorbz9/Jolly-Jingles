@@ -148,7 +148,7 @@ router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res, next)
   const user = await db.User.findByPk(userId)
   // TODO replace 'placeholder' with name for myJingles view
   // TODO include authoriation so only a logged in user can access their own page
-  res.render('placeholder.pug', {
+  res.render('user-jinglelists.pug', {
     csrfToken: req.csrfToken(),
     title: 'My Jingles'
   });

@@ -19,9 +19,9 @@
     margin-bottom: 10px;
   }
 
-  .main-container {
+  .top-container {
     margin: 100px auto;
-    width: 575px;
+    width: 600px;
     display: flex;
     justify-content: center;
 }
@@ -37,6 +37,7 @@
   flex-direction: column;
   line-height: normal;
   margin-top: 10px;
+  width: 80%;
 }
 
 .text {
@@ -61,4 +62,25 @@
   margin: 0px;
   font-size: 11px;
 }
-  
+
+.bottom-container {
+  margin: 100px auto;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+}
+
+.lyrics-container {
+  width: 80%;
+  padding: 24px;
+}
+
+.reviews-container {
+  width: 80%;
+  padding: 24px;
+}
+
+#select {
+  width: 200px;
+}

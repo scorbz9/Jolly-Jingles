@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     })
 
     List.belongsToMany(models.Jingle, {
-      through: 'JingleLists',
+      through: 'Jinglelists',
       otherKey: 'jingleId',
       foreignKey: 'listId'
     });

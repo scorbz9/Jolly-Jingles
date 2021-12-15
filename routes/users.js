@@ -158,7 +158,8 @@ router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res, next)
   const lists = await db.List.findAll({ where: { userId }})
   const jinglelist = await db.Jinglelist.findAll
 
-  res.render('placeholder.pug', {
+  res.render('user-jinglelists.pug', {
+
     csrfToken: req.csrfToken(),
     title: 'My Jingles',
     user,

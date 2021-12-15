@@ -8,10 +8,12 @@ html(lang="en")
     title=title
   body
     nav(class='navbar')
+  
       div(id="center-container")
         a(class='jollyjingle-logo' href='/') jollyjingle
         a(href='/users/#{user.id}') My Jingles
         input(type="text", name="Search", placeholder= "Search books")
+      div(id="right-container")
         a(href='users/sign-in') Sign in
         a(href='users/sign-up') Sign up
         a(href='users/sign-out') Sign out

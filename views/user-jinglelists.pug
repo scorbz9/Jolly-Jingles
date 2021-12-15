@@ -9,9 +9,11 @@ block content
         div.jinglelists-container
             div.sidelinks-container
                 a.list-tag#all-tag(href="") All
-                a.list-tag(href="") List1
                     each list in lists
                         a(href="")= list.name
+                        form(method="post" action=`/users/${userId}/jingleLists/${list.id}`)
+                            input(type="hidden" name='_csrf' value=csrfToken)
+                            input(type='submit' value="❌")
                 if addJingleListError
                     p Please provide a name for the list.
                 form(method='post' action=`/users/${userId}/jingleLists`)

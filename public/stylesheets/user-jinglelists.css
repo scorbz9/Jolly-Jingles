@@ -23,13 +23,17 @@
 }
 
 .list-tag {
-    font-size: 9px;
+    font-size: 8px;
     text-decoration: none;
 
 }
 
-#all-tag {
-    /* color:green; */
+#explore-butt {
+    color: ;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 10px 0 5px 0;
+    text-decoration: none;
 }
 
 #add-list-butt {
@@ -40,8 +44,8 @@
     border-radius: 2px;
     text-align: center;
     padding:1px;
-    background-color: lightgray;
-
+    background-color: rgba(211, 211, 211, 0.219);
+    margin: 5px 0;
 }
 
 .sidelinks-container {

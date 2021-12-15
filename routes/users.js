@@ -151,9 +151,10 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
   const user = await db.User.findByPk(userId);
 
 
+  // More database configuration is required - need to add a marker to track which jinglelist is the user's default collection ('My Jingles')
   // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
   const lists = await db.List.findAll({ where: { userId }})
-  const listId = lists.map(list => list.id)[1]
+  const listId = lists.map(list => list.id)[0]
 
   const jingles = await db.Jinglelist.findAll({
     where: { listId },
@@ -164,37 +165,52 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     csrfToken: req.csrfToken(),
     title: 'My Jingles',
     user,
-    // list
+    lists,
+    jingles,
+    userId
   });
 }));
 
 const addJingleListValidator =
-  check('listName')
+  check('name')
     .exists({ checkFalsy: true })
 
 
 // POST /users/:userId/jingleLists - add a new jingleList to jingleLists
-router.post('/:userId(\\d+)/jingleLists', addJingleListValidator, asyncHandler(async (req, res, next) => {
-  // Update below based on view implementation
-  const { name } = req.body
-  const userId = req.params.userId;
-  console.log(name)
+router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator, asyncHandler(async (req, res, next) => {
 
-  const validationErrors = validationResult(req)
+  const { name } = req.body;
+  const userId = parseInt(req.params.userId, 10);
 
-  if (!validationErrors.isEmpty()) {
-    const newJingleList = await db.List.create({
+  const validationErrors = validationResult(req);
+
+  await db.List.create({
+    name,
+    userId
+  });
+
+  const lists = await db.List.findAll( { where: { userId } } );
+
+  if (validationErrors.isEmpty()) {
+
+    res.render('user-jinglelists.pug', {
+      csrfToken: req.csrfToken(),
+      lists,
+      userId,
+      name
+    });
+  } else {
+    let addJingleListError = validationErrors.array().map(error => error.msg)[0]
+
+    res.render('user-jinglelists.pug', {
+      csrfToken: req.csrfToken(),
+      lists,
+      userId,
       name,
-      userId
+      addJingleListError
     });
 
-    const updatedJingleLists = await db.List.findAll( { where: { userId } } );
-
-    res.send('temp1')
-    // res.render('jinglelists', { token: csrfToken(), updatedJingleLists })
-  } else {
-    // alert('Please provide a name for the new list.')
-    res.send('temp2')
+    addJingleListError = null;
   }
 }));
 

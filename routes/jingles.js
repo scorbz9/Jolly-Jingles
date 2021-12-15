@@ -6,11 +6,19 @@ const { csrfProtection, asyncHandler } = require('./utils');
 
 // to see the info page for a jingle
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+    // console.log(req.params)
     const id = parseInt(req.params.id, 10);
-    console.log(req.params.id)
+    // console.log(req.params.id)
+    // console.log(id)
     const jingle = await db.Jingle.findByPk(id);
+
+    // console.log(jingle)
+
     if (jingle) {
-    res.render('jingles-view', { title: jingle.name, jingle });
+        const { image, artist, name, lyrics, avgRating, description } = jingle;
+
+
+    res.render('index', {title: jingle.name, image, artist, name, lyrics, avgRating, description})
     } else {
         res.status(404)
         res.send('Page Not Found');

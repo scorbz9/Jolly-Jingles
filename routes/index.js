@@ -11,7 +11,7 @@ const asyncHandler = (handler) => {
 router.get('/', asyncHandler(async(req, res) => {
   const jingles = await Jingle.findAll()
   console.log(jingles)
-  const { image, name, artist, avgRating} = req.body;
+  const { image, name, artist, avgRating, lyrics} = req.body;
   res.render('explore', {title: 'explore', jingles })
 }))
 

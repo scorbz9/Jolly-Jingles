@@ -6,15 +6,11 @@ const { csrfProtection, asyncHandler } = require('./utils');
 
 // to see the info page for a jingle
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
-    console.log(req.params)
     const id = parseInt(req.params.id, 10);
     console.log(req.params.id)
-    console.log(id)
     const jingle = await db.Jingle.findByPk(id);
-    console.log(jingle)
     if (jingle) {
-    console.log(jingle.name);
-    res.render('index', {title: jingle.name})
+    res.render('jingles-view', { title: jingle.name, jingle });
     } else {
         res.status(404)
         res.send('Page Not Found');

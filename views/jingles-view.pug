@@ -1,0 +1,24 @@
+doctype html
+html(lang="en")
+  head
+    link(rel="stylesheet", href="/stylesheets/jingles-view.css")
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title= title
+  body
+    nav(class='navbar')
+      div(id="center-container")
+        a(class='jollyjingle-logo' href='/') jollyjingle
+        a(href='/users/#{user.id}') My Jingles
+        input(type="text", name="Search", placeholder= "Search books")
+        a(href='users/sign-in') Sign in
+        a(href='users/sign-up') Sign up
+        a(href='users/sign-out') Sign out
+    div.main-container
+        img(src=jingle.image id="jinglepic")
+        div
+            h2=jingle.name
+            p=`by ${jingle.artist}` 
+            p=jingle.avgRating
+            p=jingle.description

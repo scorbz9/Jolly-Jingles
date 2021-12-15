@@ -1,46 +1,45 @@
 .main-container {
-    margin: 0 auto;
-    width: 575px;
+    color: #006372;
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
+    width: 575px;
 }
 
 .jinglelists-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
-
 }
 
 .myJingles-link {
     border-bottom: 1px solid lightgray;
     font-size: 12px;
-    padding: 10px 0 5px 0;
     text-decoration: none;
+    padding: 10px 0 5px 0;
 }
 
 .list-tag {
     font-size: 8px;
     text-decoration: none;
-
 }
 
 #explore-butt {
-    text-decoration: none;
     font-size: 12px;
     padding: 10px 0 5px 0;
     text-decoration: none;
 }
 
 #add-list-butt {
-    font-size: 7px;
-    width: 40px;
+    background-color: rgba(211, 211, 211, 0.219);
     border: 1px solid lightgray;
     border-radius: 2px;
-    text-align: center;
-    padding:1px;
-    background-color: rgba(211, 211, 211, 0.219);
+    font-size: 7px;
     margin: 5px 0;
+    padding:1px;
+    text-align: center;
+    text-decoration: none;
+    width: 40px;
 }
 
 .sidelinks-container {
@@ -52,16 +51,46 @@
 
 .jingles-container {
     display:flex;
+    flex-direction: column;
+    justify-content: flex-end;
     width: 450px;
-    height: 35px;
-    align-items: flex-end;
 }
 
 .column-name-container {
     border-bottom: 1px solid lightgray;
+    color: rgb(61, 61, 61);
+    display: grid;
     font-size: 7px;
-    display:flex;
-    justify-content: space-between;
+    font-weight: bold;
+    grid-template-columns: repeat(6, 1fr);
     height: 20px;
+    margin-top: 16px;
     width: 100%;
+}
+
+/* each jingle row */
+img {
+    height: 75px;
+    padding-right: 5px;
+}
+
+.jingle-table {
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.jingle-container {
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.jingle-container > * {
+    display: flex;
+    font-size: 9px;
+    text-decoration: none;
 }

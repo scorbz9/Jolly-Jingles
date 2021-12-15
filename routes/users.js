@@ -159,7 +159,8 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     where: { listId },
   });
 
-  res.render('placeholder.pug', {
+  res.render('user-jinglelists.pug', {
+
     csrfToken: req.csrfToken(),
     title: 'My Jingles',
     user,

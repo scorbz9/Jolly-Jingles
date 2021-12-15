@@ -15,9 +15,11 @@ html(lang="en")
         a(href='users/sign-in') Sign in
         a(href='users/sign-up') Sign up
         a(href='users/sign-out') Sign out
-    div(class='jingles-grid')
-      each jingle in jingles
-        img(src=jingle.image id="jinglepic")
-        p= jingle.name
-        p= jingle.artist
-        p= jingle.avgRating
+    div(class='jingles-container')
+      div(class='jingles-grid')
+        each jingle in jingles
+          div(class="jingle")
+            img(src=jingle.image id="jinglepic")
+            p(id="nameText")= jingle.name
+            p(id="artistText")= jingle.artist
+            p= jingle.avgRating

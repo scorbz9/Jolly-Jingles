@@ -1,9 +1,12 @@
+* {
+  box-sizing: border-box;
+}
 .navbar {
   display: flex;
   justify-content: center;
+  justify-items: space;
   align-items: center;
   margin: 5px;
-
 }
 
 #center-container {
@@ -13,7 +16,37 @@
   align-items: center;
 }
 
+
+
 #jinglepic {
   height: 200px;
   width: 200px;
+}
+
+.jingle-container {
+  margin: 0 auto;
+  padding: 32px;
+  max-width: 1400px;
+
+  display: flex;
+  flex-flow: row wrap;
+  position: relative;
+}
+
+.jingles-grid {
+  margin-left: 250px;
+  display: inline-grid;
+
+  height: 80%;
+  width: 80%;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto;
+  align-items: center;
+  align-content:center;
+  /* justify-items: center; */
+  justify-content: space-between;
+
+  vertical-align: baseline;
+  column-gap: 10px;
+
 }

@@ -144,19 +144,20 @@ router.post('/sign-out', async (req, res, next) => {
 
 // TODO - Below
 
-/* GET /users/:userId - Get 'myJingles' page */
-router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+/* GET /users/:userId/jingleLists - Get 'myJingles' page */
+router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
   const userId = req.params.userId;
 
-  const user = await db.User.findByPk(userId)
+  const user = await db.User.findByPk(userId);
 
-  // TODO replace 'placeholder' with name for myJingles view
-  // TODO include authorization so only a logged in user can access their own page
-  // TODO load in the jingles that were previously saved by user
 
-  // Must go through two tables User -> List -> JingleList -> Jingles
+  // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
   const lists = await db.List.findAll({ where: { userId }})
-  const jinglelist = await db.Jinglelist.findAll
+  const listId = lists.map(list => list.id)[1]
+
+  const jingles = await db.Jinglelist.findAll({
+    where: { listId },
+  });
 
   res.render('user-jinglelists.pug', {
 

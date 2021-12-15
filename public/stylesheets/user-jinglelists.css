@@ -1,0 +1,67 @@
+.main-container {
+    margin: 0 auto;
+    width: 575px;
+    display: flex;
+    flex-direction: column;
+}
+
+.jinglelists-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+.myJingles-link {
+    border-bottom: 1px solid lightgray;
+    font-size: 12px;
+    padding: 10px 0 5px 0;
+    text-decoration: none;
+}
+
+.list-tag {
+    font-size: 8px;
+    text-decoration: none;
+
+}
+
+#explore-butt {
+    text-decoration: none;
+    font-size: 12px;
+    padding: 10px 0 5px 0;
+    text-decoration: none;
+}
+
+#add-list-butt {
+    font-size: 7px;
+    width: 40px;
+    border: 1px solid lightgray;
+    border-radius: 2px;
+    text-align: center;
+    padding:1px;
+    background-color: rgba(211, 211, 211, 0.219);
+    margin: 5px 0;
+}
+
+.sidelinks-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    width: 125px;
+}
+
+.jingles-container {
+    display:flex;
+    width: 450px;
+    height: 35px;
+    align-items: flex-end;
+}
+
+.column-name-container {
+    border-bottom: 1px solid lightgray;
+    font-size: 7px;
+    display:flex;
+    justify-content: space-between;
+    height: 20px;
+    width: 100%;
+}

@@ -1,0 +1,26 @@
+extends layout.pug
+append head
+  //- add page specific styles by appending to the head
+  link(rel="stylesheet" href="/stylesheets/user-jinglelists.css")
+
+block content
+    div.main-container
+        a.myJingles-link(href="") My Jingles
+        div.jinglelists-container
+            div.sidelinks-container
+                a.list-tag#all-tag(href="") All
+                a.list-tag(href="") List1
+                    //- for each list in lists
+                    //-     a(href="")= list.name
+                a#add-list-butt Add list
+
+                a#explore-butt(href="") Explore
+            div.jingles-container
+                div.column-name-container
+                    p cover
+                    p title
+                    p author
+                    p avg rating
+                    p review
+                    p date added
+                        //- for each jingle in jingles

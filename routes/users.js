@@ -270,8 +270,24 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, as
 }));
 
 // DELETE /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Remove a jingle from a particular jingle list
-router.delete('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\d+)', asyncHandler(async (req, res, next) => {
+router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\d+)', asyncHandler(async (req, res, next) => {
+    const userId = req.params.userId;
+    const listId = req.params.jingleListId;
 
+    //jingle id
+    // const jingleId = req.params.jingleId;
+
+    //delete jingle from jinglelist using userId and listId
+    const jingleToDestroy = await db.Jinglelist.findOne({
+      where: {
+        jingleId: 2,
+        listId: 1
+      }
+    })
+
+    await jingleToDestroy.destroy();
+
+    res.redirect(`/users/1/jingleLists`);
 }));
 
 module.exports = router;

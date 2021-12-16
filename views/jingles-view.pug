@@ -26,7 +26,7 @@ html(lang="en")
             // TO DO: add logged-in user's jinglelists
         div.jingle-info-container
             h2.text=jingle.name
-            p.text=`by ${jingle.artist}` 
+            p.text=`by ${jingle.artist}`
             p.text="⭐⭐⭐⭐⭐"+jingle.avgRating
             p#description.text=jingle.description
     div.bottom-container
@@ -36,3 +36,8 @@ html(lang="en")
         div.reviews-container
             p.text.heading="Community Reviews"
             p.text= "List of Reviews Go here"
+            a(href='/jingles/'+jingle.id+'/reviews') Write a review
+            div.reviews
+              each review in reviews
+                div(class="review")
+                p #{review.message} #{review.rating}

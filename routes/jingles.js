@@ -71,7 +71,6 @@ router.post('/:id(\\d+)/reviews', asyncHandler(async(req, res) => {
     // console.log('jingle id:', jingleId)
 
     const validationErrors = validationResult(req);
-
     if (validationErrors.isEmpty()) {
         await db.Review.create({
             message,
@@ -90,11 +89,22 @@ router.post('/:id(\\d+)/reviews', asyncHandler(async(req, res) => {
 
 // to delete a reivew of a jingle
 // TO DO: test
-router.post('/:id(\\d+)/reviews/:id(\\d+)', csrfProtection, asyncHandler(async(req, res) => {
-    const id = parseInt(req.params.id, 10);
-    const review = await db.Review.findByPk(id);
-    await review.destroy();
-    res.redirect(`users/${user.id}`);
+router.post('/:id(\\d+)/reviews/:id(\\d+)', asyncHandler(async(req, res) => {
+    // this is fetching each review id!:
+    // console.log(req.params.id)
+    let reviewId = parseInt(req.params.id, 10)
+    // console.log(reviewId)
+
+    const review = await db.Review.findByPk(reviewId)
+    if (req.session.auth.userId === review.userId) {
+        // console.log('review to destroy: ', review)
+        await review.destroy();
+    }
+    // retrieves the jingle ID to use for the redirect
+    jingleId = review.jingleId
+
+    res.redirect(`/jingles/${jingleId}`);
+
 }));
 
 

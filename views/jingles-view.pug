@@ -10,11 +10,12 @@ html(lang="en")
     nav(class='navbar')
       div(id="center-container")
         a(class='jollyjingle-logo' href='/') jollyjingle
-        a(href=`/users/${user.id}/jingleLists`) My Jingles
+        a(href='/users/#{user.id}') My Jingles
         input(type="text", name="Search", placeholder= "Search books")
         a(href='users/sign-in') Sign in
         a(href='users/sign-up') Sign up
         a(href='users/sign-out') Sign out
+
     div.top-container
         div.jingle-img-container
             img(src=jingle.image id="jinglepic")
@@ -36,9 +37,16 @@ html(lang="en")
         div.reviews-container
             p.text.heading="Community Reviews"
             p.text= "List of Reviews Go here"
+
+
             a(href='/jingles/'+jingle.id+'/reviews') Write a review
             div.reviews
               each review in reviews
                 div(class="review")
                 p #{review.message} #{review.rating}
+
+                if user.id === review.userId
+                  form(action='/jingles/'+jingle.id+'/reviews/'+review.id, method="post")
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    button(type="submit" id="delete-butt") Delete
     include footer.pug

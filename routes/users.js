@@ -153,36 +153,54 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
 
   // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
   const lists = await db.List.findAll({ where: { userId }})
+  // const jinglesId = await db.List.findAll({ where: {  }})
+  // console.log(lists)
+
   const listId = lists.map(list => list.id)[1]
 
-  let jingleList = [];
-  var image = 'test';
+  console.log(listId)
+  //get jingle with jingleId
+const jingleList = await db.Jinglelist.findAll({ where: { listId }});
+
+
+  console.log(jingleList)
+
+
 
   //array of jingles
   const jingles = await db.Jinglelist.findAll({
     where: { listId },
+    include: db.Jingles
   });
 
+    //array of jingles
+    // const test = await db.Jinglelist.findAll({
+    //   where: { jingleId },
 
-var artist = '';
+    // });
 
-  for (let i = 0; i < jingles.length; i++) {
-      artist += jingles[i].artist
-  }
-
-  jingles.forEach(async (jingle) => {
-     const jingleId = jingle.jingleId;
-     const single = await db.Jingle.findByPk(jingleId);
-
-     var image = single.image
-    //  var title = single.name
-    //  var avgRating = single.avgRating
-    //  var dateAdded = single.dateAdded
-      console.log(single.artist)
+  // console.log(jingles)
 
 
-  });
-  
+// var artist = '';
+
+  // for (let i = 0; i < jingles.length; i++) {
+  //     artist += jingles[i].artist
+  // }
+
+  // jingles.forEach(async (jingle) => {
+  //    const jingleId = jingle.jingleId;
+  //    const single = await db.Jingle.findByPk(jingleId);
+
+  //    var image = single.image
+  //   //  var title = single.name
+  //   //  var avgRating = single.avgRating
+  //   //  var dateAdded = single.dateAdded
+  //     console.log(single.artist)
+
+
+  // });
+
   res.render('user-jinglelists.pug', {
 
     csrfToken: req.csrfToken(),
@@ -190,7 +208,7 @@ var artist = '';
     user,
     // image,
     // title,
-    artist,
+    // artist,
     // avgRating
   });
 

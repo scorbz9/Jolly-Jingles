@@ -8,12 +8,12 @@ const { loginUser, logoutUser } = require('../auth');
 const jingle = require('../db/models/jingle');
 
 /* GET /sign-up page */
-router.get('/sign-up', csrfProtection, asyncHandler( async (req, res, next) => {
+router.get('/sign-up', csrfProtection, asyncHandler(async (req, res, next) => {
 
   const user = await db.User.build({
 
   })
-  res.render('user-sign-up', { csrfToken: req.csrfToken(), title: 'Sign up',  user } )
+  res.render('user-sign-up', { csrfToken: req.csrfToken(), title: 'Sign up', user })
 }));
 
 
@@ -32,12 +32,12 @@ const signUpValidators = [
     .withMessage("Please provide a valid email address.")
     .custom((value) => {
       return db.User.findOne({ where: { email: value } })
-          .then((user) => {
-              if (user) {
-                  return Promise.reject('The provided Email Address is already in use by another account');
-              }
-          });
-  }),
+        .then((user) => {
+          if (user) {
+            return Promise.reject('The provided Email Address is already in use by another account');
+          }
+        });
+    }),
   check('password')
     .exists({ checkFalsy: true })
     .withMessage("Please provide a password.")
@@ -49,14 +49,15 @@ const signUpValidators = [
 ];
 
 /* POST /sign-up - Register user */
-router.post('/sign-up', csrfProtection, signUpValidators, asyncHandler( async (req, res, next) => {
+router.post('/sign-up', csrfProtection, signUpValidators, asyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body;
 
   const validationErrors = validationResult(req);
 
   const user = await db.User.build({
     name,
-    email
+    email,
+    defaultList: `${name}'s Jingles`
   });
 
   if (validationErrors.isEmpty()) {
@@ -65,8 +66,17 @@ router.post('/sign-up', csrfProtection, signUpValidators, asyncHandler( async (r
 
     await user.save();
     loginUser(req, res, user);
+
+    const userId = req.session.auth.userId
+
+    // Create default list in database
+    await db.List.create({
+      name: `${name}'s Jingles`,
+      userId
+    });
+
     // TODO - Redirect to user page (redirect to / temporarily)
-    res.redirect('/')
+    res.redirect(`/`)
   } else {
     const errors = validationErrors.array().map(error => error.msg)
     res.render('user-sign-up', {
@@ -105,14 +115,14 @@ const signInValidators = [
 
 
 /* POST /sign-in - Perform login */
-router.post('/sign-in', csrfProtection, signInValidators, asyncHandler( async (req, res, next) => {
+router.post('/sign-in', csrfProtection, signInValidators, asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 
   const validationErrors = validationResult(req);
   let errors = [];
 
   if (validationErrors.isEmpty()) {
-    const user = await db.User.findOne( { where: { email } } )
+    const user = await db.User.findOne({ where: { email } })
 
     if (user !== null) {
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString())
@@ -122,7 +132,7 @@ router.post('/sign-in', csrfProtection, signInValidators, asyncHandler( async (r
         return res.redirect('/')
       }
     }
-      errors.push("Sign in attempt failed.")
+    errors.push("Sign in attempt failed.")
 
   } else {
     errors = validationErrors.array().map(error => error.msg)
@@ -142,55 +152,47 @@ router.post('/sign-out', async (req, res, next) => {
   res.redirect('/')
 });
 
-// TODO - Below
-
 /* GET /users/:userId/jingleLists - Get 'myJingles' page */
 router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
-  const userId = parseInt(req.params.userId, 10);
+  const userId = req.session.auth.userId
 
   const user = await db.User.findByPk(userId);
+  const defaultListName = user.defaultList;
 
-  // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
-  // const lists = await db.List.findAll({ where: { userId }})
-  // console.log(lists)
+  const lists = await db.List.findAll({ where: { userId } })
 
-  // const listId = lists.map(list => list.id)[1]
-  // console.log(listId)
+  const list = await db.List.findOne({ where: { name: defaultListName } })
+  const listId = list.id;
 
-  //get jingleList with jingleId
-const jingleList = await db.Jinglelist.findAll({ where: { listId }});
-
-
-  console.log(jingleList)
-
-  // More database configuration is required - need to add a marker to track which jinglelist is the user's default collection ('My Jingles')
-  // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
-  const lists = await db.List.findAll({ where: { userId }})
-  const listId = lists.map(list => list.id)[0]
-
-
-  //array of jingles
   const jingles = await db.Jinglelist.findAll({
-    where: { listId },
-    include: db.Jingles
+
+    include: db.Jingle,
+    where: {
+      listId,
+    },
   });
+
+  console.log(jingles)
+
+  const jinglesFromAList = [];
+
+  jingles.map(async (jingle) => {
+    jinglesFromAList.push(jingle.Jingle)
+  })
 
   res.render('user-jinglelists.pug', {
-
-       csrfToken: req.csrfToken(),
-       title: 'My Jingles',
-       user,
-       userId,
-       jingles,
-       jingleList,
-       image,
-       lists
-     });
-
+    csrfToken: req.csrfToken(),
+    title: 'My Jingles',
+    user,
+    userId,
+    jinglesFromAList,
+    // image,
+    lists
   });
-
 }));
 
+
+// TODO - Add validation to prevent users from adding lists with name format `${name}'s Jingles`
 const addJingleListValidator =
   check('name')
     .exists({ checkFalsy: true })
@@ -211,7 +213,9 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
       userId
     });
 
-    const lists = await db.List.findAll( { where: { userId } } );
+    // defaultList++;
+
+    const lists = await db.List.findAll({ where: { userId } });
 
     res.render('user-jinglelists.pug', {
       csrfToken: req.csrfToken(),
@@ -224,7 +228,7 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
 
     let addJingleListError = validationErrors.array().map(error => error.msg)[0]
 
-    const lists = await db.List.findAll( { where: { userId } } );
+    const lists = await db.List.findAll({ where: { userId } });
 
     res.render('user-jinglelists.pug', {
       csrfToken: req.csrfToken(),
@@ -252,7 +256,7 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, as
   const userId = req.params.userId;
   const listId = req.params.jingleListId;
 
-  const jingleListsToDestroy = await db.Jinglelist.findAll( { where: { listId } } );
+  const jingleListsToDestroy = await db.Jinglelist.findAll({ where: { listId } });
 
   const listToDestroy = await db.List.findByPk(listId);
 

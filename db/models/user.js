@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     hashedPassword: DataTypes.STRING,
     defaultList: {
-      type: DataTypes.INTEGER,
+      allowNull: false,
+      type: DataTypes.STRING(50),
       unique: true,
     }
   }, {});

@@ -186,7 +186,6 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     user,
     userId,
     jinglesFromAList,
-    // image,
     lists
   });
 }));

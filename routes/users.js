@@ -163,12 +163,12 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
 
   const list = await db.List.findOne({ where: { name: defaultListName } })
   const listId = list.id;
-  // console.log(listId)
+
   const jingles = await db.Jinglelist.findAll({
+    include: db.Jingle,
     where: {
-      listId, // TODO: replace with 'DefaultList ' column
+      listId,
     },
-    include: db.Jingles
   });
 
   console.log(jingles)
@@ -176,10 +176,8 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
   const jinglesFromAList = [];
 
   jingles.map(async (jingle) => {
-    jinglesFromAList.push(jingle.jingleId)
+    jinglesFromAList.push(jingle.Jingle)
   })
-
-  console.log(jinglesFromAList)
 
   res.render('user-jinglelists.pug', {
 
@@ -187,7 +185,7 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     title: 'My Jingles',
     user,
     userId,
-    jingles,
+    jinglesFromAList,
     // image,
     lists
   });

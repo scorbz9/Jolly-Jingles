@@ -5,7 +5,14 @@ module.exports = (sequelize, DataTypes) => {
     listId: DataTypes.INTEGER
   }, {});
   Jinglelist.associate = function(models) {
-  
+
+    Jinglelist.belongsTo(models.Jingle, {
+      foreignKey: 'jingleId'
+    })
+
+    Jinglelist.belongsTo(models.List, {
+      foreignKey: 'listId'
+    })
   };
   return Jinglelist;
 };

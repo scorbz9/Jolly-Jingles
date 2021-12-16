@@ -25,6 +25,7 @@ block content
                 a#add-list-butt(href="/") Explore
             div.jingles-container
                 div.jingle-table
+
                     table(class='jingle-list-table')
                         thead(class='thead')
                             tr
@@ -44,4 +45,6 @@ block content
                                     td=`${jingle.avgRating}`
                                     td=`${jingle.review}`
                                     td=`${jingle.createdAt}`
+
+
     include footer.pug

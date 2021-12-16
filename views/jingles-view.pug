@@ -23,7 +23,6 @@ html(lang="en")
             p=`by ${jingle.artist}`
             p=jingle.avgRating
             p=jingle.description
-    include footer.pug
 
     div.top-container
         div.jingle-img-container
@@ -53,4 +52,4 @@ html(lang="en")
               each review in reviews
                 div(class="review")
                 p #{review.message} #{review.rating}
-
+    include footer.pug

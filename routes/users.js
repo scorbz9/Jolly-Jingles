@@ -146,7 +146,7 @@ router.post('/sign-out', async (req, res, next) => {
 
 /* GET /users/:userId/jingleLists - Get 'myJingles' page */
 router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
-  const userId = req.params.userId;
+  const userId = parseInt(req.params.userId, 10);
 
   const user = await db.User.findByPk(userId);
 
@@ -178,10 +178,11 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
        csrfToken: req.csrfToken(),
        title: 'My Jingles',
        user,
+       userId,
        jingles,
        jingleList,
-       image
-       // list
+       image,
+       lists
      });
 
   });

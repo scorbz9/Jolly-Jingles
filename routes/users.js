@@ -146,14 +146,29 @@ router.post('/sign-out', async (req, res, next) => {
 
 /* GET /users/:userId/jingleLists - Get 'myJingles' page */
 router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
-  const userId = req.params.userId;
+  const userId = parseInt(req.params.userId, 10);
 
   const user = await db.User.findByPk(userId);
+
+
+  // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
+  const lists = await db.List.findAll({ where: { userId }})
+  // console.log(lists)
+
+  const listId = lists.map(list => list.id)[1]
+  // console.log(listId)
+
+  //get jingleList with jingleId
+const jingleList = await db.Jinglelist.findAll({ where: { listId }});
+
+
+  console.log(jingleList)
 
   // More database configuration is required - need to add a marker to track which jinglelist is the user's default collection ('My Jingles')
   // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
   const lists = await db.List.findAll({ where: { userId }})
   const listId = lists.map(list => list.id)[0]
+
 
 
   //array of jingles
@@ -163,13 +178,8 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
   });
 
 
-  jingles.forEach(async (jingle) => {
-      // console.log(jingle.jingleId)
-     const jingleId = jingle.jingleId;
-     const single = await db.Jingle.findByPk(jingleId);
+  // });
 
-
-  });
 
   res.render('user-jinglelists.pug', {
 
@@ -179,6 +189,16 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     lists,
     jingles,
     userId
+       csrfToken: req.csrfToken(),
+       title: 'My Jingles',
+       user,
+       userId,
+       jingles,
+       jingleList,
+       image,
+       lists
+     });
+
   });
 
 }));
@@ -232,6 +252,10 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
 
 // GET /users/:userId/jingleLists/:jingleListId - Display information for a particular jingleList
 router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+  const listId = parseInt(req.params.jingleListId, 10);
+
+  const list = await db.List.findByPk(listId);
+
 
 }));
 

@@ -150,16 +150,14 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
 
   const user = await db.User.findByPk(userId);
 
-
   // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
   const lists = await db.List.findAll({ where: { userId }})
-  // const jinglesId = await db.List.findAll({ where: {  }})
   // console.log(lists)
 
   const listId = lists.map(list => list.id)[1]
+  // console.log(listId)
 
-  console.log(listId)
-  //get jingle with jingleId
+  //get jingleList with jingleId
 const jingleList = await db.Jinglelist.findAll({ where: { listId }});
 
 
@@ -172,14 +170,6 @@ const jingleList = await db.Jinglelist.findAll({ where: { listId }});
     where: { listId },
     include: db.Jingles
   });
-
-    //array of jingles
-    // const test = await db.Jinglelist.findAll({
-    //   where: { jingleId },
-
-    // });
-
-  // console.log(jingles)
 
 
 // var artist = '';
@@ -206,10 +196,7 @@ const jingleList = await db.Jinglelist.findAll({ where: { listId }});
     csrfToken: req.csrfToken(),
     title: 'My Jingles',
     user,
-    // image,
-    // title,
-    // artist,
-    // avgRating
+    // name
   });
 
 }));

@@ -238,6 +238,10 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
 
 // GET /users/:userId/jingleLists/:jingleListId - Display information for a particular jingleList
 router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+  const listId = parseInt(req.params.jingleListId, 10);
+
+  const list = await db.List.findByPk(listId);
+
 
 }));
 

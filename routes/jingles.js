@@ -15,10 +15,9 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     // console.log(jingle)
 
     if (jingle) {
-        const { image, artist, name, lyrics, avgRating, description } = jingle;
+        // const { image, artist, name, lyrics, avgRating, description } = jingle;
 
-
-    res.render('index', {title: jingle.name, image, artist, name, lyrics, avgRating, description})
+    res.render('jingles-view', {title: jingle.name, jingle})
     } else {
         res.status(404)
         res.send('Page Not Found');

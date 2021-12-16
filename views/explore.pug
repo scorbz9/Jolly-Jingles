@@ -22,6 +22,6 @@ html(lang="en")
         each jingle in jingles
           div(class="jingle")
             img(src=jingle.image id="jinglepic")
-            p(id="nameText")= jingle.name
+            a(id="nameText" href=`/jingles/${jingle.id}`)=jingle.name
             p(id="artistText")= jingle.artist
             p= jingle.avgRating

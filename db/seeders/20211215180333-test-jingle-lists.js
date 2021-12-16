@@ -9,10 +9,10 @@ module.exports = {
       Example:
       */
     return queryInterface.bulkInsert('Jinglelists', [
-        { jingleId: 62, listId: 11, createdAt: new Date(), updatedAt: new Date() },
-        { jingleId: 62, listId: 12, createdAt: new Date(), updatedAt: new Date() },
-        { jingleId: 63, listId: 11, createdAt: new Date(), updatedAt: new Date() },
-        { jingleId: 63, listId: 12, createdAt: new Date(), updatedAt: new Date() },
+        { jingleId: 7, listId: 8, createdAt: new Date(), updatedAt: new Date() },
+        { jingleId: 8, listId: 8, createdAt: new Date(), updatedAt: new Date() },
+        { jingleId: 9, listId: 9, createdAt: new Date(), updatedAt: new Date() },
+        { jingleId: 10, listId: 9, createdAt: new Date(), updatedAt: new Date() },
     ], {});
 },
 

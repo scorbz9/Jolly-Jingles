@@ -15,10 +15,24 @@ html(lang="en")
         a(href='users/sign-in') Sign in
         a(href='users/sign-up') Sign up
         a(href='users/sign-out') Sign out
-    div.main-container
-        img(src=jingle.image id="jinglepic")
-        div
-            h2=jingle.name
-            p=`by ${jingle.artist}` 
-            p=jingle.avgRating
-            p=jingle.description
+    div.top-container
+        div.jingle-img-container
+            img(src=jingle.image id="jinglepic")
+            label(for="myJingleList")
+            select#select(name="myJingleList" required=true)
+            p#star-rating="My Rating"
+            p#stars ⭐⭐⭐⭐⭐
+            // TO DO: add button to create jinglelist
+            // TO DO: add logged-in user's jinglelists
+        div.jingle-info-container
+            h2.text=jingle.name
+            p.text=`by ${jingle.artist}` 
+            p.text="⭐⭐⭐⭐⭐"+jingle.avgRating
+            p#description.text=jingle.description
+    div.bottom-container
+        div.lyrics-container
+            p.text.heading="Lyrics"
+            p.text=jingle.lyrics
+        div.reviews-container
+            p.text.heading="Community Reviews"
+            p.text= "List of Reviews Go here"

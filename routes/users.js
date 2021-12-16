@@ -150,31 +150,71 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
 
   const user = await db.User.findByPk(userId);
 
+<<<<<<< HEAD
+  // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
+  const lists = await db.List.findAll({ where: { userId }})
+  // console.log(lists)
+
+  const listId = lists.map(list => list.id)[1]
+  // console.log(listId)
+
+  //get jingleList with jingleId
+const jingleList = await db.Jinglelist.findAll({ where: { listId }});
+
+
+  console.log(jingleList)
+
+=======
   // More database configuration is required - need to add a marker to track which jinglelist is the user's default collection ('My Jingles')
   // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
   const lists = await db.List.findAll({ where: { userId }})
   const listId = lists.map(list => list.id)[0]
+>>>>>>> c374183aa0af55ff5330c5a39b421dfd8a72a100
 
-  let jingleList = [];
-  var image = 'test';
 
   //array of jingles
   const jingles = await db.Jinglelist.findAll({
     where: { listId },
+    include: db.Jingles
   });
 
-  console.log(jingles)
 
+<<<<<<< HEAD
+// var artist = '';
+
+  // for (let i = 0; i < jingles.length; i++) {
+  //     artist += jingles[i].artist
+  // }
+
+  // jingles.forEach(async (jingle) => {
+  //    const jingleId = jingle.jingleId;
+  //    const single = await db.Jingle.findByPk(jingleId);
+
+  //    var image = single.image
+  //   //  var title = single.name
+  //   //  var avgRating = single.avgRating
+  //   //  var dateAdded = single.dateAdded
+  //     console.log(single.artist)
+=======
   jingles.forEach(async (jingle) => {
       // console.log(jingle.jingleId)
      const jingleId = jingle.jingleId;
      const single = await db.Jingle.findByPk(jingleId);
+>>>>>>> c374183aa0af55ff5330c5a39b421dfd8a72a100
 
-     image = single.image
-     console.log(image)
 
-     res.render('user-jinglelists.pug', {
+  // });
 
+<<<<<<< HEAD
+  res.render('user-jinglelists.pug', {
+
+    csrfToken: req.csrfToken(),
+    title: 'My Jingles',
+    user,
+    lists,
+    jingles,
+    userId
+=======
        csrfToken: req.csrfToken(),
        title: 'My Jingles',
        user,
@@ -184,6 +224,7 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
        // list
      });
 
+>>>>>>> c374183aa0af55ff5330c5a39b421dfd8a72a100
   });
 
 }));

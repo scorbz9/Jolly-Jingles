@@ -165,6 +165,7 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
   const listId = list.id;
 
   const jingles = await db.Jinglelist.findAll({
+
     include: db.Jingle,
     where: {
       listId,
@@ -180,7 +181,6 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
   })
 
   res.render('user-jinglelists.pug', {
-
     csrfToken: req.csrfToken(),
     title: 'My Jingles',
     user,
@@ -189,7 +189,6 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     // image,
     lists
   });
-
 }));
 
 

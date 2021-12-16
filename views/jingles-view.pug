@@ -10,7 +10,7 @@ html(lang="en")
     nav(class='navbar')
       div(id="center-container")
         a(class='jollyjingle-logo' href='/') jollyjingle
-        a(href='/users/#{user.id}') My Jingles
+        a(href=`/users/${user.id}/jingleLists`) My Jingles
         input(type="text", name="Search", placeholder= "Search books")
         a(href='users/sign-in') Sign in
         a(href='users/sign-up') Sign up
@@ -41,3 +41,4 @@ html(lang="en")
               each review in reviews
                 div(class="review")
                 p #{review.message} #{review.rating}
+    include footer.pug

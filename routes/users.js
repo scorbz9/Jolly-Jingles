@@ -146,7 +146,7 @@ router.post('/sign-out', async (req, res, next) => {
 
 /* GET /users/:userId/jingleLists - Get 'myJingles' page */
 router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
-  const userId = req.params.userId;
+  const userId = parseInt(req.params.userId, 10);
 
   const user = await db.User.findByPk(userId);
 
@@ -218,10 +218,11 @@ const jingleList = await db.Jinglelist.findAll({ where: { listId }});
        csrfToken: req.csrfToken(),
        title: 'My Jingles',
        user,
+       userId,
        jingles,
        jingleList,
-       image
-       // list
+       image,
+       lists
      });
 
 >>>>>>> c374183aa0af55ff5330c5a39b421dfd8a72a100
@@ -278,6 +279,10 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
 
 // GET /users/:userId/jingleLists/:jingleListId - Display information for a particular jingleList
 router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+  const listId = parseInt(req.params.jingleListId, 10);
+
+  const list = await db.List.findByPk(listId);
+
 
 }));
 

@@ -172,13 +172,13 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     },
   });
 
-  console.log(jingles)
 
   const jinglesFromAList = [];
 
   jingles.map(async (jingle) => {
     jinglesFromAList.push(jingle.Jingle)
   })
+  console.log(jinglesFromAList)
 
   res.render('user-jinglelists.pug', {
     csrfToken: req.csrfToken(),
@@ -186,7 +186,6 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     user,
     userId,
     jinglesFromAList,
-    // image,
     lists
   });
 }));
@@ -212,8 +211,6 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
       name,
       userId
     });
-
-    // defaultList++;
 
     const lists = await db.List.findAll({ where: { userId } });
 

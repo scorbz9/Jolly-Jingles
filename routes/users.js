@@ -196,7 +196,9 @@ const jingleList = await db.Jinglelist.findAll({ where: { listId }});
     csrfToken: req.csrfToken(),
     title: 'My Jingles',
     user,
-    // name
+    lists,
+    jingles,
+    userId
   });
 
 }));

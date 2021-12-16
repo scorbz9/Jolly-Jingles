@@ -1,3 +1,4 @@
+
 footer {
     background-color: #f9f8f4;
     height: 275px;
@@ -13,20 +14,20 @@ footer {
     margin: 0 auto;
     padding-top: 25px;
     width: 1150px;
-
 }
 
 .left-container {
     display: flex;
+    flex-direction: column;
     width: 60%;
 }
 
-.footer-links-columns {
+.left-container p {
     color: #a2a19f;
-    display: flex;
-    flex-direction: column;
     font-weight: bold;
-    margin-right: 100px;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 10px;
 }
 
 .right-container {
@@ -45,8 +46,9 @@ footer {
 .social-link-img {
     cursor: pointer;
     height: 30px;
+    margin-right: 8px;
 }
 
 .footer-jingles {
-    margin-right: 160px
+    margin-right: 150px
 }

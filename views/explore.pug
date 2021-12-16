@@ -17,15 +17,6 @@ html(lang="en")
         a(href='users/sign-in') Sign in
         a(href='users/sign-up') Sign up
         a(href='users/sign-out') Sign out
-<<<<<<< HEAD
-    div(class='jingles-grid')
-      each jingle in jingles
-        img(src=jingle.image id="jinglepic")
-        p= jingle.name
-        p= jingle.artist
-        p= jingle.avgRating
-    include footer.pug
-=======
     div(class='jingles-container')
       div(class='jingles-grid')
         each jingle in jingles
@@ -34,4 +25,4 @@ html(lang="en")
             a(id="nameText" href=`/jingles/${jingle.id}`)=jingle.name
             p(id="artistText")= jingle.artist
             p= jingle.avgRating
->>>>>>> c374183aa0af55ff5330c5a39b421dfd8a72a100
+    include footer.pug

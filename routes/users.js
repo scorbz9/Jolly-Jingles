@@ -150,6 +150,7 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
 
   const user = await db.User.findByPk(userId);
 
+<<<<<<< HEAD
   // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
   const lists = await db.List.findAll({ where: { userId }})
   // console.log(lists)
@@ -163,6 +164,12 @@ const jingleList = await db.Jinglelist.findAll({ where: { listId }});
 
   console.log(jingleList)
 
+=======
+  // More database configuration is required - need to add a marker to track which jinglelist is the user's default collection ('My Jingles')
+  // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
+  const lists = await db.List.findAll({ where: { userId }})
+  const listId = lists.map(list => list.id)[0]
+>>>>>>> c374183aa0af55ff5330c5a39b421dfd8a72a100
 
 
   //array of jingles
@@ -172,6 +179,7 @@ const jingleList = await db.Jinglelist.findAll({ where: { listId }});
   });
 
 
+<<<<<<< HEAD
 // var artist = '';
 
   // for (let i = 0; i < jingles.length; i++) {
@@ -187,10 +195,17 @@ const jingleList = await db.Jinglelist.findAll({ where: { listId }});
   //   //  var avgRating = single.avgRating
   //   //  var dateAdded = single.dateAdded
   //     console.log(single.artist)
+=======
+  jingles.forEach(async (jingle) => {
+      // console.log(jingle.jingleId)
+     const jingleId = jingle.jingleId;
+     const single = await db.Jingle.findByPk(jingleId);
+>>>>>>> c374183aa0af55ff5330c5a39b421dfd8a72a100
 
 
   // });
 
+<<<<<<< HEAD
   res.render('user-jinglelists.pug', {
 
     csrfToken: req.csrfToken(),
@@ -199,60 +214,89 @@ const jingleList = await db.Jinglelist.findAll({ where: { listId }});
     lists,
     jingles,
     userId
+=======
+       csrfToken: req.csrfToken(),
+       title: 'My Jingles',
+       user,
+       jingles,
+       jingleList,
+       image
+       // list
+     });
+
+>>>>>>> c374183aa0af55ff5330c5a39b421dfd8a72a100
   });
 
 }));
 
 const addJingleListValidator =
-  check('listName')
+  check('name')
     .exists({ checkFalsy: true })
 
 
 // POST /users/:userId/jingleLists - add a new jingleList to jingleLists
-router.post('/:userId(\\d+)/jingleLists', addJingleListValidator, asyncHandler(async (req, res, next) => {
-  // Update below based on view implementation
-  const { name } = req.body
-  const userId = req.params.userId;
-  console.log(name)
+router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator, asyncHandler(async (req, res, next) => {
 
-  const validationErrors = validationResult(req)
+  const { name } = req.body;
+  const userId = parseInt(req.params.userId, 10);
 
-  if (!validationErrors.isEmpty()) {
-    const newJingleList = await db.List.create({
+  const validationErrors = validationResult(req);
+
+  if (validationErrors.isEmpty()) {
+
+    await db.List.create({
       name,
       userId
     });
 
-    const updatedJingleLists = await db.List.findAll( { where: { userId } } );
+    const lists = await db.List.findAll( { where: { userId } } );
 
-    res.send('temp1')
-    // res.render('jinglelists', { token: csrfToken(), updatedJingleLists })
+    res.render('user-jinglelists.pug', {
+      csrfToken: req.csrfToken(),
+      lists,
+      userId,
+      name
+    });
+
   } else {
-    // alert('Please provide a name for the new list.')
-    res.send('temp2')
+
+    let addJingleListError = validationErrors.array().map(error => error.msg)[0]
+
+    const lists = await db.List.findAll( { where: { userId } } );
+
+    res.render('user-jinglelists.pug', {
+      csrfToken: req.csrfToken(),
+      lists,
+      userId,
+      addJingleListError
+    });
+
+    addJingleListError = null;
   }
 }));
 
 
 // GET /users/:userId/jingleLists/:jingleListId - Display information for a particular jingleList
 router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
-  console.log('placeholder1')
+
 }));
 
 // DELETE /users/:userId/jingleLists/:jingleListId - Delete a particular jingleList
-router.delete('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', asyncHandler(async (req, res, next) => {
-  console.log(req.params.jingleListId)
-  const jingleListId = req.params.jingleListId;
+router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+  const userId = req.params.userId;
+  const listId = req.params.jingleListId;
 
-  // Below needs testing still
-  const listToDestroy = await db.JingleList.findByPk(jingleListId, {
-    include: [
-      db.Jingle,
-      db.List,
-    ]
-  })
+  const jingleListsToDestroy = await db.Jinglelist.findAll( { where: { listId } } );
+
+  const listToDestroy = await db.List.findByPk(listId);
+
+  jingleListsToDestroy.map(async jingleList => {
+    await jingleList.destroy();
+  });
 
   await listToDestroy.destroy();
+
+  res.redirect(`/users/${userId}/jingleLists/`);
 }));
 
 // DELETE /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Remove a jingle from a particular jingle list

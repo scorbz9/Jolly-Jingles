@@ -150,12 +150,11 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
 
   const user = await db.User.findByPk(userId);
 
-
   // TODO - Get user's default 'My Jingles' Jinglelist - below is placeholder listId
-  const lists = await db.List.findAll({ where: { userId }})
+  // const lists = await db.List.findAll({ where: { userId }})
   // console.log(lists)
 
-  const listId = lists.map(list => list.id)[1]
+  // const listId = lists.map(list => list.id)[1]
   // console.log(listId)
 
   //get jingleList with jingleId
@@ -170,25 +169,14 @@ const jingleList = await db.Jinglelist.findAll({ where: { listId }});
   const listId = lists.map(list => list.id)[0]
 
 
-
   //array of jingles
   const jingles = await db.Jinglelist.findAll({
     where: { listId },
     include: db.Jingles
   });
 
-
-  // });
-
-
   res.render('user-jinglelists.pug', {
 
-    csrfToken: req.csrfToken(),
-    title: 'My Jingles',
-    user,
-    lists,
-    jingles,
-    userId
        csrfToken: req.csrfToken(),
        title: 'My Jingles',
        user,

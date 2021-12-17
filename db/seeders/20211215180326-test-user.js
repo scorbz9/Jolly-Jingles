@@ -25,6 +25,14 @@ module.exports = {
           updatedAt: new Date(),
           defaultList: 'Jolly Jingles2\'s Jingles'
         },
+        {
+          name: 'Demo User',
+          email: 'demo@testing.com',
+          hashedPassword: '$2a$10$yzxxzTWVFgFR6CRnsDL2OufMUWaTgMEGygFQz.U4iU6rdSmK2DGK.',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          defaultList: 'Demo\'s Jingles'
+        },
       ], {});
   },
 

@@ -57,12 +57,6 @@
   color:#999999
 }
 
-#stars {
-  text-align:center;
-  margin: 0px;
-  font-size: 11px;
-}
-
 .bottom-container {
   margin: 100px auto;
   width: 80%;
@@ -92,3 +86,39 @@
   padding: 10px 0 10px 0;
 }
 
+.rate {
+  align-self: center;
+  height: 11px;
+  padding: 0 10px;
+}
+.rate:not(:checked) > label {
+  float:right;
+  width:1em;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:pointer;
+  font-size:22px;
+  color:#ccc;
+}
+
+.rate:not(:checked) > label::before {
+  content: '★ ';
+}
+
+.rate > input:checked ~ label {
+  content: '★ ';
+  color: #ffc700;
+}
+
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+  color: #deb217;  
+}
+
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+  color: #c59b08;
+}

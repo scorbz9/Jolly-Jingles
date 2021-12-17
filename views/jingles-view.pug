@@ -10,19 +10,30 @@ html(lang="en")
     nav(class='navbar')
       div(id="center-container")
         a(class='jollyjingle-logo' href='/') jollyjingle
-        a(href='/users/#{user.id}') My Jingles
-        input(type="text", name="Search", placeholder= "Search books")
-        a(href='users/sign-in') Sign in
-        a(href='users/sign-up') Sign up
-        a(href='users/sign-out') Sign out
+        a(href=`/users/${user.id}/jingleLists`) My Jingles
+        input(type="text", name="Search", placeholder= "Search Jingles")
+        a(href='/users/sign-in') Sign in
+        a(href='/users/sign-up') Sign up
+        a(href='/users/sign-out') Sign out
 
     div.top-container
         div.jingle-img-container
             img(src=jingle.image id="jinglepic")
             label(for="myJingleList")
             select#select(name="myJingleList" required=true)
-            p#star-rating="My Rating"
-            p#stars ⭐⭐⭐⭐⭐
+            p#star-rating="My Rating:"
+            //- p#stars ⭐⭐⭐⭐⭐
+            div.rate
+              label(for="star1")
+                input(type="radio" id="star1" name="rate" value="1")
+              label(for="star2")
+                input(type="radio" id="star2" name="rate" value="2")
+              label(for="star3")
+                input(type="radio" id="star3" name="rate" value="3")
+              label(for="star4")
+                input(type="radio" id="star4" name="rate" value="4")
+              label(for="star5")
+                input(type="radio" id="star5" name="rate" value="5")
             // TO DO: add button to create jinglelist
             // TO DO: add logged-in user's jinglelists
         div.jingle-info-container

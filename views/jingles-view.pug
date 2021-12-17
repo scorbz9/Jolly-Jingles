@@ -41,7 +41,10 @@ html(lang="en")
             h2.text=jingle.name
             p.text=`by ${jingle.artist}`
             // TO DO: how to display average review rating?
-            p.text="⭐⭐⭐⭐⭐"+avgReviews
+            if (isNaN(avgReviews))
+              p.text="⭐⭐⭐⭐⭐"+" Be the first to review"
+            else 
+              p.text="⭐⭐⭐⭐⭐"+ avgReviews
             p#description.text=jingle.description
             form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)
               input(type='hidden' name='_csrf' value=csrfToken)

@@ -22,8 +22,14 @@ router.get('/:id(\\d+)',  csrfProtection, asyncHandler(async (req, res) => {
 
     // find all reviews where the jingleId matches
     const reviews = await db.Review.findAll({ where: { jingleId } })
-    const sumOfreviews = await db.Review.sum('rating');
-    const avgReviews = (sumOfreviews / reviews.length).toFixed(2);
+    // console.log(reviews)
+    const sumOfReviews = await db.Review.sum('rating', {where: {jingleId}});
+    const avgReviews = (sumOfReviews / reviews.length).toFixed(2);
+    db.Jingle.update({avgRating: avgReviews}, {
+        where: {
+            id
+        }
+    })
     // const reviewRating = await db.Review.findAll(AVG('rating'))
     const userId = req.session.auth.userId
     const lists = await db.List.findAll({ where: { userId } })

@@ -11,12 +11,19 @@ html(lang="en")
 
       div(id="center-container")
         a(class='jollyjingle-logo' href='/') jollyjingle
+      if user
         a(href='/users/'+user.id+'/jingleLists') My Jingles
+      if !user
+        a(href='users/sign-up') My Jingles
         input(type="text", name="Search", placeholder= "Search books")
       div(id="right-container")
+      if user
+        p welcome
+          strong  #{user.name}
+        a(href='users/sign-out') Sign out
+      if !user
         a(href='users/sign-in') Sign in
         a(href='users/sign-up') Sign up
-        a(href='users/sign-out') Sign out
     div(class='jingles-container')
       div(class='jingles-grid')
         each jingle in jingles

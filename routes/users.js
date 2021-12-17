@@ -178,7 +178,6 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
   jingles.map(async (jingle) => {
     jinglesFromAList.push(jingle.Jingle)
   })
-  console.log(jinglesFromAList)
 
   res.render('user-jinglelists.pug', {
     csrfToken: req.csrfToken(),
@@ -248,28 +247,32 @@ router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asy
 
 }));
 
-// DELETE /users/:userId/jingleLists/:jingleListId - Delete a particular jingleList
-router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
-  const userId = req.params.userId;
-  const listId = req.params.jingleListId;
+// // DELETE /users/:userId/jingleLists/:jingleListId - Delete a particular jingleList
+// router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+//   const userId = req.params.userId;
+//   const listId = req.params.jingleListId;
 
-  const jingleListsToDestroy = await db.Jinglelist.findAll({ where: { listId } });
+//   const jingleListsToDestroy = await db.Jinglelist.findAll({ where: { listId } });
 
-  const listToDestroy = await db.List.findByPk(listId);
+//   const listToDestroy = await db.List.findByPk(listId);
 
-  jingleListsToDestroy.map(async jingleList => {
-    await jingleList.destroy();
-  });
+//   jingleListsToDestroy.map(async jingleList => {
+//     await jingleList.destroy();
+//   });
 
-  await listToDestroy.destroy();
+//   await listToDestroy.destroy();
 
-  res.redirect(`/users/${userId}/jingleLists/`);
-}));
+//   res.redirect(`/users/${userId}/jingleLists/`);
+// }));
 
 // DELETE /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Remove a jingle from a particular jingle list
 router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\d+)', asyncHandler(async (req, res, next) => {
     const userId = req.params.userId;
     const listId = req.params.jingleListId;
+    const jingleId = req.params.jingleId
+
+    // console.log(jingleId)
+
 
     //jingle id
     // const jingleId = req.params.jingleId;
@@ -277,14 +280,16 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\
     //delete jingle from jinglelist using userId and listId
     const jingleToDestroy = await db.Jinglelist.findOne({
       where: {
-        jingleId: 2,
-        listId: 1
+        jingleId,
+        listId
       }
     })
 
+    console.log(jingleToDestroy)
+
     await jingleToDestroy.destroy();
 
-    res.redirect(`/users/1/jingleLists`);
+    res.redirect(`/users/${userId}/jingleLists`);
 }));
 
 module.exports = router;

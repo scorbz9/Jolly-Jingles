@@ -45,6 +45,9 @@ block content
                                     td=`${jingle.avgRating}`
                                     td=`${jingle.review}`
                                     td=`${jingle.createdAt}`
+                                        form(method="post" action=`/users/${userId}/jingleLists/${userId}/jingles/${jingle.id}`)
+                                            input(type="hidden" name='_csrf' value=csrfToken)
+                                            input(type='submit' value="❌")
 
 
     include footer.pug

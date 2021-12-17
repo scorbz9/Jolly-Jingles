@@ -24,5 +24,8 @@ html(lang="en")
             img(src=jingle.image id="jinglepic")
             a(id="nameText" href=`/jingles/${jingle.id}`)=jingle.name
             p(id="artistText")= jingle.artist
-            p= jingle.avgRating
+            if (jingle.avgRating === null || isNaN(jingle.avgRating))
+              p="Be the first to review"
+            else 
+              p=jingle.avgRating
     include footer.pug

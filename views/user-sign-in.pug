@@ -6,8 +6,6 @@ include utils.pug
 block content
     h1 Sign in to jollyJingles
     +validationErrorSummary(errors)
-
-
     form(method='post' action='/users/sign-in')
         input(type='hidden' name='_csrf' value=csrfToken)
         +field('Email address', 'email', email, 'email', 'you@yours.com')

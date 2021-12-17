@@ -1,11 +1,20 @@
+body {
+    position: relative;
+    overflow-x: hidden;
+
+}
 
 footer {
     background-color: #f9f8f4;
-    height: 275px;
     left: 0;
-    margin-top: 100px;
     position: absolute;
-    width: 100%;
+    margin-bottom: -10;
+    width: 100vw;
+    height: 200px;
+    margin-top: 25px;
+    padding-bottom: 25px;
+    margin-left: -10px;
+    overflow: hidden;
 }
 
 .footer-main {

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {Jingle} = require('../db/models');
+const db = require('../db/models');
 
 const asyncHandler = (handler) => {
   return (req, res, next) => {
@@ -9,10 +9,11 @@ const asyncHandler = (handler) => {
 };
 
 router.get('/', asyncHandler(async(req, res) => {
-  const jingles = await Jingle.findAll()
-  // console.log(jingles)
-  const { image, name, artist, avgRating} = req.body;
+  const jingles = await db.Jingle.findAll();
+
   res.render('explore', {title: 'explore', jingles })
+
+
 }))
 
 module.exports = router;

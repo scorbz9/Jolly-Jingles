@@ -292,4 +292,10 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\
     res.redirect(`/users/${userId}/jingleLists`);
 }));
 
+// ADD /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Add a jingle to a jingle list
+router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\d+)', asyncHandler( async(req, res, next) => {
+  
+}))
+
+
 module.exports = router;

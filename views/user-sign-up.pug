@@ -1,18 +1,24 @@
 extends layout.pug
+append head
+  //- add page specific styles by appending to the head
+  link(rel="stylesheet" href="/stylesheets/user-sign-up.css")
 
 include utils.pug
 
 block content
-    h1 Sign Up for jollyJingles
-    p Sign up to see your friend's favorite jingles, get recommendations, and join a community of jolly jinglers.
-    +validationErrorSummary(errors)
+    h2#sign-up-logo jolly
+        strong Jingles
 
-    form(method='post' action='/users/sign-up')
-        input(type='hidden' name='_csrf' value=csrfToken)
-        +field('Name', 'name', user.name, 'text', 'Name')
-        +field('Email address', 'email', user.email, 'email', 'you@yours.com')
-        +field('Password', 'password', user.password, 'password')
-        input(type='submit' value='Sign Up')
-    div
-        p Already a member?
-            a(href='/users/sign-in') Sign in
+    div#sign-up-form-container
+        h1 Sign Up for jollyJingles
+        p Sign up to see your friend's favorite jingles, get recommendations, and join a community of jolly jinglers.
+        +validationErrorSummary(errors)
+        form(method='post' action='/users/sign-up')
+            input(type='hidden' name='_csrf' value=csrfToken)
+            +field('Name', 'name', user.name, 'text', 'Name')
+            +field('Email address', 'email', user.email, 'email', 'you@yours.com')
+            +field('Password', 'password', user.password, 'password')
+            input(type='submit' value='Sign Up')
+        div
+            p Already a member?
+                a(href='/users/sign-in') Sign in

@@ -55,7 +55,6 @@ router.get('/:id(\\d+)/reviews', csrfProtection, asyncHandler(async(req, res) =>
             artist,
             userId: req.session.auth.userId,
             csrfToken: req.csrfToken(),
-
         })
     } else {
         res.status(404)
@@ -106,6 +105,7 @@ router.post('/:id(\\d+)/reviews/:id(\\d+)', asyncHandler(async(req, res) => {
         await review.destroy();
     }
     // retrieves the jingle ID to use for the redirect
+    console.log('CONSOLE LOG HERE!!:', review.userId)
     jingleId = review.jingleId
 
     res.redirect(`/jingles/${jingleId}`);

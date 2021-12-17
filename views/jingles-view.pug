@@ -49,14 +49,16 @@ html(lang="en")
             p.text=jingle.lyrics
         div.reviews-container
             p.text.heading="Community Reviews"
-            p.text= "List of Reviews Go here"
 
 
             a(href='/jingles/'+jingle.id+'/reviews') Write a review
             div.reviews
               each review in reviews
                 div(class="review")
-                p #{review.message} #{review.rating}
+                p.text
+                  strong #{user.name}
+                  |  rated it: #{review.rating}
+                p.text #{review.message}
 
                 if user.id === review.userId
                   form(action='/jingles/'+jingle.id+'/reviews/'+review.id, method="post")

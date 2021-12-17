@@ -3,16 +3,16 @@
     justify-content: center;
     align-items: center;
     margin: 5px;
-  
+
   }
-  
+
   #center-container {
     display: flex;
     justify-content: space-around;
     height: 20px;
     align-items: center;
   }
-  
+
   #jinglepic {
     height: 200px;
     width: 200px;

@@ -23,7 +23,15 @@ const signUpValidators = [
     .exists({ checkFalsy: true })
     .withMessage('Please provide a name.')
     .isLength({ max: 50 })
-    .withMessage('Name must be less than 50 characters.'),
+    .withMessage('Name must be less than 50 characters.')
+    .custom((value) => {
+      return db.User.findOne({ where: { name: value } })
+        .then((user) => {
+          if (user) {
+            return Promise.reject('The provided name is already in use by another account');
+          }
+        });
+      }),
   check('email')
     .exists({ checkFalsy: true })
     .withMessage('Please provide an email.')
@@ -45,8 +53,7 @@ const signUpValidators = [
     .isLength({ max: 50 })
     .withMessage("Password must be less than 50 characters.")
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/, 'g')
-    .withMessage('Password must contain at least 1 lowercase letter, uppercase letter, number, and special character (i.e. "!@#$%^&*")'),
-
+    .withMessage('Password must contain at least 1 lowercase letter, uppercase letter, number, and special character (i.e. "!@#$%^&*")')
 ];
 
 /* POST /sign-up - Register user */

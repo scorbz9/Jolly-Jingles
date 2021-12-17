@@ -1,15 +1,24 @@
-link(rel="stylesheet" href="/stylesheets/footer.css")
+append head
+    link(rel="stylesheet" href="/stylesheets/footer.css")
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+
+
 block footer
 footer
     div.footer-main
         div.left-container
             //- div.footer-links-columns
             p Connect
-            div
-                img.social-link-img(src="https://s.gr-assets.com/assets/site_footer/footer_facebook-ea4ab848f8e86c5f5c98311bc9495a1b.svg", alt="")
-                img.social-link-img(src="https://s.gr-assets.com/assets/site_footer/footer_twitter-126b3ee80481a763f7fccb06ca03053c.svg", alt="")
-                img.social-link-img(src="https://s.gr-assets.com/assets/site_footer/footer_instagram-d59e3887020f12bcdb12e6c539579d85.svg", alt="")
-                img.social-link-img(src="https://s.gr-assets.com/assets/site_footer/footer_linkedin-5b820f4703eff965672594ef4d10e33c.svg", alt="")
+            div.contact
+                a(href="https://github.com/scorbz9" target="_blank") Seth Corbett
+                    i.fa.fa-github#github-link
+                a(href="https://github.com/Bapboop" target="_blank") Robert Popphan
+                    i.fa.fa-github#github-link
+                a(href="https://github.com/grantongrant" target="_blank") Grant Russell-Walsh
+                    i.fa.fa-github#github-link
+                a(href="https://github.com/verduscos" target="_blank") Eddie Verdusco
+                    i.fa.fa-github#github-link
+
         div.right-container
             div
                 img.footer-img(src="https://s.gr-assets.com/assets/app/badge-ios-desktop-homepage-6ac7ae16eabce57f6c855361656a7540.svg", alt="")

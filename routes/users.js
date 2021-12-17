@@ -6,6 +6,7 @@ const { check, validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
 const { loginUser, logoutUser } = require('../auth');
 const jingle = require('../db/models/jingle');
+const { user } = require('pg/lib/defaults');
 
 /* GET /sign-up page */
 router.get('/sign-up', csrfProtection, asyncHandler(async (req, res, next) => {
@@ -247,23 +248,23 @@ router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asy
 
 }));
 
-// // DELETE /users/:userId/jingleLists/:jingleListId - Delete a particular jingleList
-// router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
-//   const userId = req.params.userId;
-//   const listId = req.params.jingleListId;
+// DELETE /users/:userId/jingleLists/:jingleListId - Delete a particular jingleList
+router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+  const userId = req.params.userId;
+  const listId = req.params.jingleListId;
 
-//   const jingleListsToDestroy = await db.Jinglelist.findAll({ where: { listId } });
+  const jingleListsToDestroy = await db.Jinglelist.findAll({ where: { listId } });
 
-//   const listToDestroy = await db.List.findByPk(listId);
+  const listToDestroy = await db.List.findByPk(listId);
 
-//   jingleListsToDestroy.map(async jingleList => {
-//     await jingleList.destroy();
-//   });
+  jingleListsToDestroy.map(async jingleList => {
+    await jingleList.destroy();
+  });
 
-//   await listToDestroy.destroy();
+  await listToDestroy.destroy();
 
-//   res.redirect(`/users/${userId}/jingleLists/`);
-// }));
+  res.redirect(`/users/${userId}/jingleLists/`);
+}));
 
 // DELETE /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Remove a jingle from a particular jingle list
 router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\d+)', asyncHandler(async (req, res, next) => {
@@ -285,11 +286,24 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\
       }
     })
 
-    console.log(jingleToDestroy)
-
     await jingleToDestroy.destroy();
 
     res.redirect(`/users/${userId}/jingleLists`);
 }));
+
+// ADD /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Add a jingle to a jingle list
+router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProtection,  asyncHandler( async(req, res, next) => {
+  const jingleId = req.params.jingleId;
+  const listId = req.params.userId
+
+  await db.Jinglelist.create({
+    jingleId,
+    listId
+  })
+
+  res.redirect(`/jingles/${jingleId}`);
+
+}))
+
 
 module.exports = router;

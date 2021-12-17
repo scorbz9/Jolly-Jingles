@@ -20,7 +20,8 @@ html(lang="en")
       if user
         p welcome
           strong  #{user.name}
-        a(href='users/sign-out') Sign out
+        form(method='post' action='/users/sign-out')
+          input(type='submit' value='Sign Out')
       if !user
         a(href='users/sign-in') Sign in
         a(href='users/sign-up') Sign up

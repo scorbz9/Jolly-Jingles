@@ -7,7 +7,6 @@ const loginUser = (req, res, user) => {
 };
 
 const logoutUser = (req, res) => {
-  console.log('logout working?')
     delete req.session.auth;
 }
 

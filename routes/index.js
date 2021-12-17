@@ -22,10 +22,12 @@ router.get('/', asyncHandler(async(req, res) => {
   
   jingles.forEach(async(jingle) => {
     const reviews = await db.Review.findByPk(parseInt(jingle.id, 10));
-    console.log(reviews)
-    const sumOfReviews = await db.Review.sum('rating');
+    console.log(reviews.length)
+    if(reviews) {
+    const sumOfReviews = await db.Review.sum('rating', {where: jingle.id});
     const avgReviews = (sumOfReviews / reviews.length).toFixed(2);
     res.render('explore', {title: 'Explore', jingles, avgReviews})
+    }
   })
 
   

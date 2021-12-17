@@ -11,7 +11,7 @@ html(lang="en")
 
       div(id="center-container")
         a(class='jollyjingle-logo' href='/') jollyjingle
-        a(href='/users/#{user.id}') My Jingles
+        a(href='/users/'+user.id+'/jingleLists') My Jingles
         input(type="text", name="Search", placeholder= "Search books")
       div(id="right-container")
         a(href='users/sign-in') Sign in

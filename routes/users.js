@@ -6,6 +6,7 @@ const { check, validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
 const { loginUser, logoutUser } = require('../auth');
 const jingle = require('../db/models/jingle');
+const { user } = require('pg/lib/defaults');
 
 /* GET /sign-up page */
 router.get('/sign-up', csrfProtection, asyncHandler(async (req, res, next) => {
@@ -285,16 +286,23 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\
       }
     })
 
-    console.log(jingleToDestroy)
-
     await jingleToDestroy.destroy();
 
     res.redirect(`/users/${userId}/jingleLists`);
 }));
 
 // ADD /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Add a jingle to a jingle list
-router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\d+)', asyncHandler( async(req, res, next) => {
-  
+router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProtection,  asyncHandler( async(req, res, next) => {
+  const jingleId = req.params.jingleId;
+  const listId = req.params.userId
+
+  await db.Jinglelist.create({
+    jingleId,
+    listId
+  })
+
+  res.redirect(`/jingles/${jingleId}`);
+
 }))
 
 

@@ -6,7 +6,7 @@ var router = express.Router();
 const { csrfProtection, asyncHandler } = require('./utils');
 
 // to see the info page for a jingle
-router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+router.get('/:id(\\d+)',  csrfProtection, asyncHandler(async (req, res) => {
     // console.log(req.params)
     const id = parseInt(req.params.id, 10);
     // console.log(req.params.id)
@@ -29,7 +29,7 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     const lists = await db.List.findAll({ where: { userId } })
     // console.log(JSON.stringify(reviews))
     // Added reviews to render if a review exists [review exists if it has an associated jingleId]:
-    res.render('jingles-view', {title: jingle.name, jingle, review: true, reviews, userId, lists, avgReviews})
+    res.render('jingles-view', {title: jingle.name, jingle, review: true, reviews, userId, lists, avgReviews, id, csrfToken: req.csrfToken()})
     } else {
         res.status(404)
         res.send('Page Not Found');

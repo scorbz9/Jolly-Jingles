@@ -30,6 +30,20 @@ footer {
     padding-bottom: 10px;
 }
 
+.contact {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact > a{
+    color: #a2a19f;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 5px 0;
+
+}
+
 .right-container {
     align-items: flex-end;
     display: flex;
@@ -43,10 +57,12 @@ footer {
     height: 40px;
 }
 
-.social-link-img {
+#github-link {
+    color: #a2a19f;
     cursor: pointer;
-    height: 30px;
-    margin-right: 8px;
+    font-size: 25px;
+    margin-left: 15px;
+
 }
 
 .footer-jingles {

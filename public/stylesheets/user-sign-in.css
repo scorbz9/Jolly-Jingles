@@ -7,12 +7,16 @@ body {
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
     color:  #8c7e71;
     display: absolute;
-    margin-top: 5px;
-    margin-left: 3px;
+    margin-top: 7px;
+    margin-left: 10px;
 }
 
 #sign-in-logo strong {
     color:  #594c3f
+}
+
+#home-link {
+    text-decoration: none;
 }
 
 #sign-in-form-container {

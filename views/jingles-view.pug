@@ -20,7 +20,9 @@ html(lang="en")
         div.jingle-img-container
             img(src=jingle.image id="jinglepic")
             label(for="myJingleList")
-            select#select(name="myJingleList" required=true)
+            select#select(name="myJingleList" required=true)="Add to My Jingles"
+                each list in lists
+                    option(value=list.id selected=(list.id))= list.name
             p#star-rating="My Rating:"
             //- p#stars ⭐⭐⭐⭐⭐
             div.rate

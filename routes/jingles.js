@@ -22,9 +22,11 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
 
     // find all reviews where the jingleId matches
     const reviews = await db.Review.findAll({ where: { jingleId } })
+    const userId = req.session.auth.userId
+    const lists = await db.List.findAll({ where: { userId } })
     // console.log(JSON.stringify(reviews))
     // Added reviews to render if a review exists [review exists if it has an associated jingleId]:
-    res.render('jingles-view', {title: jingle.name, jingle, review: true, reviews})
+    res.render('jingles-view', {title: jingle.name, jingle, review: true, reviews, userId, lists})
     } else {
         res.status(404)
         res.send('Page Not Found');

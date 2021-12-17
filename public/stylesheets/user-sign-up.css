@@ -1,10 +1,96 @@
+body {
+    background-color:#f9f8f4;
+}
+
+
 #sign-up-logo {
     font-size: 30px;
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
-    color:  #333;
-    font-weight: 10;
+    color:  #8c7e71;
+    display: absolute;
+    margin-top: 5px;
+    margin-left: 3px;
 }
 
 #sign-up-logo strong {
-    color:  #181818
+    color:  #594c3f
+}
+
+#sign-up-form-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, .5);
+    border-radius: 3px;
+    margin-top: 10px;
+    height: 425px;
+}
+
+#sign-up-title {
+    margin-top: 10px;
+}
+
+#sign-up-form-container h1 {
+    color: #594c3f;
+    font-weight: bolder;
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+}
+
+#sign-up-form-container p,
+#sign-up-form-container a, {
+    color: #594c3f;
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+}
+
+#sign-up-submit {
+    margin-top: 63px;
+    padding: 10px;
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+    background-color: #f4f1ea;
+    border-radius: 2px;
+    border: 1px solid #877855;
+    color: #40362d
+}
+
+#sign-up-submit:hover {
+    background-color: #d6cfbf
+}
+
+.form-control {
+    display: flex;
+    padding: 10px;
+    margin: 5px;
+    float: left;
+}
+
+input, label {
+    display: block;
+}
+
+#form-label {
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+#sign-in-container {
+    margin-top: 15px;
+}
+
+#already-a-member {
+    margin-right: 7px;
+    display: inline;
+}
+
+#sign-in-link {
+    text-decoration: none;
+    display: inline
+
+}
+
+#sign-in-link:hover {
+    color: red;
+    text-decoration: underline;
 }

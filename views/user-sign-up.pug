@@ -10,15 +10,17 @@ block content
         strong Jingles
 
     div#sign-up-form-container
-        h1 Sign Up for jollyJingles
-        p Sign up to see your friend's favorite jingles, get recommendations, and join a community of jolly jinglers.
+        h1#sign-up-title Sign Up for jollyJingles
+        pre.sign-up-element Sign up to see your friend's favorite jingles, get recommendations, and join a community of jolly jinglers.
         +validationErrorSummary(errors)
         form(method='post' action='/users/sign-up')
             input(type='hidden' name='_csrf' value=csrfToken)
             +field('Name', 'name', user.name, 'text', 'Name')
             +field('Email address', 'email', user.email, 'email', 'you@yours.com')
             +field('Password', 'password', user.password, 'password')
-            input(type='submit' value='Sign Up')
-        div
-            p Already a member?
-                a(href='/users/sign-in') Sign in
+            input(type='submit' value='Sign Up' id="sign-up-submit")
+        div#sign-in-container
+            p#already-a-member Already a member?
+            a(href='/users/sign-in' id="sign-in-link") Sign in
+
+    include footer.pug

@@ -21,6 +21,7 @@ module.exports = {
         { jingleId: 9, listId: 3, createdAt: new Date(), updatedAt: new Date() },
         { jingleId: 4, listId: 3, createdAt: new Date(), updatedAt: new Date() },
         { jingleId: 6, listId: 3, createdAt: new Date(), updatedAt: new Date() },
+
     ], {});
 },
 

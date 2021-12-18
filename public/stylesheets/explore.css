@@ -1,28 +1,77 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  border: 0;
 }
-.navbar {
-  width: 95%;
+
+.header {
+  width: 100vw;
+  height: 50px;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
-  justify-items: space;
-  align-items: center;
-  margin: 5px;
+  background-color: #f9f8f4;
+  /* box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2); */
+  border-bottom: 1px solid #0000002f;
+  margin-bottom: 25px;;
 }
 
-#center-container {
+.navbar {
+  height: 50px;
+  width: 70%;
+  /* position: fixed; */
   display: flex;
-  justify-content: space-around;
-  height: 20px;
+  justify-content: space-between;
   align-items: center;
 }
 
-#right-container {
+
+
+.my-jingles {
+  font-size: 20px;
+  margin-right: 10px;
+  color: #8c7e71;
+}
+
+.jollyjingle-logo {
+
   display: flex;
-  justify-content: space-around;
+  flex-direction: row;
   align-items: center;
+  height: 0px;
+  font-size: 30px;
+  color: #958a7e;
+  font-weight: 50px;
+  margin-left: 21px;
 }
 
+#brand-color {
+  color: #33362d;
+}
+
+.sign-in-button {
+  background-color: rgba(0, 0, 255, 0.068);
+  padding: 3px;
+  width: 100px;
+  text-decoration: none;
+  color: #8c7e71;
+  /* margin-left: 20px; */
+  text-align: center;
+  border-radius: 10px;
+}
+
+.sign-up {
+  margin-left: 20px;
+}
+
+#search {
+  height: 32px;
+  width: 388.39px;
+  border: 1px solid #0000002f;
+  background: #ffffff;
+  border-radius: 3px;
+  padding: 4px 26px 4px 8px;
+}
 
 #jinglepic {
   height: 200px;
@@ -55,6 +104,14 @@
   vertical-align: baseline;
   column-gap: 10px;
 
+}
+
+.sign-in-container {
+  /* background-color: blue; */
+
+  width: 150px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 #nameText {

@@ -5,27 +5,32 @@ append head
 
 block content
     div.main-container
-        h1= artist
+        h1='test'
         a.myJingles-link(href="") My Jingles
         div.jinglelists-container
             div.sidelinks-container
-                a.list-tag#all-tag(href="") All
-                    each list in lists
-                        form(method='get' action=`/users/${userId}/jingleLists/${list.id}`)
-                            input(type="hidden" name='_csrf' value=csrfToken)
-                            input(type='submit' value=`${list.name}`)
-                        form(method="post" action=`/users/${userId}/jingleLists/${list.id}`)
-                            input(type="hidden" name='_csrf' value=csrfToken)
-                            input(type='submit' value="❌")
-                if addJingleListError
-                    each error in addJingleListError
-                        p #{error}
-                form(method='post' action=`/users/${userId}/jingleLists`)
-                    input(type="hidden" name="_csrf" value=csrfToken)
-                    input(type='text' name="name" id="list-name-field" value=name)
-                    input(type='submit' value='Add List')
-                //- not using explore-butt styling
-                a#add-list-butt(href="/") Explore
+                div.lists-container
+                    table(class='jinglelists-table')
+                        thead(class='thead')
+                            tr
+                                th(scope='col') My Lists
+                        tbody
+                            each list in lists
+                                tr
+                                    td
+                                        form(method='get' action=`/users/${userId}/jingleLists/${list.id}` class="list")
+                                            input(type='submit' value=`${list.name}` class="list")
+                                        form(method="post" action=`/users/${userId}/jingleLists/${list.id}` class='list-delete')
+                                            input(type="hidden" name='_csrf' value=csrfToken)
+                                            input(type='submit' value="✖" class='list-delete')
+                    if addJingleListError
+                        each error in addJingleListError
+                            p #{error}
+                    form(method='post' action=`/users/${userId}/jingleLists`)
+                        input(type="hidden" name="_csrf" value=csrfToken)
+                        input(type='text' name="name" id="list-name-field" value=name)
+                        input(type='submit' value='Add List')
+                a#explore-butt(href="/") Explore
             div.jingles-container
                 div.jingle-table
 
@@ -50,7 +55,7 @@ block content
                                     td=`${jingle.createdAt}`
                                         form(method="post" action=`/users/${userId}/jingleLists/${userId}/jingles/${jingle.id}`)
                                             input(type="hidden" name='_csrf' value=csrfToken)
-                                            input(type='submit' value="❌")
+                                            input(type='submit' value="✖")
 
 
     include footer.pug

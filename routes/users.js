@@ -203,6 +203,8 @@ const addJingleListValidator = [
   check('name')
     .exists({ checkFalsy: true })
     .withMessage("Please provide a name for the list.")
+    .isLength({ max: 40 })
+    .withMessage("List name must be less than 50 characters.")
     .custom((value) => {
       return db.List.findOne({ where: { name: value } })
         .then((user) => {

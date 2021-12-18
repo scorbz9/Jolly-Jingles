@@ -14,17 +14,20 @@ block content
     div#sign-in-form-container
         h1#sign-in-title Sign in to <em>jolly</em>Jingles
         +validationErrorSummary(errors)
+
         form(method='post' action='/users/sign-in')
             input(type='hidden' name='_csrf' value=csrfToken)
             +field('Email address', 'email', email, 'email', 'you@yours.com')
             +field('Password', 'password', password, 'password')
-            input(type='submit' value='Sign in' id="sign-in-submit")
+            div.butt
+                input(type='submit' value='Sign in' id="sign-in-submit")
+                form(method='post' action='/users/demo/sign-in')
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    input(type='submit' value='Demo User' id="sign-in-submit")
         div#sign-up-container
             p#not-a-member Not a member?
             a(href='/users/sign-up' id="sign-up-link") Sign up
-            form(method='post' action='/users/demo/sign-in')
-                input(type='hidden' name='_csrf' value=csrfToken)
-                input(type='submit' value='Demo User' id="sign-in-submit")
+
 
 
 

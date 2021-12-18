@@ -124,3 +124,8 @@ input, label {
     font-size: 14px;
     font-weight: bold;
 }
+
+.butt {
+    display:flex;
+    justify-content: space-between;
+}

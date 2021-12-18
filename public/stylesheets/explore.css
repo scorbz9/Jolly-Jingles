@@ -18,11 +18,12 @@
 
 .navbar {
   height: 50px;
-  width: 70%;
-  /* position: fixed; */
+  width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
 
 
@@ -40,13 +41,13 @@
   align-items: center;
   height: 0px;
   font-size: 30px;
-  color: #958a7e;
+  color: #8c7e71;
   font-weight: 50px;
   margin-left: 21px;
 }
 
 #brand-color {
-  color: #33362d;
+  color: #594c3f
 }
 
 .sign-in-button {

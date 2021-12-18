@@ -4,7 +4,7 @@ const { csrfProtection, asyncHandler } = require('./utils');
 const db = require('../db/models')
 const { check, validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
-const { loginUser, logoutUser } = require('../auth');
+const { loginUser, logoutUser, demoUser } = require('../auth');
 const jingle = require('../db/models/jingle');
 const { user } = require('pg/lib/defaults');
 
@@ -162,7 +162,7 @@ router.post('/sign-out', async (req, res, next) => {
 
 /* GET /users/:userId/jingleLists - Get 'myJingles' page */
 router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
-  const userId = req.session.auth.userId
+  const userId = parseInt(req.params.userId, 10);
 
   const user = await db.User.findByPk(userId);
   const defaultListName = user.defaultList;
@@ -311,6 +311,46 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProt
   res.redirect(`/jingles/${jingleId}`);
 
 }))
+
+//DEMO /users/demo/sign-in - Sign-in butt for demo
+router.post('/demo/sign-in', csrfProtection, signInValidators, asyncHandler(async (req, res, next) => {
+  // const { email, password } = req.body;
+
+
+  const email = 'demo@testing.com';
+  const password = 'Test1!';
+  // const userId = 3;
+  console.log('IN DEMO USER ROUTE')
+
+  const validationErrors = validationResult(req);
+  let errors = [];
+
+  // if (validationErrors.isEmpty()) {
+  //   const user = await db.User.findOne({ where: { email } })
+
+  //   if (user !== null) {
+  //     const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString())
+
+      // if (passwordMatch) {
+        console.log(user)
+        demoUser(req, res, user, email, password)
+        res.redirect('/users/3/jingleLists')
+      // }
+    // }
+  //   errors.push("Sign in attempt failed.")
+
+  // } else {
+  //   errors = validationErrors.array().map(error => error.msg)
+  // }
+
+  res.render('user-sign-in', {
+    errors,
+    email,
+    csrfToken: req.csrfToken(),
+    title: 'Sign in'
+  })
+}));
+
 
 
 module.exports = router;

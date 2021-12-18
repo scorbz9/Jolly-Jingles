@@ -13,7 +13,6 @@ router.get('/', asyncHandler(async(req, res) => {
 
   res.render('explore', {title: 'explore', jingles })
 
-
 }))
 
 module.exports = router;

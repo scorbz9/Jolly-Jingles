@@ -7,7 +7,6 @@ const loginUser = (req, res, user) => {
     };
 };
 
-//demo
 const demoUser = (req, res) => {
   req.session.auth = {
       userId: 3,
@@ -19,7 +18,6 @@ const logoutUser = (req, res) => {
 }
 
 const restoreUser = async (req, res, next) => {
-    console.log(req.session);
 
     if (req.session.auth) {
       const { userId } = req.session.auth;

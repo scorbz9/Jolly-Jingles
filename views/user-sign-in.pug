@@ -22,7 +22,6 @@ block content
             div.butt
                 input(type='submit' value='Sign in' id="sign-in-submit")
                 form(method='post' action='/users/demo/sign-in')
-                    input(type='hidden' name='_csrf' value=csrfToken)
                     input(type='submit' value='Demo User' id="sign-in-submit")
         div#sign-up-container
             p#not-a-member Not a member?

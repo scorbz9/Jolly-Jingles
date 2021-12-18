@@ -38,7 +38,7 @@ app.use(
 // create Session table if it doesn't already exist
 store.sync();
 
-app.use(restoreUser);
+app.use(restoreUser); // Declare if there is a user or !user
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/jingles', jinglesRouter);

@@ -4,7 +4,7 @@ const { csrfProtection, asyncHandler } = require('./utils');
 const db = require('../db/models')
 const { check, validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
-const { loginUser, logoutUser, demoUser } = require('../auth');
+const { loginUser, logoutUser, demoUser, restoreUser } = require('../auth');
 const jingle = require('../db/models/jingle');
 const { user } = require('pg/lib/defaults');
 
@@ -365,41 +365,9 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProt
 
 //DEMO /users/demo/sign-in - Sign-in butt for demo
 router.post('/demo/sign-in', csrfProtection, signInValidators, asyncHandler(async (req, res, next) => {
-  // const { email, password } = req.body;
-
-
-  const email = 'demo@testing.com';
-  const password = 'Test1!';
-  // const userId = 3;
-  console.log('IN DEMO USER ROUTE')
-
-  const validationErrors = validationResult(req);
-  let errors = [];
-
-  // if (validationErrors.isEmpty()) {
-  //   const user = await db.User.findOne({ where: { email } })
-
-  //   if (user !== null) {
-  //     const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString())
-
-      // if (passwordMatch) {
-        console.log(user)
-        demoUser(req, res, user, email, password)
-        res.redirect('/users/3/jingleLists')
-      // }
-    // }
-  //   errors.push("Sign in attempt failed.")
-
-  // } else {
-  //   errors = validationErrors.array().map(error => error.msg)
-  // }
-
-  res.render('user-sign-in', {
-    errors,
-    email,
-    csrfToken: req.csrfToken(),
-    title: 'Sign in'
-  })
+  // only pushes in a user with the id of 3, which was hard coded in as the demo user: (May vary based on your database)
+    demoUser(req, res)
+    return res.redirect('/')
 }));
 
 

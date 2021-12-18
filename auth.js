@@ -1,3 +1,4 @@
+const { user } = require('pg/lib/defaults');
 const db = require('./db/models');
 
 const loginUser = (req, res, user) => {
@@ -7,11 +8,9 @@ const loginUser = (req, res, user) => {
 };
 
 //demo
-const demoUser = (req, res, user, email, password) => {
+const demoUser = (req, res) => {
   req.session.auth = {
       userId: 3,
-      email: 'demo@testing.com',
-      password : 'Test1!',
   }
 }
 

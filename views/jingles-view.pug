@@ -10,7 +10,8 @@ html(lang="en")
     nav(class='navbar')
       div(id="center-container")
         a(class='jollyjingle-logo' href='/') jollyjingle
-        a(href=`/users/${user.id}/jingleLists`) My Jingles
+        if user
+          a(href=`/users/${user.id}/jingleLists`) My Jingles
         input(type="text", name="Search", placeholder= "Search Jingles")
         a(href='/users/sign-in') Sign in
         a(href='/users/sign-up') Sign up

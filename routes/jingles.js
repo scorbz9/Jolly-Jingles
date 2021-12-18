@@ -31,8 +31,18 @@ router.get('/:id(\\d+)',  csrfProtection, asyncHandler(async (req, res) => {
         }
     })
     // const reviewRating = await db.Review.findAll(AVG('rating'))
-    const userId = req.session.auth.userId
-    const lists = await db.List.findAll({ where: { userId } })
+    // const userId = req.session.auth.userId
+
+    // Added this to fix an error that was being caused when an non logged in user tried to acces the jingle page, userId did nto exist.
+    // so: userId = 0 will be a non null non user, and the list will be blank to avoid errors from the render.
+    let userId = 0
+    let lists = []
+    if (req.session.auth) {
+        userId = req.session.auth.userId
+        lists = await db.List.findAll({ where: { userId } })
+    }
+
+    // const lists = await db.List.findAll({ where: { userId } })
     // console.log(JSON.stringify(reviews))
     // Added reviews to render if a review exists [review exists if it has an associated jingleId]:
     res.render('jingles-view', {title: jingle.name, jingle, review: true, reviews, userId, lists, avgReviews, id, csrfToken: req.csrfToken()})
@@ -48,7 +58,11 @@ router.get('/:id(\\d+)/reviews', csrfProtection, asyncHandler(async(req, res) =>
     const id = parseInt(req.params.id, 10);
     const jingle = await db.Jingle.findByPk(id);
 
-
+    // Redirects a non logged in user if they click review, will probably change this later to throw an error/alert instead.
+    if (!req.session.auth) {
+        res.redirect('/users/sign-in')
+    }
+    
     if (jingle) {
         const { name, image, artist, jingleId} = jingle
 

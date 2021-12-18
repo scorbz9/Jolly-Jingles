@@ -330,12 +330,6 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\
   const listId = req.params.jingleListId;
   const jingleId = req.params.jingleId
 
-  // console.log(jingleId)
-
-
-  //jingle id
-  // const jingleId = req.params.jingleId;
-
   //delete jingle from jinglelist using userId and listId
   const jingleToDestroy = await db.Jinglelist.findOne({
     where: {

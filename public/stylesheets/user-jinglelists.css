@@ -1,20 +1,29 @@
+body {
+    background-color: #f9f8f4;
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+}
+
 .main-container {
-    color: #006372;
+    color: #40362d;
     display: flex;
     flex-direction: column;
     font-size: 14px;
     margin: 0 auto;
-    width: 1000px;
+    width: 85%
 }
 
-.jinglelists-container {
+.lists-and-jingles-container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 3px;
+    padding: 10px;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+    width: 100%;
 }
 
 .myJingles-link {
-    border-bottom: 1px solid lightgray;
     font-size: 20px;
     text-decoration: none;
     padding: 10px 0 5px 0;
@@ -50,14 +59,29 @@
     width: 40%;
 }
 
-.lists-container th {
-
-}
-
 .lists-container table {
     width: 250px;
     display: flex;
     flex-direction: column;
+}
+
+#new-list-name-field {
+
+}
+
+#new-list-submit {
+    margin-top: 10px;
+    padding: 10px;
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+    background-color: #f4f1ea;
+    border-radius: 2px;
+    border: 1px solid #877855;
+    color: #40362d;
+    font-size: 15px;
+}
+
+#new-list-submit:hover {
+    background-color: #d6cfbf
 }
 
 #explore-butt {
@@ -77,15 +101,27 @@
 }
 
 .sidelinks-container {
-    margin-top: 10px;
     width: 225px;
+    padding: 10px;
+    border-right: 1px solid rgba(64, 54, 45, 0.5);
 }
 
 .jingles-container {
     display:flex;
     flex-direction: column;
-    justify-content: flex-end;
-    width: 800px;
+    width: 1000px;
+}
+
+.jingles-container thead {
+
+}
+
+.jingles-container th {
+    width: 100px
+}
+
+.jingles-container tr {
+
 }
 
 .column-name-container {

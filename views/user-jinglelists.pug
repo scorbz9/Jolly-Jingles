@@ -7,7 +7,7 @@ block content
     div.main-container
         h1='test'
         a.myJingles-link(href="") My Jingles
-        div.jinglelists-container
+        div.lists-and-jingles-container
             div.sidelinks-container
                 div.lists-container
                     table(class='jinglelists-table')
@@ -28,12 +28,11 @@ block content
                             p #{error}
                     form(method='post' action=`/users/${userId}/jingleLists`)
                         input(type="hidden" name="_csrf" value=csrfToken)
-                        input(type='text' name="name" id="list-name-field" value=name)
-                        input(type='submit' value='Add List')
+                        input(type='text' name="name" id="new-list-name-field" value=name)
+                        input(type='submit' value='Add List' id='new-list-submit')
                 a#explore-butt(href="/") Explore
             div.jingles-container
                 div.jingle-table
-
                     table(class='jingle-list-table')
                         thead(class='thead')
                             tr

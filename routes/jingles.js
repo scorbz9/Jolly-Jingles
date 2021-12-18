@@ -7,22 +7,18 @@ const { csrfProtection, asyncHandler } = require('./utils');
 
 // to see the info page for a jingle
 router.get('/:id(\\d+)',  csrfProtection, asyncHandler(async (req, res) => {
-    // console.log(req.params)
     const id = parseInt(req.params.id, 10);
-    // console.log(req.params.id)
-    // console.log(id)
     const jingle = await db.Jingle.findByPk(id);
 
-    // console.log(jingle.id)
     // assigned jingleId = id to refer in future query:
     const jingleId = id
 
     if (jingle) {
-        // const { image, artist, name, lyrics, avgRating, description } = jingle;
+    // const { image, artist, name, lyrics, avgRating, description } = jingle;
 
     // find all reviews where the jingleId matches
     const reviews = await db.Review.findAll({ where: { jingleId } })
-    // console.log(reviews)
+
     const sumOfReviews = await db.Review.sum('rating', {where: {jingleId}});
     const avgReviews = (sumOfReviews / reviews.length).toFixed(2);
     db.Jingle.update({avgRating: avgReviews}, {
@@ -43,7 +39,6 @@ router.get('/:id(\\d+)',  csrfProtection, asyncHandler(async (req, res) => {
     }
 
     // const lists = await db.List.findAll({ where: { userId } })
-    // console.log(JSON.stringify(reviews))
     // Added reviews to render if a review exists [review exists if it has an associated jingleId]:
     res.render('jingles-view', {title: jingle.name, jingle, review: true, reviews, userId, lists, avgReviews, id, csrfToken: req.csrfToken()})
     } else {
@@ -62,11 +57,10 @@ router.get('/:id(\\d+)/reviews', csrfProtection, asyncHandler(async(req, res) =>
     if (!req.session.auth) {
         res.redirect('/users/sign-in')
     }
-    
+
     if (jingle) {
         const { name, image, artist, jingleId} = jingle
 
-        // console.log(jingle)
         res.render('jingles-review', {
             id,
             title: 'Leave a Review!',
@@ -89,10 +83,9 @@ router.post('/:id(\\d+)/reviews', asyncHandler(async(req, res) => {
 
     // will show the content of the review
     let { message, rating, jingleId, userId } = req.body;
-    // console.log('test:', req.body.review)
+
     // ID of jingle being reviewd:
     jingleId = parseInt(jingleId, 10)
-    // console.log('jingle id:', jingleId)
 
     const validationErrors = validationResult(req);
     if (validationErrors.isEmpty()) {
@@ -115,17 +108,14 @@ router.post('/:id(\\d+)/reviews', asyncHandler(async(req, res) => {
 // TO DO: test
 router.post('/:id(\\d+)/reviews/:id(\\d+)', asyncHandler(async(req, res) => {
     // this is fetching each review id!:
-    // console.log(req.params.id)
+
     let reviewId = parseInt(req.params.id, 10)
-    // console.log(reviewId)
 
     const review = await db.Review.findByPk(reviewId)
     if (req.session.auth.userId === review.userId) {
-        // console.log('review to destroy: ', review)
         await review.destroy();
     }
     // retrieves the jingle ID to use for the redirect
-    console.log('CONSOLE LOG HERE!!:', review.userId)
     jingleId = review.jingleId
 
     res.redirect(`/jingles/${jingleId}`);

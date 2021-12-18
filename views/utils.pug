@@ -9,7 +9,8 @@ mixin field(labelText, fieldName, fieldValue, fieldType = 'text', placeholder = 
 mixin validationErrorSummary(errors)
   if errors
     div(class='alert alert-danger' role='alert')
-      p The following error(s) occurred:
+      pre The following error(s) occurred:
       ul
         each error in errors
-          li= error
+          li
+            pre #{error}

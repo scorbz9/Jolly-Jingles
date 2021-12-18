@@ -1,16 +1,31 @@
 
 extends layout.pug
+append head
+  //- add page specific styles by appending to the head
+  link(rel="stylesheet" href="/stylesheets/user-sign-in.css")
 
 include utils.pug
 
 block content
-    h1 Sign in to jollyJingles
-    +validationErrorSummary(errors)
-    form(method='post' action='/users/sign-in')
-        input(type='hidden' name='_csrf' value=csrfToken)
-        +field('Email address', 'email', email, 'email', 'you@yours.com')
-        +field('Password', 'password', password, 'password')
-        input(type='submit' value='Sign in')
-    div
-        p Not a member?
-            a(href='/users/sign-up') Sign up
+    a(href="/" id="home-link")
+        h2#sign-in-logo jolly
+            strong Jingles
+
+    div#sign-in-form-container
+        h1#sign-in-title Sign in to <em>jolly</em>Jingles
+        +validationErrorSummary(errors)
+        form(method='post' action='/users/sign-in')
+            input(type='hidden' name='_csrf' value=csrfToken)
+            +field('Email address', 'email', email, 'email', 'you@yours.com')
+            +field('Password', 'password', password, 'password')
+            input(type='submit' value='Sign in' id="sign-in-submit")
+        div#sign-up-container
+            p#not-a-member Not a member?
+            a(href='/users/sign-up' id="sign-up-link") Sign up
+            form(method='post' action='/users/demo/sign-in')
+                input(type='hidden' name='_csrf' value=csrfToken)
+                input(type='submit' value='Demo User' id="sign-in-submit")
+
+
+
+    include footer.pug

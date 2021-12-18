@@ -6,8 +6,16 @@ const loginUser = (req, res, user) => {
     };
 };
 
+//demo
+const demoUser = (req, res, user, email, password) => {
+  req.session.auth = {
+      userId: 3,
+      email: 'demo@testing.com',
+      password : 'Test1!',
+  }
+}
+
 const logoutUser = (req, res) => {
-  console.log('logout working?')
     delete req.session.auth;
 }
 
@@ -35,4 +43,4 @@ const restoreUser = async (req, res, next) => {
     }
 };
 
-module.exports = { loginUser, restoreUser, logoutUser }
+module.exports = { loginUser, restoreUser, logoutUser, demoUser }

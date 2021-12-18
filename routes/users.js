@@ -4,7 +4,7 @@ const { csrfProtection, asyncHandler } = require('./utils');
 const db = require('../db/models')
 const { check, validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
-const { loginUser, logoutUser } = require('../auth');
+const { loginUser, logoutUser, demoUser } = require('../auth');
 const jingle = require('../db/models/jingle');
 const { user } = require('pg/lib/defaults');
 
@@ -23,7 +23,15 @@ const signUpValidators = [
     .exists({ checkFalsy: true })
     .withMessage('Please provide a name.')
     .isLength({ max: 50 })
-    .withMessage('Name must be less than 50 characters.'),
+    .withMessage('Name must be less than 50 characters.')
+    .custom((value) => {
+      return db.User.findOne({ where: { name: value } })
+        .then((user) => {
+          if (user) {
+            return Promise.reject('The provided name is already in use by another account');
+          }
+        });
+    }),
   check('email')
     .exists({ checkFalsy: true })
     .withMessage('Please provide an email.')
@@ -45,8 +53,7 @@ const signUpValidators = [
     .isLength({ max: 50 })
     .withMessage("Password must be less than 50 characters.")
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/, 'g')
-    .withMessage('Password must contain at least 1 lowercase letter, uppercase letter, number, and special character (i.e. "!@#$%^&*")'),
-
+    .withMessage('Password must contain at least 1 lowercase letter, uppercase letter, number, and special character (i.e. "!@#$%^&*")')
 ];
 
 /* POST /sign-up - Register user */
@@ -155,7 +162,7 @@ router.post('/sign-out', async (req, res, next) => {
 
 /* GET /users/:userId/jingleLists - Get 'myJingles' page */
 router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
-  const userId = req.session.auth.userId
+  const userId = parseInt(req.params.userId, 10);
 
   const user = await db.User.findByPk(userId);
   const defaultListName = user.defaultList;
@@ -192,16 +199,45 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
 
 
 // TODO - Add validation to prevent users from adding lists with name format `${name}'s Jingles`
-const addJingleListValidator =
+const addJingleListValidator = [
   check('name')
     .exists({ checkFalsy: true })
-
+    .withMessage("Please provide a name for the list.")
+    .custom((value) => {
+      return db.List.findOne({ where: { name: value } })
+        .then((user) => {
+          if (user) {
+            return Promise.reject('A list with that name already exists.');
+          }
+        });
+    }),
+]
 
 // POST /users/:userId/jingleLists - add a new jingleList to jingleLists
 router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator, asyncHandler(async (req, res, next) => {
 
   const { name } = req.body;
-  const userId = parseInt(req.params.userId, 10);
+  const userId = req.session.auth.userId
+
+  const user = await db.User.findByPk(userId);
+  const defaultListName = user.defaultList;
+
+  const list = await db.List.findOne({ where: { name: defaultListName } })
+  const listId = list.id;
+
+  const jingles = await db.Jinglelist.findAll({
+
+    include: db.Jingle,
+    where: {
+      listId,
+    },
+  });
+
+  const jinglesFromAList = [];
+
+  jingles.map(async (jingle) => {
+    jinglesFromAList.push(jingle.Jingle)
+  })
 
   const validationErrors = validationResult(req);
 
@@ -218,12 +254,13 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
       csrfToken: req.csrfToken(),
       lists,
       userId,
-      name
+      name,
+      jinglesFromAList
     });
 
   } else {
 
-    let addJingleListError = validationErrors.array().map(error => error.msg)[0]
+    let addJingleListError = validationErrors.array().map(error => error.msg)
 
     const lists = await db.List.findAll({ where: { userId } });
 
@@ -231,7 +268,8 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
       csrfToken: req.csrfToken(),
       lists,
       userId,
-      addJingleListError
+      addJingleListError,
+      jinglesFromAList
     });
 
     addJingleListError = null;
@@ -242,10 +280,30 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
 // GET /users/:userId/jingleLists/:jingleListId - Display information for a particular jingleList
 router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const listId = parseInt(req.params.jingleListId, 10);
+  const userId = parseInt(req.params.userId, 10)
 
-  const list = await db.List.findByPk(listId);
+  const lists = await db.List.findAll({ where: { userId } })
 
+  const jingles = await db.Jinglelist.findAll({
 
+    include: db.Jingle,
+    where: {
+      listId,
+    },
+  });
+
+  const jinglesFromAList = [];
+
+  jingles.map(async (jingle) => {
+    jinglesFromAList.push(jingle.Jingle)
+  })
+
+  res.render('user-jinglelists.pug', {
+    csrfToken: req.csrfToken(),
+    lists,
+    userId,
+    jinglesFromAList
+  });
 }));
 
 // DELETE /users/:userId/jingleLists/:jingleListId - Delete a particular jingleList
@@ -268,31 +326,31 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, as
 
 // DELETE /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Remove a jingle from a particular jingle list
 router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\d+)', asyncHandler(async (req, res, next) => {
-    const userId = req.params.userId;
-    const listId = req.params.jingleListId;
-    const jingleId = req.params.jingleId
+  const userId = req.params.userId;
+  const listId = req.params.jingleListId;
+  const jingleId = req.params.jingleId
 
-    // console.log(jingleId)
+  // console.log(jingleId)
 
 
-    //jingle id
-    // const jingleId = req.params.jingleId;
+  //jingle id
+  // const jingleId = req.params.jingleId;
 
-    //delete jingle from jinglelist using userId and listId
-    const jingleToDestroy = await db.Jinglelist.findOne({
-      where: {
-        jingleId,
-        listId
-      }
-    })
+  //delete jingle from jinglelist using userId and listId
+  const jingleToDestroy = await db.Jinglelist.findOne({
+    where: {
+      jingleId,
+      listId
+    }
+  })
 
-    await jingleToDestroy.destroy();
+  await jingleToDestroy.destroy();
 
-    res.redirect(`/users/${userId}/jingleLists`);
+  res.redirect(`/users/${userId}/jingleLists`);
 }));
 
 // ADD /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Add a jingle to a jingle list
-router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProtection,  asyncHandler( async(req, res, next) => {
+router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProtection, asyncHandler(async (req, res, next) => {
   const jingleId = req.params.jingleId;
   const listId = req.params.userId
 
@@ -304,6 +362,46 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProt
   res.redirect(`/jingles/${jingleId}`);
 
 }))
+
+//DEMO /users/demo/sign-in - Sign-in butt for demo
+router.post('/demo/sign-in', csrfProtection, signInValidators, asyncHandler(async (req, res, next) => {
+  // const { email, password } = req.body;
+
+
+  const email = 'demo@testing.com';
+  const password = 'Test1!';
+  // const userId = 3;
+  console.log('IN DEMO USER ROUTE')
+
+  const validationErrors = validationResult(req);
+  let errors = [];
+
+  // if (validationErrors.isEmpty()) {
+  //   const user = await db.User.findOne({ where: { email } })
+
+  //   if (user !== null) {
+  //     const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString())
+
+      // if (passwordMatch) {
+        console.log(user)
+        demoUser(req, res, user, email, password)
+        res.redirect('/users/3/jingleLists')
+      // }
+    // }
+  //   errors.push("Sign in attempt failed.")
+
+  // } else {
+  //   errors = validationErrors.array().map(error => error.msg)
+  // }
+
+  res.render('user-sign-in', {
+    errors,
+    email,
+    csrfToken: req.csrfToken(),
+    title: 'Sign in'
+  })
+}));
+
 
 
 module.exports = router;

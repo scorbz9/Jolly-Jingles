@@ -11,12 +11,15 @@ block content
             div.sidelinks-container
                 a.list-tag#all-tag(href="") All
                     each list in lists
-                        a(href="")= list.name
+                        form(method='get' action=`/users/${userId}/jingleLists/${list.id}`)
+                            input(type="hidden" name='_csrf' value=csrfToken)
+                            input(type='submit' value=`${list.name}`)
                         form(method="post" action=`/users/${userId}/jingleLists/${list.id}`)
                             input(type="hidden" name='_csrf' value=csrfToken)
                             input(type='submit' value="❌")
                 if addJingleListError
-                    p Please provide a name for the list.
+                    each error in addJingleListError
+                        p #{error}
                 form(method='post' action=`/users/${userId}/jingleLists`)
                     input(type="hidden" name="_csrf" value=csrfToken)
                     input(type='text' name="name" id="list-name-field" value=name)

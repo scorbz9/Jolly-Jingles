@@ -36,12 +36,13 @@ block content
                     table(class='jingle-list-table')
                         thead(class='thead')
                             tr
-                                th(scope='col') cover
-                                th(scope='col') title
-                                th(scope='col') artist
-                                th(scope='col') avg rating
-                                th(scope='col') review
-                                th(scope='col') date added
+                                th(scope='col') Cover
+                                th(scope='col') Title
+                                th(scope='col') Artist
+                                th(scope='col') Rating
+                                th(scope='col') Date Added
+                                th(scope='col')
+                                th(scope='col')
                         tbody
                             each jingle in jinglesFromAList
                                 tr
@@ -50,11 +51,12 @@ block content
                                     td=`${jingle.name}`
                                     td=`${jingle.artist}`
                                     td=`${jingle.avgRating}`
-                                    td=`${jingle.review}`
                                     td=`${jingle.createdAt}`
+                                    td
+                                        a(href='/jingles/'+jingle.id+'/reviews' id="jingle-review-link") Write a review
+                                    td(id="delete-container")
                                         form(method="post" action=`/users/${userId}/jingleLists/${userId}/jingles/${jingle.id}`)
                                             input(type="hidden" name='_csrf' value=csrfToken)
-                                            input(type='submit' value="✖")
-
+                                            input(type='submit' value="✖" id="delete-jingle-from-list")
 
     include footer.pug

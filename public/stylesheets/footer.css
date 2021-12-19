@@ -39,18 +39,19 @@ footer {
     padding-bottom: 10px;
 }
 
-.contact {
-    display: flex;
-    flex-direction: column;
-}
-
-.contact > a{
+.link{
     color: #a2a19f;
     display: flex;
     align-items: center;
-    text-decoration: none;
     padding: 5px 0;
+}
 
+.link:hover > a {
+    color: #646464
+}
+
+a {
+    text-decoration: none;
 }
 
 .right-container {

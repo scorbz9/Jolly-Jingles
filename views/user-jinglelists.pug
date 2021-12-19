@@ -46,8 +46,10 @@ block content
                             each jingle in jinglesFromAList
                                 tr
                                     td
-                                        img(src=`${jingle.image}`)
-                                    td=`${jingle.name}`
+                                        a(href=`/jingles/${jingle.id}`)
+                                            img(src=`${jingle.image}`)
+                                    td
+                                        a(href=`/jingles/${jingle.id}`)= `${jingle.name}`
                                     td=`${jingle.artist}`
                                     td=`${jingle.avgRating}`
                                     td=`${jingle.createdAt}`

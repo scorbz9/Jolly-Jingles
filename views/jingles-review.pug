@@ -4,21 +4,23 @@ html(lang="en")
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet" href="/stylesheets/reviews.css")
     title= title
   body
   include nav-bar.pug
-    p= image
-    p= name
-    p= artist
-  form(method="post" action=`/jingles/63/reviews`)
-    input(type='hidden' name='_csrf' value=csrfToken)
-    label(for="message") What did you think?
-    textarea(name="message", cols="30", rows="10", placeholder = 'Enter your review')
-    div
-      label(for="rating") Number
-      input(type="number", name="rating")
-    div
-      label(for="jingleId")
-      input(type="hidden", value= id, name="jingleId")
-
-    button(type='submit' class='review-butt') Post
+  div.review-container
+      img(src=`${image}`, alt="album cover")
+      h1= name
+      p= `by ${artist}`
+      form(method="post" action=`/jingles/63/reviews`)
+      input(type='hidden' name='_csrf' value=csrfToken)
+      label(for="message") What did you think?
+      textarea(name="message", cols="30", rows="10", placeholder = 'Enter your review')
+      div
+        label(for="rating") Number
+        input(type="number", name="rating")
+      div
+        label(for="jingleId")
+        input(type="hidden", value= id, name="jingleId")
+        button(type='submit' class='review-butt') Post
+  include footer.pug

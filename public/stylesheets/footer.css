@@ -1,7 +1,8 @@
 body {
     position: relative;
     overflow-x: hidden;
-
+    font-family: 'Trebuchet MS', Helvetica, sans-serif;
+    color: #a2a19f;
 }
 
 footer {
@@ -10,9 +11,9 @@ footer {
     position: absolute;
     margin-bottom: -10;
     width: 100vw;
-    height: 200px;
+    /* height: 200px; */
     margin-top: 25px;
-    padding-bottom: 25px;
+    padding-bottom: 20px;
     margin-left: -10px;
     overflow: hidden;
 }
@@ -44,10 +45,11 @@ footer {
     display: flex;
     align-items: center;
     padding: 5px 0;
+    /* font-weight: bold; */
 }
 
 .link:hover > a {
-    color: #646464
+    color: #594c3f
 }
 
 a {
@@ -77,4 +79,8 @@ a {
 
 .footer-jingles {
     margin-right: 150px
+}
+
+.social-links {
+    color: #a2a19f;
 }

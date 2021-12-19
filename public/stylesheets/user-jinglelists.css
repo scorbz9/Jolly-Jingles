@@ -9,10 +9,11 @@ body {
     flex-direction: column;
     font-size: 14px;
     margin: 0 auto;
-    width: 85%
+    width: 90%
 }
 
 .lists-and-jingles-container {
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -85,17 +86,6 @@ body {
     text-decoration: none;
 }
 
-#add-list-butt {
-    background-color: rgba(211, 211, 211, 0.219);
-    border: 1px solid lightgray;
-    border-radius: 2px;
-    margin: 5px 0;
-    padding:1px;
-    text-align: center;
-    text-decoration: none;
-    width: 100px;
-}
-
 .sidelinks-container {
     width: 225px;
     padding: 10px;
@@ -146,8 +136,6 @@ img {
 .jingle-container {
     align-items: center;
     border-bottom: 1px solid lightgray;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
     padding-bottom: 10px;
     padding-top: 10px;
 }
@@ -170,6 +158,4 @@ img {
     box-shadow: 0px 0px 0px transparent;
     border: 0px solid transparent;
     text-shadow: 0px 0px 0px transparent;
-    /* display: inline-block; */
-    /* display: flex; */
 }

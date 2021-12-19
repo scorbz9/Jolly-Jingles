@@ -7,16 +7,7 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title= title
   body
-    nav(class='navbar')
-      div(id="center-container")
-        a(class='jollyjingle-logo' href='/') jollyjingle
-        if user
-          a(href=`/users/${user.id}/jingleLists`) My Jingles
-        input(type="text", name="Search", placeholder= "Search Jingles")
-        a(href='/users/sign-in') Sign in
-        a(href='/users/sign-up') Sign up
-        a(href='/users/sign-out') Sign out
-
+    include nav-bar.pug
     div.top-container
         div.jingle-img-container
             img(src=jingle.image id="jinglepic")

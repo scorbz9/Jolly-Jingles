@@ -11,7 +11,11 @@ const asyncHandler = (handler) => {
 router.get('/', asyncHandler(async(req, res) => {
   const jingles = await db.Jingle.findAll();
 
-  res.render('explore', {title: 'explore', jingles })
+  res.render('explore', {
+    title: 'Explore',
+    jingles,
+    view: "Explore"
+   })
 
 }))
 

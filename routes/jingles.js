@@ -40,7 +40,18 @@ router.get('/:id(\\d+)',  csrfProtection, asyncHandler(async (req, res) => {
 
     // const lists = await db.List.findAll({ where: { userId } })
     // Added reviews to render if a review exists [review exists if it has an associated jingleId]:
-    res.render('jingles-view', {title: jingle.name, jingle, review: true, reviews, userId, lists, avgReviews, id, csrfToken: req.csrfToken()})
+    res.render('jingles-view', {
+        title: jingle.name,
+        jingle,
+        review: true,
+        reviews,
+        userId,
+        lists,
+        avgReviews,
+        id,
+        csrfToken: req.csrfToken(),
+        view: "Jingle-info"
+    })
     } else {
         res.status(404)
         res.send('Page Not Found');

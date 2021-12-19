@@ -1,25 +1,28 @@
+body {
+  background-color: #f9f8f4;
+}
+
 .navbar {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 5px;
-
   }
 
-  #center-container {
+#center-container {
     display: flex;
     justify-content: space-around;
     height: 20px;
     align-items: center;
   }
 
-  #jinglepic {
+#jinglepic {
     height: 200px;
     width: 200px;
     margin-bottom: 10px;
   }
 
-  .top-container {
+.top-container {
     margin: 100px auto;
     width: 600px;
     display: flex;
@@ -112,7 +115,7 @@
 
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
-  color: #deb217;  
+  color: #deb217;
 }
 
 .rate > input:checked + label:hover,

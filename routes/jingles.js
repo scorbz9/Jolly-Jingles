@@ -80,6 +80,7 @@ router.get('/:id(\\d+)/reviews', csrfProtection, asyncHandler(async(req, res) =>
             artist,
             userId: req.session.auth.userId,
             csrfToken: req.csrfToken(),
+            view: "Jingle-info"
         })
     } else {
         res.status(404)

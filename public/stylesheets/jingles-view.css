@@ -137,10 +137,12 @@ body {
 #rating--0 {
   color:#fc0;
 }
-
+*/
 .stars-container {
   display: flex;
-} */
+  flex-direction: row;
+  justify-content: left;
+}
 
 .stars {
   display: inline-block;

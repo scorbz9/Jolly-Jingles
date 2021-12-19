@@ -39,7 +39,7 @@ html(lang="en")
                p.text="Be the first to review"
               else
                 span(class="stars" style=`--rating:${avgReviews}`)
-                p.text.stars=avgReviews
+                p.text=avgReviews
             p#description.text=jingle.description
             form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)
               input(type='hidden' name='_csrf' value=csrfToken)

@@ -19,10 +19,10 @@ block content
             input(type='hidden' name='_csrf' value=csrfToken)
             +field('Email address', 'email', email, 'email', 'you@yours.com')
             +field('Password', 'password', password, 'password')
-            div.butt
-                input(type='submit' value='Sign in' id="sign-in-submit")
-                form(method='post' action='/users/demo/sign-in')
-                    input(type='submit' value='Demo User' id="sign-in-submit")
+            input(type='submit' value='Sign in' class="sign-in-submit")
+        form(method='post' action='/users/demo/sign-in')
+            input(type='hidden' name='_csrf' value=csrfToken)
+            input(type='submit' value='Demo User' class="sign-in-submit")
         div#sign-up-container
             p#not-a-member Not a member?
             a(href='/users/sign-up' id="sign-up-link") Sign up

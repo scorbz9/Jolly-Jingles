@@ -51,7 +51,7 @@ body {
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
 
-#sign-in-submit {
+.sign-in-submit {
     margin-top: 10px;
     padding: 10px;
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
@@ -60,9 +60,15 @@ body {
     border: 1px solid #877855;
     color: #40362d;
     font-size: 15px;
+    margin: 10px auto 0 auto;
+    width: 200px;
 }
 
-#sign-in-submit:hover {
+form > *, input {
+    width: 200px;
+}
+
+.sign-in-submit:hover {
     background-color: #d6cfbf
 }
 

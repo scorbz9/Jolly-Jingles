@@ -9,18 +9,20 @@ html(lang="en")
   body
   include nav-bar.pug
   div.review-container
-      img(src=`${image}`, alt="album cover")
-      h1= name
-      p= `by ${artist}`
+      div.review-cover-container
+        img(src=`${image}`, alt="album cover" id="review-cover")
+      h1.review-title= name
+      p.author= `by ${artist}`
       form(method="post" action=`/jingles/63/reviews`)
       input(type='hidden' name='_csrf' value=csrfToken)
       label(for="message") What did you think?
-      textarea(name="message", cols="30", rows="10", placeholder = 'Enter your review')
+      textarea(name="message", cols="30", rows="10", placeholder = 'Enter your review' id="review-input")
       div
-        label(for="rating") Number
-        input(type="number", name="rating")
+        label(for="rating") Rating
+        input(type="number",  min="0" max="5" name="rating" id="rating")
+
       div
         label(for="jingleId")
         input(type="hidden", value= id, name="jingleId")
-        button(type='submit' class='review-butt') Post
+        button(type='submit' class='user-button') Post
   include footer.pug

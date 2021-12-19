@@ -153,7 +153,7 @@ body {
   --percent: calc(var(--rating) / 5 * 100%);
     content: '★★★★★';
     letter-spacing: 3px;
-    background: linear-gradient(90deg, #fc0 var(--percent), #fff var(--percent));
+    background: linear-gradient(90deg, #fc0 var(--percent), #D3D3D3 var(--percent));
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;

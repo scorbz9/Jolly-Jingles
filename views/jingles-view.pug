@@ -35,9 +35,10 @@ html(lang="en")
             // TO DO: how to display average review rating?
             div.stars-container
               if (!avgReviews || isNaN(avgReviews))
-               span(class="stars" style="--rating: 2.2")
+               span(class="stars" style="--rating: 0")
                p.text="Be the first to review"
               else
+                span(class="stars" style=`--rating:${avgReviews}`)
                 p.text.stars=avgReviews
             p#description.text=jingle.description
             form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)

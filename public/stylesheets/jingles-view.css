@@ -89,7 +89,7 @@ body {
   padding: 10px 0 10px 0;
 }
 
-.rate {
+/* .rate {
   align-self: center;
   height: 11px;
   padding: 0 10px;
@@ -124,4 +124,15 @@ body {
 .rate > input:checked ~ label:hover ~ label,
 .rate > label:hover ~ input:checked ~ label {
   color: #c59b08;
+} */
+
+.stars::before {
+  width: 60px;
+  height: 16px;
+  content: "★★★★★";
+  color:#ccc;
+}
+
+.stars-container {
+  display: flex;
 }

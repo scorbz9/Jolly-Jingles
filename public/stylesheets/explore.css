@@ -15,7 +15,7 @@
 }
 
 .navbar {
-  height: 55 px;
+  height: 55px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -27,7 +27,20 @@
 .my-jingles {
   font-size: 20px;
   margin-right: 10px;
-  color: #8c7e71;
+  padding: 10px;
+  width: 100px;
+  text-decoration: none;
+  color: #594c3f;
+  text-align: center;
+  border-radius: 8px;
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-weight: bold;
+  margin: 10px;
+}
+
+.my-jingles:hover {
+  background-color: #594c3f;
+  color: #f4f1ea
 }
 
 .jollyjingle-logo {
@@ -45,27 +58,55 @@
   font-weight: bold;
 }
 
-.sign-in-button {
-  background-color: rgba(0, 0, 255, 0.068);
-  padding: 3px;
-  width: 100px;
-  text-decoration: none;
-  color: #8c7e71;
-  text-align: center;
-  border-radius: 10px;
-}
-
-.sign-up {
-  margin-left: 20px;
-}
-
 #search {
   height: 32px;
   width: 388.39px;
   border: 1px solid #0000002f;
   background: #ffffff;
   border-radius: 3px;
-  padding: 4px 26px 4px 8px;
+  padding: 6px 26px 6px 8px;
+}
+
+#search-icon {
+  padding: 5px;
+  position: relative;
+  left: 3px;
+  top: 2px;
+  color:#00000046;
+  font-size: 16px;
+}
+
+.user-button {
+  background-color: #d6cfbf;
+  padding: 10px;
+  width: 100px;
+  text-decoration: none;
+  color: #594c3f;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-weight: bold;
+  margin: 10px;
+}
+
+.user-button:hover {
+  background-color: #594c3f;
+  color: #f4f1ea
+}
+
+.user-buttons-container {
+  width: 200px;
+  display: flex;
+  justify-content: space-around;
+}
+
+#right-container {
+  width: 120px;
+}
+
+#sign-out-button {
+  margin-right: 8px;
 }
 
 #jinglepic {
@@ -86,23 +127,16 @@
 .jingles-grid {
   margin-left: 250px;
   display: inline-grid;
-
   height: 80%;
   width: 80%;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: auto;
   align-items: center;
   align-content:center;
-  /* justify-items: center; */
   justify-content: space-between;
-
   vertical-align: baseline;
   column-gap: 10px;
 
-}
-
-.sign-in-container {
-  width: 150px;
 }
 
 #nameText {
@@ -111,16 +145,4 @@
 
 a {
   text-decoration: none;
-}
-
-#sign-out-button {
-  border-radius: 3px;
-  padding: 10px;
-
-}
-
-#sign-out-button:hover {
-  border-radius: 3px;
-  padding: 10px;
-
 }

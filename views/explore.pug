@@ -9,32 +9,7 @@ html(lang="en")
     title=title
   body
     header
-      nav(class='header')
-        div(class='navbar')
-          div(class='logo-container')
-            a(class='jollyjingle-logo' href='/')
-              p jolly
-                p(id='brand-color') Jingles
-          if !user
-            div(class='my-jingles-container')
-              a(href='users/sign-up' class='my-jingles') My Jingles
-            div(id="search-container")
-              input(type="text", id="search" name="Search", placeholder= "Search Jingles")
-              i.fa.fa-search
-            div(class='sign-in-container')
-                a(href='users/sign-in' class='sign-in-button') Sign in
-                a(href='users/sign-up' class='sign-in-button sign-up') Sign up
-          if user
-            div(class='my-jingles-container')
-              a(href='/users/'+user.id+'/jingleLists' class='my-jingles') My Jingles
-            div(id="search-container")
-              input(type="text", id="search" name="Search", placeholder= "Search Jingles")
-            div(id="right-container")
-            p Welcome,
-              strong  #{user.name}!
-            form(method='post' action='/users/sign-out')
-              input(type='submit' value='Sign Out' id='sign-out-button')
-    header
+      include nav-bar.pug
     div(class='jingles-container')
       div(class='jingles-grid')
         each jingle in jingles

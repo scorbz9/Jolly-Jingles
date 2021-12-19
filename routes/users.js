@@ -162,8 +162,7 @@ router.post('/sign-out', async (req, res, next) => {
 
 /* GET /users/:userId/jingleLists - Get 'myJingles' page */
 router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
-  const userId = parseInt(req.params.userId, 10);
-
+  const userId = req.session.auth.userId;
   const user = await db.User.findByPk(userId);
   const defaultListName = user.defaultList;
 
@@ -193,7 +192,8 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     user,
     userId,
     jinglesFromAList,
-    lists
+    lists,
+    view: 'my-Jingles'
   });
 }));
 
@@ -304,7 +304,8 @@ router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asy
     csrfToken: req.csrfToken(),
     lists,
     userId,
-    jinglesFromAList
+    jinglesFromAList,
+    view: "my-Jingles"
   });
 }));
 

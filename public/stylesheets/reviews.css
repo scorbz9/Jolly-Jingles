@@ -1,0 +1,59 @@
+.header {
+    border: none !important;
+  }
+
+body {
+    background-color: #f9f8f4;
+}
+
+.review-container {
+    background-color: white;
+    width: 60%;
+    margin: 0 auto;
+    border-radius: 3px;
+    padding: 10px;
+    box-shadow: 0px 0px 2px rgb(0 0 0 / 50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:25px 0 25px 0;
+}
+
+.review-cover-container {
+    width: 400px;
+}
+
+#review-cover {
+    width: 100%;
+    height: auto;
+    box-shadow: 0px 0px 10px rgb(0 0 0 / 50%);
+    border-radius: 3px;
+
+
+}
+
+
+#review-input {
+    width: 500px;
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+#rating {
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+
+}
+
+.review-title {
+    margin: 0;
+    margin-top: 5px;
+}
+
+.author {
+    margin:0;
+    margin-bottom: 20px;
+}

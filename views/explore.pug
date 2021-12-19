@@ -20,20 +20,23 @@ html(lang="en")
               a(href='users/sign-up' class='my-jingles') My Jingles
             div(id="search-container")
               input(type="text", id="search" name="Search", placeholder= "Search Jingles")
-              i.fa.fa-search
-            div(class='sign-in-container')
-                a(href='users/sign-in' class='sign-in-button') Sign in
-                a(href='users/sign-up' class='sign-in-button sign-up') Sign up
+              i.fa.fa-search(id='search-icon')
+            div(id="right-container")
+            div(class='user-buttons-container')
+                a(href='users/sign-in' class='user-button' id='sign-in-button') Sign in
+                a(href='users/sign-up' class='user-button' id='sign-up-button') Sign up
           if user
             div(class='my-jingles-container')
               a(href='/users/'+user.id+'/jingleLists' class='my-jingles') My Jingles
             div(id="search-container")
-              input(type="text", id="search" name="Search", placeholder= "Search Jingles")
+              input(type="text" id="search" name="Search" placeholder= "Search Jingles")
+              i.fa.fa-search(id='search-icon')
             div(id="right-container")
-            p Welcome,
-              strong  #{user.name}!
-            form(method='post' action='/users/sign-out')
-              input(type='submit' value='Sign Out' id='sign-out-button')
+              p Welcome,
+                strong  #{user.name}!
+            div(class='user-buttons-container')
+              form(method='post' action='/users/sign-out')
+                input(type='submit' value='Sign Out' class='user-button' id='sign-out-button')
     header
     div(class='jingles-container')
       div(class='jingles-grid')

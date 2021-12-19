@@ -65,10 +65,6 @@ body {
     flex-direction: column;
 }
 
-#new-list-name-field {
-
-}
-
 #new-list-submit {
     margin-top: 10px;
     padding: 10px;
@@ -81,7 +77,7 @@ body {
 }
 
 #new-list-submit:hover {
-    background-color: #d6cfbf
+    background-color: #d6cfbf;
 }
 
 #explore-butt {

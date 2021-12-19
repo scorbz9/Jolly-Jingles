@@ -30,10 +30,10 @@ html(lang="en")
             div(id="search-container")
               input(type="text", id="search" name="Search", placeholder= "Search Jingles")
             div(id="right-container")
-            p welcome
-              strong  #{user.name}
+            p Welcome,
+              strong  #{user.name}!
             form(method='post' action='/users/sign-out')
-              input(type='submit' value='Sign Out')
+              input(type='submit' value='Sign Out' id='sign-out-button')
     header
     div(class='jingles-container')
       div(class='jingles-grid')

@@ -101,8 +101,8 @@ router.post('/sign-up', csrfProtection, signUpValidators, asyncHandler(async (re
 /* GET /sign-in page */
 router.get('/sign-in', csrfProtection, async (req, res, next) => {
   res.render('user-sign-in', {
+    csrfToken: req.csrfToken(),
     title: 'Sign in',
-    csrfToken: req.csrfToken()
   })
 });
 
@@ -125,7 +125,7 @@ const signInValidators = [
 /* POST /sign-in - Perform login */
 router.post('/sign-in', csrfProtection, signInValidators, asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
-
+  // console.log('route working?')
   const validationErrors = validationResult(req);
   let errors = [];
 
@@ -147,9 +147,9 @@ router.post('/sign-in', csrfProtection, signInValidators, asyncHandler(async (re
   }
 
   res.render('user-sign-in', {
+    csrfToken: req.csrfToken(),
     errors,
     email,
-    csrfToken: req.csrfToken(),
     title: 'Sign in'
   })
 }));

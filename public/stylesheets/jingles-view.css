@@ -126,13 +126,35 @@ body {
   color: #c59b08;
 } */
 
-.stars::before {
+/* .stars::before {
   width: 60px;
   height: 16px;
-  content: "★★★★★";
-  color:#ccc;
+  letter-spacing: 3px;
+  display: inline;
+  color:#fc0;
+}
+
+#rating--0 {
+  color:#fc0;
 }
 
 .stars-container {
   display: flex;
+} */
+
+.stars {
+  display: inline-block;
+  font-size: 22px;
+  font-family: Times;
+  line-height: 1;
+}
+
+.stars::before {
+  --percent: calc(var(--rating) / 5 * 100%);
+    content: '★★★★★';
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #fc0 var(--percent), #fff var(--percent));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
 }

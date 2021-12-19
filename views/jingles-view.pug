@@ -15,18 +15,18 @@ html(lang="en")
             select#select(name="myJingleList" required=true)="Add to My Jingles"
                 each list in lists
                     option(value=list.id selected=(list.id))= list.name
-            p#star-rating="My Rating:"
-            div.rate
-              label(for="star1")
-                input(type="radio" id="star1" name="rate" value="1")
-              label(for="star2")
-                input(type="radio" id="star2" name="rate" value="2")
-              label(for="star3")
-                input(type="radio" id="star3" name="rate" value="3")
-              label(for="star4")
-                input(type="radio" id="star4" name="rate" value="4")
-              label(for="star5")
-                input(type="radio" id="star5" name="rate" value="5")
+            //- p#star-rating="My Rating:"
+            //- div.rate
+            //-   label(for="star1")
+            //-     input(type="radio" id="star1" name="rate" value="1")
+            //-   label(for="star2")
+            //-     input(type="radio" id="star2" name="rate" value="2")
+            //-   label(for="star3")
+            //-     input(type="radio" id="star3" name="rate" value="3")
+            //-   label(for="star4")
+            //-     input(type="radio" id="star4" name="rate" value="4")
+            //-   label(for="star5")
+            //-     input(type="radio" id="star5" name="rate" value="5")
             // TO DO: add button to create jinglelist
             // TO DO: add logged-in user's jinglelists
         div.jingle-info-container
@@ -35,7 +35,7 @@ html(lang="en")
             // TO DO: how to display average review rating?
             div.stars-container
               if (!avgReviews || isNaN(avgReviews))
-               span.stars
+               span(class="stars" style="--rating: 2.2")
                p.text="Be the first to review"
               else
                 p.text.stars=avgReviews

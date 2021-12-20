@@ -13,12 +13,15 @@ html(lang="en")
       div.main_frame_grid_container
         div.left__column
           div.jingle__cover
-            img(src=jingle.image id="jinglepic")
+            img(src=jingle.image)
           div.jingleList__action
-            label(for="myJingleList")
-            select#select(name="myJingleList" required=true)="Add to My Jingles"
+            form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)
+            input(type='hidden' name='_csrf' value=csrfToken)
+            select(name="myJingleList" onchange="javascript:this.form.submit()")="Add to My Jingles"
+              option(value="none" selected disabled hidden)="Add to My Jingles"
               each list in lists
-                option(value=list.id selected=(list.id))= list.name
+                //- option(value=list.id selected=(list.id))= list.name
+                option(value=list.id)= list.name
             //- p#star-rating="My Rating:"
             //- div.rate
             //-   label(for="star1")
@@ -34,10 +37,10 @@ html(lang="en")
             // TO DO: add button to create jinglelist
             // TO DO: add logged-in user's jinglelists
         div.right__column
-          div.jingle-info-container
-            h2.text=jingle.name
-            p.text=`by ${jingle.artist}`
-            // TO DO: how to display average review rating?
+          div#jingle__title
+            p=jingle.name
+          div.jingle__metadata
+            p#artist__info=`by ${jingle.artist}`
             div.stars-container
               if (!avgReviews || isNaN(avgReviews))
                span(class="stars" style="--rating: 0")
@@ -45,13 +48,13 @@ html(lang="en")
               else
                 span(class="stars" style=`--rating:${avgReviews}`)
                 p.text=avgReviews
-            p#description.text=jingle.description
-            form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)
-              input(type='hidden' name='_csrf' value=csrfToken)
-              input(type='submit' value="Add Jingle")
+            p#description=jingle.description
+            //- form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)
+            //-   input(type='hidden' name='_csrf' value=csrfToken)
+            //-   input(type='submit' value="Add Jingle")
           div.lyrics-container
-          p.text.heading="Lyrics"
-          p.text=jingle.lyrics
+            p#lyrics__title="Lyrics"
+            p.text=jingle.lyrics
           div.reviews-container
             p.text.heading="Community Reviews"
             a(href='/jingles/'+jingle.id+'/reviews') Write a review

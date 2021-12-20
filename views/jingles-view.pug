@@ -41,22 +41,24 @@ html(lang="en")
             p=jingle.name
           div.jingle__metadata
             p#artist__info=`by ${jingle.artist}`
-            div.stars-container
+            div.stars__container
               if (!avgReviews || isNaN(avgReviews))
                span(class="stars" style="--rating: 0")
                p.text="Be the first to review"
               else
                 span(class="stars" style=`--rating:${avgReviews}`)
-                p.text=avgReviews
+                p#avgReviews=avgReviews
             p#description=jingle.description
+            hr.solid
             //- form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)
             //-   input(type='hidden' name='_csrf' value=csrfToken)
             //-   input(type='submit' value="Add Jingle")
           div.lyrics-container
             p#lyrics__title="Lyrics"
             p.text=jingle.lyrics
+            hr.solid#bottom-line
           div.reviews-container
-            p.text.heading="Community Reviews"
+            p#Ratings__title="Ratings & Reviews"
             a(href='/jingles/'+jingle.id+'/reviews') Write a review
             div.reviews
               each review in reviews

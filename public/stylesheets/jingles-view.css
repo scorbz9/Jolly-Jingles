@@ -131,6 +131,14 @@ p {
   color: #1E1915;
 }
 
+#artist__info, #lyrics__title {
+  font-weight: 400;
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #1E1915;
+}
+
 /* .text {
   font-family: Georgia, 'Times New Roman', Times, serif;
 } */
@@ -154,10 +162,7 @@ p {
   line-height: 1.75;
 } */
 
-.reviews-container {
-  width: 80%;
-  padding: 24px;
-}
+
 
 /* #select {
   width: 200px;
@@ -168,17 +173,27 @@ p {
   padding: 10px 0 10px 0;
 } */
 
-.stars-container {
-  display: flex;
+.stars__container {
+  display: inline-flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#avgReviews {
+  font-size: 26px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #1E1915;
 }
 
 .stars {
   display: inline-block;
-  font-size: 22px;
+  font-size: 26px;
   font-family: Times;
   line-height: 1;
+  justify-content: center;
 }
 
 .stars::before {
@@ -190,6 +205,35 @@ p {
     -webkit-background-clip: text;
     color: transparent;
 }
+
+#description, .lyrics-container {
+  line-height: 1.37;
+  color: #1E1915;
+  margin-bottom: 16px;
+}
+
+hr.solid {
+  border-top: 1px solid #bbb;
+}
+
+/* .reviews-container {
+  width: 80%;
+  padding: 24px;
+} */
+
+#bottom-line {
+  margin: 40px auto;
+
+}
+
+#avgReviews, #Ratings__title {
+  font-size: 26px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #1E1915;
+  margin-bottom: 40px;
+}
+
+
 
 .footer {
   width: 100%;

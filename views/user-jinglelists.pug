@@ -51,7 +51,12 @@ block content
                                     td
                                         a(href=`/jingles/${jingle.id}`)= `${jingle.name}`
                                     td=`${jingle.artist}`
-                                    td=`${jingle.avgRating}`
+                                    //- td=`${jingle.avgRating}`
+                                    td
+                                        if (!jingle.avgRating || isNaN(jingle.avgRating))
+                                            span(class="stars" style="--rating: 0")
+                                        else
+                                            span(class="stars" style=`--rating:${jingle.avgRating}`)
                                     td=`${jingle.createdAt}`
                                     td
                                         a(href='/jingles/'+jingle.id+'/reviews' id="jingle-review-link") Write a review

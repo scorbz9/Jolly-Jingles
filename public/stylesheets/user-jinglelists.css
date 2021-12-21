@@ -159,3 +159,20 @@ img {
     border: 0px solid transparent;
     text-shadow: 0px 0px 0px transparent;
 }
+
+.stars {
+    display: inline-block;
+    font-size: 22px;
+    font-family: Times;
+    line-height: 1;
+  }
+
+.stars::before {
+    --percent: calc(var(--rating) / 5 * 100%);
+    content: '★★★★★';
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #fc0 var(--percent), #D3D3D3 var(--percent));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}

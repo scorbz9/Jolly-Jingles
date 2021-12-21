@@ -17,8 +17,10 @@ html(lang="en")
             img(src=jingle.image id="jinglepic")
             a(id="nameText" href=`/jingles/${jingle.id}`)=jingle.name
             p(id="artistText")= jingle.artist
-            if (jingle.avgRating === null || isNaN(jingle.avgRating))
-              p="Be the first to review"
-            else
-              p=jingle.avgRating
+            div.stars-container
+              if (!jingle.avgRating || isNaN(jingle.avgRating))
+               span(class="stars" style="--rating: 0")
+              else
+                span(class="stars" style=`--rating:${jingle.avgRating}`)
+                p=jingle.avgRating
     include footer.pug

@@ -146,3 +146,27 @@
 a {
   text-decoration: none;
 }
+
+.stars-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  margin: 2px 0px;
+}
+
+.stars {
+  display: inline-block;
+  font-size: 22px;
+  font-family: Times;
+  line-height: 1;
+}
+
+.stars::before {
+  --percent: calc(var(--rating) / 5 * 100%);
+    content: '★★★★★';
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #fc0 var(--percent), #D3D3D3 var(--percent));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}

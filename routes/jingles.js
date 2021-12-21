@@ -138,10 +138,12 @@ router.post('/:id(\\d+)/reviews/:id(\\d+)', asyncHandler(async(req, res) => {
 router.get('/search', asyncHandler (async (req, res) => {
     const searchString = req.url.split('=')[2];
 
+    console.log(req.url)
+
     //find all jingles that match the regex string
     const jingles = await db.Jingle.findAll({
         where : {
-            name : 'Only In America'
+            name : `${searchString}`
         }
     })
 

@@ -14,7 +14,8 @@ html(lang="en")
       div(class='jingles-grid')
         each jingle in jingles
           div(class="jingle")
-            img(src=jingle.image id="jinglepic")
+            a(id="nameText" href=`/jingles/${jingle.id}`)
+              img(src=jingle.image id="jinglepic")
             a(id="nameText" href=`/jingles/${jingle.id}`)=jingle.name
             p(id="artistText")= jingle.artist
             div.stars-container

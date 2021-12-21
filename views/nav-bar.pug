@@ -23,8 +23,11 @@ block content
                     div(class='my-jingles-container')
                         a(href='/users/'+user.id+'/jingleLists' class='my-jingles') My Jingles
                     div(id="search-container")
-                        input(type="text" id="search" name="Search" placeholder= "Search Jingles")
-                        i.fa.fa-search(id='search-icon')
+                        form(method="get" action=`/jingles/search`)
+                            //- input(type="hidden" name='_csrf' value=csrfToken)
+                            //- input(type='submit' value="✖" id="delete-jingle-from-list")
+                            input(type="text" id="search" name="Search" placeholder= "Search Jingles")
+                            i.fa.fa-search(id='search-icon')
                     div(id="right-container")
                         p Welcome,
                             strong  #{user.name}!

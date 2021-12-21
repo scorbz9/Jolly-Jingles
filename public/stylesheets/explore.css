@@ -110,8 +110,16 @@
 }
 
 #jinglepic {
-  height: 200px;
-  width: 200px;
+  height: 300px;
+  width: 300px;
+  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 20%);
+  transition-duration: .3s;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+#jinglepic:hover{
+  height: 325px;
+  width: 325px;
 }
 
 .jingle-container {
@@ -125,10 +133,10 @@
 }
 
 .jingles-grid {
-  margin-left: 250px;
+  margin:0 auto;
   display: inline-grid;
   height: 80%;
-  width: 80%;
+  width: 100%;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: auto;
   align-items: center;
@@ -136,10 +144,19 @@
   justify-content: space-between;
   vertical-align: baseline;
   column-gap: 10px;
+  row-gap: 20px;
 
 }
 
+.jingle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 400px;
+}
+
 #nameText {
+  color: #594c3f;
   font-weight: bold;
 }
 

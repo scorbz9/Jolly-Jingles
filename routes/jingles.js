@@ -134,5 +134,22 @@ router.post('/:id(\\d+)/reviews/:id(\\d+)', asyncHandler(async(req, res) => {
 
 }));
 
+// GET /jingles/search
+router.get('/search', asyncHandler (async (req, res) => {
+    const searchString = req.url.split('=')[2];
+
+    console.log(req.url)
+
+    //find all jingles that match the regex string
+    const jingles = await db.Jingle.findAll({
+        where : {
+            name : `${searchString}`
+        }
+    })
+
+    console.log(jingles)
+    //pass jingles to render in for each loop
+
+}))
 
 module.exports = router;

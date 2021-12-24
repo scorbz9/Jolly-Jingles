@@ -4,7 +4,6 @@
     display: flex;
     justify-content: center;
     background-color: #f9f8f4;
-    border-bottom: 1px solid #0000002f;
     margin-bottom: 25px;
   }
 
@@ -100,6 +99,10 @@
 #right-container {
     width: 120px;
   }
+
+#right-container strong {
+  color: #696969;
+}
 
 #sign-out-button {
     margin-right: 8px;

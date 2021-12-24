@@ -17,7 +17,10 @@ router.get('/:id(\\d+)',  csrfProtection, asyncHandler(async (req, res) => {
     // const { image, artist, name, lyrics, avgRating, description } = jingle;
 
     // find all reviews where the jingleId matches
-    const reviews = await db.Review.findAll({ where: { jingleId } })
+    const reviews = await db.Review.findAll({
+        include: db.User,
+        where: { jingleId },
+    })
 
     const sumOfReviews = await db.Review.sum('rating', {where: {jingleId}});
     const avgReviews = (sumOfReviews / reviews.length).toFixed(2);

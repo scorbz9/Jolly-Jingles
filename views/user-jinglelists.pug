@@ -19,9 +19,10 @@ block content
                                     td
                                         form(method='get' action=`/users/${userId}/jingleLists/${list.id}` class="list")
                                             input(type='submit' value=`${list.name}` class="list")
-                                        form(method="post" action=`/users/${userId}/jingleLists/${list.id}` class='list-delete')
-                                            input(type="hidden" name='_csrf' value=csrfToken)
-                                            input(type='submit' value="✖" class='list-delete')
+                                        if list.name !== defaultListName
+                                            form(method="post" action=`/users/${userId}/jingleLists/${list.id}` class='list-delete')
+                                                input(type="hidden" name='_csrf' value=csrfToken)
+                                                input(type='submit' value="✖" class='list-delete')
                 div.add-list-container
                     p Create a new list
                     if addJingleListError
@@ -32,7 +33,7 @@ block content
                         input(type='text' name="name" id="new-list-name-field" value=name placeholder="Enter a name...")
                         input(type='submit' value='Add List' id='new-list-submit')
                 div.explore-container
-                a#explore-butt(href="/") Explore
+                    a#explore-butt(href="/") Explore
             div.jingles-container
                 div.jingle-table
                     if jinglesFromAList.length === 0

@@ -67,7 +67,10 @@ body {
 }
 
 .add-list-container p {
-    margin: 10px 0px;
+    margin: 10px 9px 10px 0px;
+    border-top: 1px solid lightgray;
+    padding-top: 10px;
+
 }
 
 .alert {
@@ -92,7 +95,9 @@ body {
 }
 
 .explore-container {
-    margin-top: 8px;
+    margin: 10px 9px 10px 0px;
+    border-top: 1px solid lightgray;
+    padding: 10px 0px;
 }
 
 #explore-butt {
@@ -136,13 +141,6 @@ body {
 
 img {
     height: 125px;
-}
-
-.jingle-container {
-    align-items: center;
-    border-bottom: 1px solid lightgray;
-    padding-bottom: 10px;
-    padding-top: 10px;
 }
 
 #jingle-review-link {

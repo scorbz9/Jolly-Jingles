@@ -350,11 +350,11 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\
 router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProtection, asyncHandler(async (req, res, next) => {
   const jingleId = req.params.jingleId;
   const listId = req.body.jingleListId;
-  console.log('routing working', req.body)
+
   await db.Jinglelist.create({
     jingleId,
     listId
-  })
+  });
 
   res.redirect(`/jingles/${jingleId}`);
 }));

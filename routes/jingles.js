@@ -1,5 +1,5 @@
 var express = require('express');
-const { validationResult } = require('express-validator');
+const { validationResult, check } = require('express-validator');
 const { idle_in_transaction_session_timeout } = require('pg/lib/defaults');
 const db = require('../db/models');
 var router = express.Router();
@@ -92,9 +92,20 @@ router.get('/:id(\\d+)/reviews', csrfProtection, asyncHandler(async(req, res) =>
 
 }));
 
+const reviewValidators = [
+    check('message')
+        .isLength({ max: 500})
+        .withMessage('Please submit a review with less than 500 characters.'),
+    check('rating')
+        .exists({ checkFalsy: true })
+        .withMessage('Please include a rating with your review')
+];
+
 // TO DO: post a review of a jingle
-router.post('/:id(\\d+)/reviews', asyncHandler(async(req, res) => {
-    // res.send('Welcome to the reviews page.')
+router.post('/:id(\\d+)/reviews', reviewValidators, csrfProtection, asyncHandler(async(req, res) => {
+    const id = parseInt(req.params.id, 10);
+    const jingle = await db.Jingle.findByPk(id);
+    const { name, image, artist } = jingle
 
     // will show the content of the review
     let { message, rating, jingleId, userId } = req.body;
@@ -111,11 +122,22 @@ router.post('/:id(\\d+)/reviews', asyncHandler(async(req, res) => {
             userId: req.session.auth.userId
     });
 
-    const reviews = await db.Review.findAll({ where: { jingleId }})
     res.redirect('/jingles/'+jingleId+'/')
-
     } else {
-        res.send('error')
+
+        let reviewErrors = validationErrors.array().map(error => error.msg)
+
+        res.render('jingles-review', {
+            id,
+            title: 'Leave a Review!',
+            name,
+            image,
+            artist,
+            reviewErrors,
+            userId: req.session.auth.userId,
+            csrfToken: req.csrfToken(),
+            view: "Jingle-info"
+        })
     }
 }));
 

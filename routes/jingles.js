@@ -96,7 +96,7 @@ router.post('/:id(\\d+)/reviews', asyncHandler(async(req, res) => {
     // will show the content of the review
     let { message, rating, jingleId, userId } = req.body;
 
-    // ID of jingle being reviewd:
+    // ID of jingle being reviewed:
     jingleId = parseInt(jingleId, 10)
 
     const validationErrors = validationResult(req);

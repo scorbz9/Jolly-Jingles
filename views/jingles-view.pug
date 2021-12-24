@@ -14,14 +14,14 @@ html(lang="en")
         div.left__column
           div.jingle__cover
             img(src=jingle.image)
-          div.jingleList__action
+          div
             form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)
-            input(type='hidden' name='_csrf' value=csrfToken)
-            select(name="myJingleList" onchange="javascript:this.form.submit()")="Add to My Jingles"
-              option(value="none" selected disabled hidden)="Add to My Jingles"
-              each list in lists
-                //- option(value=list.id selected=(list.id))= list.name
-                option(value=list.id)= list.name
+              input(type='hidden' name='_csrf' value=csrfToken)
+              select(name="jingleListId" onchange="javascript:this.form.submit()")="Add this jingle to a list"
+                option(value="none" selected disabled type='hidden')="Add this jingle to a list"
+                each list in lists
+                  option(value=list.id)= list.name
+
             //- p#star-rating="My Rating:"
             //- div.rate
             //-   label(for="star1")

@@ -139,9 +139,9 @@ p {
   color: #1E1915;
 }
 
-/* .text {
-  font-family: Georgia, 'Times New Roman', Times, serif;
-} */
+#lyrics {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 
 /* #description {
   margin-top: 10px;

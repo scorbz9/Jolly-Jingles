@@ -179,10 +179,13 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     },
   });
 
-
   const jinglesFromAList = [];
 
   jingles.map(async (jingle) => {
+    let addTime = jingle.createdAt.toString()
+    addTime = addTime.slice(0, 15)
+
+    jingle.Jingle.addTime = addTime;
     jinglesFromAList.push(jingle.Jingle)
   })
 
@@ -238,6 +241,10 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
   const jinglesFromAList = [];
 
   jingles.map(async (jingle) => {
+    let addTime = jingle.createdAt.toString()
+    addTime = addTime.slice(0, 15)
+
+    jingle.Jingle.addTime = addTime;
     jinglesFromAList.push(jingle.Jingle)
   })
 
@@ -297,6 +304,10 @@ router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asy
   const jinglesFromAList = [];
 
   jingles.map(async (jingle) => {
+    let addTime = jingle.createdAt.toString()
+    addTime = addTime.slice(0, 15)
+
+    jingle.Jingle.addTime = addTime;
     jinglesFromAList.push(jingle.Jingle)
   })
 
@@ -360,7 +371,7 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProt
 
 }))
 
-//DEMO /users/demo/sign-in - Sign-in butt for demo
+// DEMO /users/demo/sign-in - Sign-in butt for demo
 router.post('/demo/sign-in', csrfProtection, signInValidators, asyncHandler(async (req, res, next) => {
   // only pushes in a user with the id of 3, which was hard coded in as the demo user: (May vary based on your database)
     demoUser(req, res)

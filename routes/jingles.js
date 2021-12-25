@@ -96,7 +96,7 @@ const reviewValidators = [
     check('message')
         .isLength({ max: 500})
         .withMessage('Please submit a review with less than 500 characters.'),
-    check('rating')
+    check('stars')
         .exists({ checkFalsy: true })
         .withMessage('Please include a rating with your review')
 ];
@@ -108,7 +108,8 @@ router.post('/:id(\\d+)/reviews', reviewValidators, csrfProtection, asyncHandler
     const { name, image, artist } = jingle
 
     // will show the content of the review
-    let { message, rating, jingleId, userId } = req.body;
+    let { message, stars, jingleId, userId } = req.body;
+    stars = parseInt(stars, 10)
 
     // ID of jingle being reviewed:
     jingleId = parseInt(jingleId, 10)
@@ -117,7 +118,7 @@ router.post('/:id(\\d+)/reviews', reviewValidators, csrfProtection, asyncHandler
     if (validationErrors.isEmpty()) {
         await db.Review.create({
             message,
-            rating,
+            rating: stars,
             jingleId,
             userId: req.session.auth.userId
     });

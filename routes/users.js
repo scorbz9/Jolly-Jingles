@@ -349,18 +349,17 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\
 // ADD /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Add a jingle to a jingle list
 router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProtection, asyncHandler(async (req, res, next) => {
   const jingleId = req.params.jingleId;
-  const listId = req.params.userId
+  const listId = req.body.jingleListId;
 
   await db.Jinglelist.create({
     jingleId,
     listId
-  })
+  });
 
   res.redirect(`/jingles/${jingleId}`);
+}));
 
-}))
-
-//DEMO /users/demo/sign-in - Sign-in butt for demo
+// DEMO /users/demo/sign-in - Sign-in butt for demo
 router.post('/demo/sign-in', csrfProtection, signInValidators, asyncHandler(async (req, res, next) => {
   // only pushes in a user with the id of 3, which was hard coded in as the demo user: (May vary based on your database)
     demoUser(req, res)

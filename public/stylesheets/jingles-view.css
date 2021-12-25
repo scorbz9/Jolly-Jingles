@@ -59,13 +59,11 @@ body {
 
 select {
   height: 40px;
-  padding: 0 16px;
+  padding: 0 40px 0px 25px;
   border-radius: 3rem;
   font-weight: 600;
-  text-align: center;
   text-decoration: none;
   border: 0 solid transparent;
-  vertical-align: middle;
   background-color: #3F8363;
   color: white;
   font-size: 16px;
@@ -214,7 +212,6 @@ hr.solid {
   color: #1E1915;
   margin-left: 10px;
 }
-
 
 
 .footer {

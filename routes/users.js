@@ -346,6 +346,7 @@ router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asy
   res.render('user-jinglelists.pug', {
     csrfToken: req.csrfToken(),
     lists,
+    user,
     userId,
     loggedInUserId,
     loggedInUser,

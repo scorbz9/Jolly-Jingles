@@ -4,6 +4,9 @@ const { idle_in_transaction_session_timeout } = require('pg/lib/defaults');
 const db = require('../db/models');
 var router = express.Router();
 const { csrfProtection, asyncHandler } = require('./utils');
+const Sequelize = require("sequelize");
+const { sequelize } = require('../db/models');
+const Op = Sequelize.Op;
 
 // to see the info page for a jingle
 router.get('/:id(\\d+)',  csrfProtection, asyncHandler(async (req, res) => {
@@ -174,18 +177,32 @@ router.post('/:id(\\d+)/reviews/:id(\\d+)', asyncHandler(async(req, res) => {
 
 // GET /jingles/search
 router.get('/search', asyncHandler (async (req, res) => {
-    const searchString = req.url.split('=')[2];
-    console.log(req.url)
-    //find all jingles that match the regex string
-    const jingles = await db.Jingle.findAll({
-        where : {
-            name : `${searchString}`
+    let loggedInUserId = null;
+    let loggedInUser;
+
+    if (req.session.auth) {
+        loggedInUserId = req.session.auth.userId;
+        loggedInUser = await db.User.findByPk(loggedInUserId)
+    }
+
+    let searchString = new URLSearchParams(req.url).get('/search?search').toLowerCase();
+
+    let jingles = await db.Jingle.findAll({
+        where: {
+            name:
+            {
+                [Op.iLike]: `%${searchString}%`
+            }
         }
     })
 
-    console.log(jingles)
-    //pass jingles to render in for each loop
-
+    res.render('explore', {
+      title: 'Explore',
+      jingles,
+      loggedInUserId,
+      loggedInUser,
+      view: "Explore"
+     });
 }))
 
 module.exports = router;

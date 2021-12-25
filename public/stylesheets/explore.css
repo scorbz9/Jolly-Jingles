@@ -81,3 +81,9 @@ a {
     -webkit-background-clip: text;
     color: transparent;
 }
+
+#no-jingles-found {
+  color: red;
+  text-align: center;
+  height: 500px;
+}

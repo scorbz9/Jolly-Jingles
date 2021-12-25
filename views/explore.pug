@@ -11,6 +11,8 @@ html(lang="en")
     include nav-bar.pug
     div(class='jingles-container')
       div(class='jingles-grid')
+        if !jingles.length
+          p#no-jingles-found No jingles found!
         each jingle in jingles
           div(class="jingle")
             a(id="nameText" href=`/jingles/${jingle.id}`)

@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  display: block;
 }
 
 body {
@@ -8,17 +7,6 @@ body {
   display: block;
   min-width: 320px;
   margin: 8px;
-}
-
-.header {
-  position: fixed;
-  width: 100%;
-  z-index: 100;
-  display: block;
-  top: 0;
-  left: 0;
-  right: 0;
-  box-shadow:  0 2px 2px rgba(0, 0, 0, 15%);
 }
 
 .main__frame {

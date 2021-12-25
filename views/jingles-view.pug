@@ -7,8 +7,7 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title= title
   body
-    div.header
-      include nav-bar.pug
+    include nav-bar.pug
     div.main__frame
       div.main_frame_grid_container
         div.left__column
@@ -20,20 +19,7 @@ html(lang="en")
             select(name="myJingleList" onchange="javascript:this.form.submit()")="Add to My Jingles"
               option(value="none" selected disabled hidden)="Add to My Jingles"
               each list in lists
-                //- option(value=list.id selected=(list.id))= list.name
                 option(value=list.id)= list.name
-            //- p#star-rating="My Rating:"
-            //- div.rate
-            //-   label(for="star1")
-            //-     input(type="radio" id="star1" name="rate" value="1")
-            //-   label(for="star2")
-            //-     input(type="radio" id="star2" name="rate" value="2")
-            //-   label(for="star3")
-            //-     input(type="radio" id="star3" name="rate" value="3")
-            //-   label(for="star4")
-            //-     input(type="radio" id="star4" name="rate" value="4")
-            //-   label(for="star5")
-            //-     input(type="radio" id="star5" name="rate" value="5")
             // TO DO: add button to create jinglelist
             // TO DO: add logged-in user's jinglelists
         div.right__column

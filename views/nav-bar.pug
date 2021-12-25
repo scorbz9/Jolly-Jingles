@@ -13,8 +13,10 @@ block content
                     div(class='my-jingles-container')
                         a(href='/users/sign-up' class='my-jingles') My Jingles
                     div(id="search-container")
-                        input(type="text", id="search" name="Search", placeholder= "Search Jingles")
-                        i.fa.fa-search(id='search-icon')
+                        form(method="get" action="/jingles/search" autocomplete="off")
+                            input(type="text", id="search" name="Search", placeholder= "Search Jingles")
+                            button(type='submit' id='search-icon')
+                                i.fa.fa-search
                     div(id="right-container")
                     div(class='user-buttons-container')
                         a(href='/users/sign-in' class='user-button' id='sign-in-button') Sign in
@@ -23,14 +25,13 @@ block content
                     div(class='my-jingles-container')
                         a(href='/users/'+loggedInUser.id+'/jingleLists' class='my-jingles') My Jingles
                     div(id="search-container")
-                        form(method="get" action=`/jingles/search`)
-                            //- input(type="hidden" name='_csrf' value=csrfToken)
-                            //- input(type='submit' value="✖" id="delete-jingle-from-list")
-                            input(type="text" id="search" name="Search" placeholder= "Search Jingles")
-                            i.fa.fa-search(id='search-icon')
+                        form(method="get" action="/jingles/search" autocomplete="off")
+                            input(type="text", id="search" name="Search", placeholder= "Search Jingles")
+                            button(type='submit' id='search-icon')
+                                i.fa.fa-search
                     div(id="right-container")
                         p Welcome,
-                            strong  #{loggedInUser.name}!
+                            strong #{loggedInUser.name}!
                     div(class='user-buttons-container')
                         form(method='post' action='/users/sign-out')
                             input(type='submit' value='Sign Out' class='user-button' id='sign-out-button')

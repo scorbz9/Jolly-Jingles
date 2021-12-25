@@ -32,7 +32,7 @@ block content
                                 p(class="alert") #{error}
                         form(method='post' action=`/users/${userId}/jingleLists`)
                             input(type="hidden" name="_csrf" value=csrfToken)
-                            input(type='text' name="name" id="new-list-name-field" value=name placeholder="Enter a name...")
+                            input(type='text' name="name" id="new-list-name-field" value=name placeholder="Enter a name..." autocomplete="off")
                             input(type='submit' value='Add List' id='new-list-submit')
                 div.explore-container
                     a#explore-butt(href="/") Explore

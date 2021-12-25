@@ -291,6 +291,7 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
 router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const listId = parseInt(req.params.jingleListId, 10);
   const userId = parseInt(req.params.userId, 10)
+  const loggedInUserId = req.session.auth.userId;
 
   const user = await db.User.findByPk(userId);
   const defaultListName = user.defaultList;
@@ -319,6 +320,7 @@ router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asy
     csrfToken: req.csrfToken(),
     lists,
     userId,
+    loggedInUserId,
     defaultListName,
     jinglesFromAList,
     view: "my-Jingles"

@@ -188,12 +188,24 @@ router.get('/search', asyncHandler (async (req, res) => {
 
     let searchString = new URLSearchParams(req.url).get('/search?search').toLowerCase();
 
+    // let jingles = await db.Jingle.findAll({
+    //     where: {
+    //         name:
+    //         {
+    //             [Op.iLike]: `%${searchString}%`
+    //         }
+    //     }
+
+    // })
+
     let jingles = await db.Jingle.findAll({
         where: {
-            name:
-            {
-                [Op.iLike]: `%${searchString}%`
-            }
+            [Op.or]: [
+                { name: { [Op.iLike]: `%${searchString}%`} },
+                { artist: { [Op.iLike]: `%${searchString}%`} },
+                { description: { [Op.iLike]: `%${searchString}%`} },
+                { lyrics: { [Op.iLike]: `%${searchString}%`} },
+            ]
         }
     })
 

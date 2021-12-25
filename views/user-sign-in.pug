@@ -19,7 +19,6 @@ block content
             input(type='hidden' name='_csrf' value=csrfToken)
             +field('Email address', 'email', email, 'email', 'you@yours.com')
             +field('Password', 'password', password, 'password')
-        nav-bar-modularize
             input(type='submit' value='Sign in' id="sign-in-submit")
         form(method='post' action='/users/demo/sign-in')
             input(type='hidden' name='_csrf' value=csrfToken)

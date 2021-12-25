@@ -13,14 +13,15 @@ html(lang="en")
         div.left__column
           div.jingle__cover
             img(src=jingle.image)
-          div.jingleList__action
+          div
             form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)
-            input(type='hidden' name='_csrf' value=csrfToken)
-            select(name="myJingleList" onchange="javascript:this.form.submit()")="Add to My Jingles"
-              option(value="none" selected disabled hidden)="Add to My Jingles"
-              each list in lists
-                //- option(value=list.id selected=(list.id))= list.name
-                option(value=list.id)= list.name
+
+              input(type='hidden' name='_csrf' value=csrfToken)
+              select(name="jingleListId" onchange="javascript:this.form.submit()")="Add this jingle to a list"
+                option(value="none" selected disabled type='hidden')="Add this jingle to a list"
+                each list in lists
+                  option(value=list.id)= list.name
+
             //- p#star-rating="My Rating:"
             //- div.rate
             //-   label(for="star1")
@@ -33,8 +34,8 @@ html(lang="en")
             //-     input(type="radio" id="star4" name="rate" value="4")
             //-   label(for="star5")
             //-     input(type="radio" id="star5" name="rate" value="5")
+
             // TO DO: add button to create jinglelist
-            // TO DO: add logged-in user's jinglelists
         div.right__column
           div#jingle__title
             p=jingle.name
@@ -63,7 +64,7 @@ html(lang="en")
               each review in reviews
                 div(class="review")
                 p.text
-                  strong #{user.name}
+                  strong #{review.User.name}
                   |  rated it: #{review.rating}
                 p.text #{review.message}
                 if user.id === review.userId

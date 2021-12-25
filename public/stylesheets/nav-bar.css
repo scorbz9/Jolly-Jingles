@@ -5,6 +5,14 @@
     justify-content: center;
     background-color: #f9f8f4;
     margin-bottom: 25px;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow:  0 2px 2px rgba(0, 0, 0, 15%);
   }
 
 .navbar {
@@ -22,7 +30,6 @@
     font-size: 20px;
     margin-right: 10px;
     padding: 10px;
-    width: 100px;
     text-decoration: none;
     color: #594c3f;
     text-align: center;
@@ -30,6 +37,7 @@
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
     font-weight: bold;
     margin: 10px;
+
   }
 
 .my-jingles:hover {
@@ -96,9 +104,9 @@
     justify-content: space-around;
   }
 
-#right-container {
-    width: 120px;
-  }
+#right-container p {
+  width: 120px;
+}
 
 #right-container strong {
   color: #696969;

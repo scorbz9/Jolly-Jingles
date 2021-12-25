@@ -196,3 +196,7 @@ img {
 #empty-list-message {
     text-align: center;
 }
+
+#date-column, #review-column {
+    width: 15%;
+}

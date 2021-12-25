@@ -20,19 +20,20 @@ block content
                                     td
                                         form(method='get' action=`/users/${userId}/jingleLists/${list.id}` class="list")
                                             input(type='submit' value=`${list.name}` class="list")
-                                        if list.name !== defaultListName
+                                        if list.name !== defaultListName && userId === loggedInUserId
                                             form(method="post" action=`/users/${userId}/jingleLists/${list.id}` class='list-delete')
                                                 input(type="hidden" name='_csrf' value=csrfToken)
                                                 input(type='submit' value="✖" class='list-delete')
-                div.add-list-container
-                    p Create a new list
-                    if addJingleListError
-                        each error in addJingleListError
-                            p(class="alert") #{error}
-                    form(method='post' action=`/users/${userId}/jingleLists`)
-                        input(type="hidden" name="_csrf" value=csrfToken)
-                        input(type='text' name="name" id="new-list-name-field" value=name placeholder="Enter a name...")
-                        input(type='submit' value='Add List' id='new-list-submit')
+                if userId === loggedInUserId
+                    div.add-list-container
+                        p Create a new list
+                        if addJingleListError
+                            each error in addJingleListError
+                                p(class="alert") #{error}
+                        form(method='post' action=`/users/${userId}/jingleLists`)
+                            input(type="hidden" name="_csrf" value=csrfToken)
+                            input(type='text' name="name" id="new-list-name-field" value=name placeholder="Enter a name...")
+                            input(type='submit' value='Add List' id='new-list-submit')
                 div.explore-container
                     a#explore-butt(href="/") Explore
             div.jingles-container
@@ -68,8 +69,9 @@ block content
                                         td
                                             a(href='/jingles/'+jingle.id+'/reviews' id="jingle-review-link") Write a review
                                         td(id="delete-container")
-                                            form(method="post" action=`/users/${userId}/jingleLists/${userId}/jingles/${jingle.id}`)
-                                                input(type="hidden" name='_csrf' value=csrfToken)
-                                                input(type='submit' value="✖" id="delete-jingle-from-list")
+                                            if userId === loggedInUserId
+                                                form(method="post" action=`/users/${userId}/jingleLists/${userId}/jingles/${jingle.id}`)
+                                                    input(type="hidden" name='_csrf' value=csrfToken)
+                                                    input(type='submit' value="✖" id="delete-jingle-from-list")
 
     include footer.pug

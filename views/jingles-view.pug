@@ -60,11 +60,14 @@ html(lang="en")
             div.reviews
               each review in reviews
                 div(class="review")
-                  p <a>#{review.User.name}</a> rated it: #{review.rating}
-                  if user.id === review.userId
-                    form(action='/jingles/'+jingle.id+'/reviews/'+review.id, method="post")
-                      input(type='hidden' name='_csrf' value=csrfToken)
-                      input(type="submit" id="delete-review" value="Delete")
-                  p(id="message") #{review.message}
+                p.text
+                   #{review.User.name}
+                  |  rated it: #{review.rating}
+                p.text #{review.message}
+                if userId === review.userId
+                  form(action='/jingles/'+jingle.id+'/reviews/'+review.id, method="post")
+                    input(type='hidden' name='_csrf' value=csrfToken)
+                    button(type="submit" id="delete-butt") Delete
+
     div.footer
       include footer.pug

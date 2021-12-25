@@ -9,7 +9,7 @@ block content
                     p jolly
                         p(id='brand-color') Jingles
             if view === "Explore"
-                if !user
+                if !loggedInUserId
                     div(class='my-jingles-container')
                         a(href='/users/sign-up' class='my-jingles') My Jingles
                     div(id="search-container")
@@ -19,9 +19,9 @@ block content
                     div(class='user-buttons-container')
                         a(href='/users/sign-in' class='user-button' id='sign-in-button') Sign in
                         a(href='/users/sign-up' class='user-button' id='sign-up-button') Sign up
-                if user
+                if loggedInUserId
                     div(class='my-jingles-container')
-                        a(href='/users/'+user.id+'/jingleLists' class='my-jingles') My Jingles
+                        a(href='/users/'+loggedInUser.id+'/jingleLists' class='my-jingles') My Jingles
                     div(id="search-container")
                         form(method="get" action=`/jingles/search`)
                             //- input(type="hidden" name='_csrf' value=csrfToken)
@@ -30,29 +30,29 @@ block content
                             i.fa.fa-search(id='search-icon')
                     div(id="right-container")
                         p Welcome,
-                            strong  #{user.name}!
+                            strong  #{loggedInUser.name}!
                     div(class='user-buttons-container')
                         form(method='post' action='/users/sign-out')
                             input(type='submit' value='Sign Out' class='user-button' id='sign-out-button')
             if view === "my-Jingles"
-                if !user
+                if !loggedInUserId
                     div(class='my-jingles-container')
                     div(id="search-container")
                     div(id="right-container")
                     div(class='user-buttons-container')
                         a(href='/users/sign-in' class='user-button' id='sign-in-button') Sign in
                         a(href='/users/sign-up' class='user-button' id='sign-up-button') Sign up
-                if user
+                if loggedInUserId
                     div(class='my-jingles-container')
                     div(id="search-container")
                     div(id="right-container")
                         p Welcome,
-                            strong  #{user.name}!
+                            strong  #{loggedInUser.name}!
                     div(class='user-buttons-container')
                         form(method='post' action='/users/sign-out')
                             input(type='submit' value='Sign Out' class='user-button' id='sign-out-button')
             if view === "Jingle-info"
-                if !user
+                if !loggedInUserId
                     div(class='my-jingles-container')
                         a(href='/users/sign-up' class='my-jingles') My Jingles
                     div(id="search-container")
@@ -60,13 +60,13 @@ block content
                     div(class='user-buttons-container')
                         a(href='/users/sign-in' class='user-button' id='sign-in-button') Sign in
                         a(href='/users/sign-up' class='user-button' id='sign-up-button') Sign up
-                if user
+                if loggedInUserId
                     div(class='my-jingles-container')
-                        a(href='/users/'+user.id+'/jingleLists' class='my-jingles') My Jingles
+                        a(href='/users/'+loggedInUser.id+'/jingleLists' class='my-jingles') My Jingles
                     div(id="search-container")
                     div(id="right-container")
                         p Welcome,
-                            strong  #{user.name}!
+                            strong  #{loggedInUser.name}!
                     div(class='user-buttons-container')
                         form(method='post' action='/users/sign-out')
                             input(type='submit' value='Sign Out' class='user-button' id='sign-out-button')

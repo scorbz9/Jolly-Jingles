@@ -34,11 +34,14 @@ router.get('/:id(\\d+)',  csrfProtection, asyncHandler(async (req, res) => {
 
     // Added this to fix an error that was being caused when an non logged in user tried to acces the jingle page, userId did nto exist.
     // so: userId = 0 will be a non null non user, and the list will be blank to avoid errors from the render.
-    let userId = 0
+    let loggedInUserId = 0
+    let loggedInUser;
+
     let lists = []
     if (req.session.auth) {
-        userId = req.session.auth.userId
-        lists = await db.List.findAll({ where: { userId } })
+        loggedInUserId = req.session.auth.userId;
+        loggedInUser = await db.User.findByPk(loggedInUserId)
+        lists = await db.List.findAll({ where: { userId:    loggedInUserId } })
     }
 
     // const lists = await db.List.findAll({ where: { userId } })
@@ -48,7 +51,8 @@ router.get('/:id(\\d+)',  csrfProtection, asyncHandler(async (req, res) => {
         jingle,
         review: true,
         reviews,
-        userId,
+        loggedInUserId,
+        loggedInUser,
         lists,
         avgReviews,
         id,
@@ -67,6 +71,14 @@ router.get('/:id(\\d+)/reviews', csrfProtection, asyncHandler(async(req, res) =>
     const id = parseInt(req.params.id, 10);
     const jingle = await db.Jingle.findByPk(id);
 
+    let loggedInUserId = null;
+    let loggedInUser;
+
+    if (req.session.auth) {
+      loggedInUserId = req.session.auth.userId;
+      loggedInUser = await db.User.findByPk(loggedInUserId)
+    }
+
     // Redirects a non logged in user if they click review, will probably change this later to throw an error/alert instead.
     if (!req.session.auth) {
         res.redirect('/users/sign-in')
@@ -81,7 +93,8 @@ router.get('/:id(\\d+)/reviews', csrfProtection, asyncHandler(async(req, res) =>
             name,
             image,
             artist,
-            userId: req.session.auth.userId,
+            loggedInUserId,
+            loggedInUser,
             csrfToken: req.csrfToken(),
             view: "Jingle-info"
         })

@@ -11,9 +11,19 @@ const asyncHandler = (handler) => {
 router.get('/', asyncHandler(async(req, res) => {
   const jingles = await db.Jingle.findAll();
 
+  let loggedInUserId = null;
+  let loggedInUser;
+
+  if (req.session.auth) {
+    loggedInUserId = req.session.auth.userId;
+    loggedInUser = await db.User.findByPk(loggedInUserId)
+  }
+
   res.render('explore', {
     title: 'Explore',
     jingles,
+    loggedInUserId,
+    loggedInUser,
     view: "Explore"
    })
 

@@ -396,7 +396,7 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\
 router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProtection, asyncHandler(async (req, res, next) => {
   const jingleId = req.params.jingleId;
   const listId = req.body.jingleListId;
-
+  console.log(listId)
   await db.Jinglelist.create({
     jingleId,
     listId

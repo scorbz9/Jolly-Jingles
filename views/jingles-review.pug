@@ -19,9 +19,20 @@ html(lang="en")
             p#error #{error}
         input(type='hidden' name='_csrf' value=csrfToken)
         label(for="message" id="what-did-you-think") What did you think?
-        textarea(name="message", cols="30", rows="10", placeholder = 'Enter your review' id="review-input")
-        label(for="rating" id='rating-label') Rating
-        input(type="number",  min="0" max="5" name="rating" id="rating")
+        div(class="rating")
+          input(class="star star-1" type="radio" name="stars" id="star-1" value="5")
+          label(class="star star-1" for="star-1")
+          input(class="star star-2" type="radio" name="stars" id="star-2" value="4")
+          label(class="star star-2" for="star-2")
+          input(class="star star-3" type="radio" name="stars" id="star-3" value="3")
+          label(class="star star-3" for="star-3")
+          input(class="star star-4" type="radio" name="stars" id="star-4" value="2")
+          label(class="star star-4" for="star-4")
+          input(class="star star-1" type="radio" name="stars" id="star-5" value="1")
+          label(class="star star-1" for="star-5")
+        textarea(name="message", cols="30", rows="10", placeholder = 'Enter your review...' id="review-input")
+
+
         label(for="jingleId")
         input(type="hidden", value= id, name="jingleId")
         button(type='submit' class='user-button' id="submit-review") Post

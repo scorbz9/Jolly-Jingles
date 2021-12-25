@@ -196,6 +196,8 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     addTime = addTime.slice(0, 15)
 
     jingle.Jingle.addTime = addTime;
+    jingle.Jingle.listId = jingle.listId
+
     jinglesFromAList.push(jingle.Jingle)
   })
 
@@ -263,6 +265,8 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
     addTime = addTime.slice(0, 15)
 
     jingle.Jingle.addTime = addTime;
+    jingle.Jingle.listId = jingle.listId
+
     jinglesFromAList.push(jingle.Jingle)
   })
 
@@ -299,9 +303,13 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
       csrfToken: req.csrfToken(),
       lists,
       userId,
+      name,
+      loggedInUserId,
+      loggedInUser,
       addJingleListError,
       defaultListName,
-      jinglesFromAList
+      jinglesFromAList,
+      view: "my-Jingles"
     });
 
     addJingleListError = null;
@@ -342,6 +350,8 @@ router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asy
     addTime = addTime.slice(0, 15)
 
     jingle.Jingle.addTime = addTime;
+    jingle.Jingle.listId = jingle.listId
+
     jinglesFromAList.push(jingle.Jingle)
   })
 
@@ -373,7 +383,7 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, as
 
   await listToDestroy.destroy();
 
-  res.redirect(`/users/${userId}/jingleLists/`);
+  res.redirect(`/users/${userId}/jingleLists`);
 }));
 
 // DELETE /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Remove a jingle from a particular jingle list
@@ -392,7 +402,7 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\
 
   await jingleToDestroy.destroy();
 
-  res.redirect(`/users/${userId}/jingleLists`);
+  res.redirect(`/users/${userId}/jingleLists/${listId}`);
 }));
 
 // ADD /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Add a jingle to a jingle list

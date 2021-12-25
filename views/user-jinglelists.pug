@@ -26,7 +26,7 @@ block content
                                                 input(type='submit' value="✖" class='list-delete')
                 if userId === loggedInUserId
                     div.add-list-container
-                        p Create a new list
+                        p#create-new Create a new list
                         if addJingleListError
                             each error in addJingleListError
                                 p(class="alert") #{error}
@@ -70,7 +70,7 @@ block content
                                             a(href='/jingles/'+jingle.id+'/reviews' id="jingle-review-link") Write a review
                                         td(id="delete-container")
                                             if userId === loggedInUserId
-                                                form(method="post" action=`/users/${userId}/jingleLists/${userId}/jingles/${jingle.id}`)
+                                                form(method="post" action=`/users/${userId}/jingleLists/${jingle.listId}/jingles/${jingle.id}`)
                                                     input(type="hidden" name='_csrf' value=csrfToken)
                                                     input(type='submit' value="✖" id="delete-jingle-from-list")
 

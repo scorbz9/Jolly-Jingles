@@ -3,6 +3,10 @@ body {
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
 
+.header {
+    box-shadow: 0px 0px 0px transparent;
+}
+
 .main-container {
     color: #40362d;
     display: flex;
@@ -13,6 +17,7 @@ body {
 }
 
 .lists-and-jingles-container {
+    margin-top: 80px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

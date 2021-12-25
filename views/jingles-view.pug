@@ -7,7 +7,8 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title= title
   body
-    include nav-bar.pug
+    header
+      include nav-bar.pug
     div.main__frame
       div.main_frame_grid_container
         div.left__column
@@ -40,17 +41,18 @@ html(lang="en")
             hr.solid#bottom-line
           div.reviews-container
             p#Ratings__title="Ratings & Reviews"
-            a(href='/jingles/'+jingle.id+'/reviews') Write a review
+            a(href='/jingles/'+jingle.id+'/reviews' id="write-a-review") Write a review
             div.reviews
               each review in reviews
                 div(class="review")
                 p.text
-                  strong #{review.User.name}
+                   #{review.User.name}
                   |  rated it: #{review.rating}
                 p.text #{review.message}
-                if user.id === review.userId
+                if userId === review.userId
                   form(action='/jingles/'+jingle.id+'/reviews/'+review.id, method="post")
                     input(type='hidden' name='_csrf' value=csrfToken)
                     button(type="submit" id="delete-butt") Delete
+
     div.footer
       include footer.pug

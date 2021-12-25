@@ -11,12 +11,12 @@ body {
     width: 60%;
     margin: 0 auto;
     border-radius: 3px;
-    padding: 10px;
     box-shadow: 0px 0px 2px rgb(0 0 0 / 50%);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding:25px 0 25px 0;
+    color: #40362d;
 }
 
 .review-cover-container {
@@ -28,25 +28,31 @@ body {
     height: auto;
     box-shadow: 0px 0px 10px rgb(0 0 0 / 50%);
     border-radius: 3px;
-
-
 }
 
+#what-did-you-think {
+    margin: 10px 0px;
+}
 
 #review-input {
-    width: 500px;
+    resize: none;
     border-radius: 3px;
     outline: none;
     border: 1px solid rgba(128, 128, 128, 0.5);
 }
 
-#rating {
-    margin-top: 20px;
-    margin-left: 5px;
-    margin-bottom: 15px;
-    border: 1px solid rgba(128, 128, 128, 0.5);
-
+#rating-label {
+    display: inline;
+    margin-top: 10px;
 }
+
+#rating {
+    display: inline;
+    width: 150px;
+    margin-top: 5px;
+    border: 1px solid rgba(128, 128, 128, 0.5);
+}
+
 
 .review-title {
     margin: 0;
@@ -55,5 +61,24 @@ body {
 
 .author {
     margin:0;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form > *, input {
+    width: 400px;
+}
+
+#submit-review {
+    margin: 10px 0px 0px 0px;
+}
+
+#error {
+    margin: 0px 0px 0px 0px;
+    font-size: 12px;
+    color: red;
 }

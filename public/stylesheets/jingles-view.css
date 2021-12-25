@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  display: block;
 }
 
 body {
@@ -8,17 +7,6 @@ body {
   display: block;
   min-width: 320px;
   margin: 8px;
-}
-
-.header {
-  position: fixed;
-  width: 100%;
-  z-index: 100;
-  display: block;
-  top: 0;
-  left: 0;
-  right: 0;
-  box-shadow:  0 2px 2px rgba(0, 0, 0, 15%);
 }
 
 .main__frame {
@@ -137,9 +125,9 @@ p {
   color: #1E1915;
 }
 
-/* .text {
-  font-family: Georgia, 'Times New Roman', Times, serif;
-} */
+.text {
+  margin-left: 5px;
+}
 
 /* #description {
   margin-top: 10px;
@@ -178,12 +166,6 @@ p {
   align-items: center;
   margin-top: 10px;
   margin-bottom: 20px;
-}
-
-#avgReviews {
-  font-size: 26px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  color: #1E1915;
 }
 
 .stars {
@@ -225,10 +207,10 @@ hr.solid {
 }
 
 #avgReviews, #Ratings__title {
-  font-size: 26px;
+  font-size: 20px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: #1E1915;
-  margin-bottom: 40px;
+  margin-left: 10px;
 }
 
 

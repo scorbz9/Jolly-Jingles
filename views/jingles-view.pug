@@ -7,8 +7,7 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title= title
   body
-    div.header
-      include nav-bar.pug
+    include nav-bar.pug
     div.main__frame
       div.main_frame_grid_container
         div.left__column
@@ -16,6 +15,7 @@ html(lang="en")
             img(src=jingle.image)
           div
             form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)
+
               input(type='hidden' name='_csrf' value=csrfToken)
               select(name="jingleListId" onchange="javascript:this.form.submit()")="Add this jingle to a list"
                 option(value="none" selected disabled type='hidden')="Add this jingle to a list"
@@ -34,8 +34,8 @@ html(lang="en")
             //-     input(type="radio" id="star4" name="rate" value="4")
             //-   label(for="star5")
             //-     input(type="radio" id="star5" name="rate" value="5")
+
             // TO DO: add button to create jinglelist
-            // TO DO: add logged-in user's jinglelists
         div.right__column
           div#jingle__title
             p=jingle.name
@@ -64,7 +64,7 @@ html(lang="en")
               each review in reviews
                 div(class="review")
                 p.text
-                  strong #{user.name}
+                  strong #{review.User.name}
                   |  rated it: #{review.rating}
                 p.text #{review.message}
                 if user.id === review.userId

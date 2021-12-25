@@ -121,7 +121,7 @@ p {
   color: #1E1915;
 }
 
-#artist__info, #lyrics__title {
+#artist__info {
   font-weight: 400;
   font-size: 20px;
   margin-bottom: 10px;
@@ -131,10 +131,6 @@ p {
 
 #lyrics {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-
-.text {
-  margin-left: 5px;
 }
 
 /* #description {
@@ -197,30 +193,79 @@ p {
 #description, .lyrics-container {
   line-height: 1.37;
   color: #1E1915;
-  margin-bottom: 16px;
 }
 
 hr.solid {
   border-top: 1px solid #bbb;
+  margin: 20px 0px 30px 0px;
 }
 
-/* .reviews-container {
-  width: 80%;
-  padding: 24px;
-} */
-
-#bottom-line {
-  margin: 40px auto;
-
-}
-
-#avgReviews, #Ratings__title {
+#avgReviews {
   font-size: 20px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: #1E1915;
   margin-left: 10px;
 }
 
+#Ratings__title {
+  margin-bottom: 5px;
+}
+
+#Ratings__title, #lyrics__title {
+  font-weight: 400;
+  font-size: 24px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #1E1915;
+}
+
+#lyrics {
+  margin: 7px 0px;
+}
+
+.reviews-container {
+  color: #1E1915;
+}
+
+.reviews a {
+  color: blue;
+  font-weight: bolder;
+}
+
+.reviews-container a:hover {
+  text-decoration: underline;
+}
+
+.review {
+  margin: 20px 0px;
+}
+
+.review p {
+  display: inline-block;
+}
+
+#message {
+  display: block;
+}
+
+.review form {
+  display: inline-block;
+}
+
+#delete-review {
+  background: transparent;
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  text-shadow: 0px 0px 0px transparent;
+  color: #594c3f;
+  display: inline-block;
+  font-size: 12px;
+  margin-left: 1px;
+}
+
+#delete-review:hover {
+  color: red;
+  text-decoration: underline;
+}
 
 .footer {
   width: 100%;

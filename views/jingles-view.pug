@@ -16,7 +16,6 @@ html(lang="en")
             img(src=jingle.image)
           div
             form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)
-
               input(type='hidden' name='_csrf' value=csrfToken)
               select(name="jingleListId" onchange="javascript:this.form.submit()")="Add this jingle to a list"
                 option(value="none" selected disabled type='hidden')="Add this jingle to a list"
@@ -51,26 +50,21 @@ html(lang="en")
                 p#avgReviews=avgReviews
             p#description=jingle.description
             hr.solid
-            //- form(method="post" action=`/users/${userId}/jingleLists/${userId}/${id}`)
-            //-   input(type='hidden' name='_csrf' value=csrfToken)
-            //-   input(type='submit' value="Add Jingle")
           div.lyrics-container
             p#lyrics__title="Lyrics"
             pre#lyrics=jingle.lyrics
             hr.solid#bottom-line
           div.reviews-container
             p#Ratings__title="Ratings & Reviews"
-            a(href='/jingles/'+jingle.id+'/reviews') Write a review
+            a(href='/jingles/'+jingle.id+'/reviews' id="write-a-review") Write a review
             div.reviews
               each review in reviews
                 div(class="review")
-                p.text
-                  strong #{review.User.name}
-                  |  rated it: #{review.rating}
-                p.text #{review.message}
-                if user.id === review.userId
-                  form(action='/jingles/'+jingle.id+'/reviews/'+review.id, method="post")
-                    input(type='hidden' name='_csrf' value=csrfToken)
-                    button(type="submit" id="delete-butt") Delete
+                  p <a>#{review.User.name}</a> rated it: #{review.rating}
+                  if user.id === review.userId
+                    form(action='/jingles/'+jingle.id+'/reviews/'+review.id, method="post")
+                      input(type='hidden' name='_csrf' value=csrfToken)
+                      input(type="submit" id="delete-review" value="Delete")
+                  p(id="message") #{review.message}
     div.footer
       include footer.pug

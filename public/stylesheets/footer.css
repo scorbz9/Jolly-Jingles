@@ -11,11 +11,12 @@ footer {
     position: absolute;
     margin-bottom: -10;
     width: 100vw;
-    /* height: 200px; */
+    height: 200px;
     margin-top: 25px;
     padding-bottom: 20px;
     margin-left: -10px;
     overflow: hidden;
+
 }
 
 .footer-main {

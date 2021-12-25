@@ -13,7 +13,7 @@ block content
                     table(class='jinglelists-table')
                         thead(class='thead')
                             tr
-                                th(scope='col') My Lists
+                                th(scope='col') #{user.name}'s Lists
                         tbody
                             each list in lists
                                 tr
@@ -26,13 +26,13 @@ block content
                                                 input(type='submit' value="✖" class='list-delete')
                 if userId === loggedInUserId
                     div.add-list-container
-                        p Create a new list
+                        p#create-new Create a new list
                         if addJingleListError
                             each error in addJingleListError
                                 p(class="alert") #{error}
                         form(method='post' action=`/users/${userId}/jingleLists`)
                             input(type="hidden" name="_csrf" value=csrfToken)
-                            input(type='text' name="name" id="new-list-name-field" value=name placeholder="Enter a name...")
+                            input(type='text' name="name" id="new-list-name-field" value=name placeholder="Enter a name..." autocomplete="off")
                             input(type='submit' value='Add List' id='new-list-submit')
                 div.explore-container
                     a#explore-butt(href="/") Explore
@@ -48,8 +48,8 @@ block content
                                     th(scope='col') Title
                                     th(scope='col') Artist
                                     th(scope='col') Rating
-                                    th(scope='col') Date Added
-                                    th(scope='col')
+                                    th(scope='col' id="date-column") Date Added
+                                    th(scope='col' id="review-column")
                                     th(scope='col')
                             tbody
                                 each jingle in jinglesFromAList
@@ -70,7 +70,7 @@ block content
                                             a(href='/jingles/'+jingle.id+'/reviews' id="jingle-review-link") Write a review
                                         td(id="delete-container")
                                             if userId === loggedInUserId
-                                                form(method="post" action=`/users/${userId}/jingleLists/${userId}/jingles/${jingle.id}`)
+                                                form(method="post" action=`/users/${userId}/jingleLists/${jingle.listId}/jingles/${jingle.id}`)
                                                     input(type="hidden" name='_csrf' value=csrfToken)
                                                     input(type='submit' value="✖" id="delete-jingle-from-list")
 

@@ -13,7 +13,7 @@ html(lang="en")
           img(src=`${image}`, alt="album cover" id="review-cover")
       h1.review-title= name
       p.author= `by ${artist}`
-      form(method="post" action=`/jingles/${id}/reviews`)
+      form(method="post" action=`/jingles/${id}/reviews` autocomplete="off")
         if reviewErrors
           each error in reviewErrors
             p#error #{error}

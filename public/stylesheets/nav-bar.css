@@ -72,10 +72,13 @@
 #search-icon {
     padding: 5px;
     position: relative;
-    left: 3px;
+    left: 6px;
     top: 2px;
     color:#00000046;
     font-size: 16px;
+    background: none;
+    padding: 0px;
+    border: none;
   }
 
 .user-button {

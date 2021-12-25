@@ -5,18 +5,12 @@ const db = require('../db/models')
 const { check, validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
 const { loginUser, logoutUser, demoUser, restoreUser } = require('../auth');
-const jingle = require('../db/models/jingle');
-const { user } = require('pg/lib/defaults');
 
 /* GET /sign-up page */
 router.get('/sign-up', csrfProtection, asyncHandler(async (req, res, next) => {
-
-  const user = await db.User.build({
-
-  })
+  const user = await db.User.build();
   res.render('user-sign-up', { csrfToken: req.csrfToken(), title: 'Sign up', user })
 }));
-
 
 const signUpValidators = [
   check('name')
@@ -34,9 +28,8 @@ const signUpValidators = [
     }),
   check('email')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide an email.')
+    .withMessage('Please provide a valid email address  .')
     .isLength({ max: 255 })
-    // TODO - Figure out how to make only 1 error message appear for invalid email when submitted empty email field.
     .isEmail()
     .withMessage("Please provide a valid email address.")
     .custom((value) => {
@@ -69,24 +62,27 @@ router.post('/sign-up', csrfProtection, signUpValidators, asyncHandler(async (re
   });
 
   if (validationErrors.isEmpty()) {
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const hashedPassword = await bcrypt.hash(password, 10);
     user.hashedPassword = hashedPassword;
 
     await user.save();
     loginUser(req, res, user);
 
-    const userId = req.session.auth.userId
+    const userId = req.session.auth.userId;
 
-    // Create default list in database
+    // Create user's default list in database
     await db.List.create({
       name: `${name}'s Jingles`,
       userId
     });
 
-    // TODO - Redirect to user page (redirect to / temporarily)
-    res.redirect(`/`)
+    res.redirect(`/users/${userId}/jingleLists`)
   } else {
-    const errors = validationErrors.array().map(error => error.msg)
+    const errors = validationErrors.array().map(error => error.msg);
+
+    // Removes redundant error message
+    errors.splice(2, 1);
+
     res.render('user-sign-up', {
       csrfToken: req.csrfToken(),
       user,
@@ -109,9 +105,8 @@ router.get('/sign-in', csrfProtection, async (req, res, next) => {
 const signInValidators = [
   check('email')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide an email.')
+    .withMessage('Please provide a valid email address.')
     .isLength({ max: 255 })
-    // TODO - Figure out how to make only 1 error message appear for invalid email when submitted empty email field.
     .isEmail()
     .withMessage("Please provide a valid email address."),
   check('password')
@@ -125,25 +120,28 @@ const signInValidators = [
 /* POST /sign-in - Perform login */
 router.post('/sign-in', csrfProtection, signInValidators, asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
-  // console.log('route working?')
   const validationErrors = validationResult(req);
+
   let errors = [];
 
   if (validationErrors.isEmpty()) {
     const user = await db.User.findOne({ where: { email } })
 
     if (user !== null) {
-      const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString())
+      const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
 
       if (passwordMatch) {
-        loginUser(req, res, user)
-        return res.redirect('/')
+        loginUser(req, res, user);
+        return res.redirect('/');
       }
     }
-    errors.push("Sign in attempt failed.")
+    errors.push("Sign in attempt failed.");
 
   } else {
-    errors = validationErrors.array().map(error => error.msg)
+    errors = validationErrors.array().map(error => error.msg);
+
+    // Removes redundant error message
+    errors.splice(1, 1);
   }
 
   res.render('user-sign-in', {
@@ -157,7 +155,7 @@ router.post('/sign-in', csrfProtection, signInValidators, asyncHandler(async (re
 /* POST /sign-out - Perform logout */
 router.post('/sign-out', async (req, res, next) => {
   logoutUser(req, res);
-  res.redirect('/')
+  res.redirect('/');
 });
 
 /* GET /users/:userId/jingleLists - Get 'myJingles' page */
@@ -194,6 +192,8 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     addTime = addTime.slice(0, 15)
 
     jingle.Jingle.addTime = addTime;
+    jingle.Jingle.listId = jingle.listId;
+
     jinglesFromAList.push(jingle.Jingle)
   })
 
@@ -227,7 +227,7 @@ const addJingleListValidator = [
     }),
 ]
 
-// POST /users/:userId/jingleLists - add a new jingleList to jingleLists
+// POST /users/:userId/jingleLists - Add a new jingleList to jingleLists
 router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator, asyncHandler(async (req, res, next) => {
   const { name } = req.body;
   const userId = parseInt(req.params.userId, 10)
@@ -261,6 +261,8 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
     addTime = addTime.slice(0, 15)
 
     jingle.Jingle.addTime = addTime;
+    jingle.Jingle.listId = jingle.listId
+
     jinglesFromAList.push(jingle.Jingle)
   })
 
@@ -297,9 +299,13 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
       csrfToken: req.csrfToken(),
       lists,
       userId,
+      name,
+      loggedInUserId,
+      loggedInUser,
       addJingleListError,
       defaultListName,
-      jinglesFromAList
+      jinglesFromAList,
+      view: "my-Jingles"
     });
 
     addJingleListError = null;
@@ -340,12 +346,15 @@ router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asy
     addTime = addTime.slice(0, 15)
 
     jingle.Jingle.addTime = addTime;
+    jingle.Jingle.listId = jingle.listId
+
     jinglesFromAList.push(jingle.Jingle)
   })
 
   res.render('user-jinglelists.pug', {
     csrfToken: req.csrfToken(),
     lists,
+    user,
     userId,
     loggedInUserId,
     loggedInUser,
@@ -370,7 +379,7 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, as
 
   await listToDestroy.destroy();
 
-  res.redirect(`/users/${userId}/jingleLists/`);
+  res.redirect(`/users/${userId}/jingleLists`);
 }));
 
 // DELETE /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Remove a jingle from a particular jingle list
@@ -389,10 +398,10 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/jingles/:jingleId(\\
 
   await jingleToDestroy.destroy();
 
-  res.redirect(`/users/${userId}/jingleLists`);
+  res.redirect(`/users/${userId}/jingleLists/${listId}`);
 }));
 
-// ADD /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Add a jingle to a jingle list
+// POST /users/:userId/jingleLists/:jingleListId/jingles/:jingleId - Add a jingle to a jingle list
 router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProtection, asyncHandler(async (req, res, next) => {
   const jingleId = req.params.jingleId;
   const listId = req.body.jingleListId;
@@ -405,9 +414,10 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProt
   res.redirect(`/jingles/${jingleId}`);
 }));
 
-// DEMO /users/demo/sign-in - Sign-in butt for demo
+// POST /users/demo/sign-in - Sign-in to demo user
 router.post('/demo/sign-in', csrfProtection, signInValidators, asyncHandler(async (req, res, next) => {
-  // only pushes in a user with the id of 3, which was hard coded in as the demo user: (May vary based on your database)
+
+  // Only pushes in a user with the id of 3, which was hard coded in as the demo user: (May vary based on your database)
     demoUser(req, res)
     return res.redirect('/')
 }));

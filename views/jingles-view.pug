@@ -7,8 +7,7 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title= title
   body
-    div.header
-      include nav-bar.pug
+    include nav-bar.pug
     div.main__frame
       div.main_frame_grid_container
         div.left__column
@@ -55,7 +54,7 @@ html(lang="en")
             //-   input(type='submit' value="Add Jingle")
           div.lyrics-container
             p#lyrics__title="Lyrics"
-            p.text=jingle.lyrics
+            pre#lyrics=jingle.lyrics
             hr.solid#bottom-line
           div.reviews-container
             p#Ratings__title="Ratings & Reviews"

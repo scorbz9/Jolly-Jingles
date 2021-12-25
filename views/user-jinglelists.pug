@@ -19,50 +19,56 @@ block content
                                     td
                                         form(method='get' action=`/users/${userId}/jingleLists/${list.id}` class="list")
                                             input(type='submit' value=`${list.name}` class="list")
-                                        form(method="post" action=`/users/${userId}/jingleLists/${list.id}` class='list-delete')
-                                            input(type="hidden" name='_csrf' value=csrfToken)
-                                            input(type='submit' value="✖" class='list-delete')
+                                        if list.name !== defaultListName
+                                            form(method="post" action=`/users/${userId}/jingleLists/${list.id}` class='list-delete')
+                                                input(type="hidden" name='_csrf' value=csrfToken)
+                                                input(type='submit' value="✖" class='list-delete')
+                div.add-list-container
+                    p Create a new list
                     if addJingleListError
                         each error in addJingleListError
-                            p #{error}
+                            p(class="alert") #{error}
                     form(method='post' action=`/users/${userId}/jingleLists`)
                         input(type="hidden" name="_csrf" value=csrfToken)
-                        input(type='text' name="name" id="new-list-name-field" value=name)
+                        input(type='text' name="name" id="new-list-name-field" value=name placeholder="Enter a name...")
                         input(type='submit' value='Add List' id='new-list-submit')
-                a#explore-butt(href="/") Explore
+                div.explore-container
+                    a#explore-butt(href="/") Explore
             div.jingles-container
                 div.jingle-table
-                    table(class='jingle-list-table')
-                        thead(class='thead')
-                            tr
-                                th(scope='col') Cover
-                                th(scope='col') Title
-                                th(scope='col') Artist
-                                th(scope='col') Rating
-                                th(scope='col') Date Added
-                                th(scope='col')
-                                th(scope='col')
-                        tbody
-                            each jingle in jinglesFromAList
+                    if jinglesFromAList.length === 0
+                        p(id="empty-list-message") This list is currently empty...
+                    else
+                        table(class='jingle-list-table')
+                            thead(class='thead')
                                 tr
-                                    td
-                                        a(href=`/jingles/${jingle.id}`)
-                                            img(src=`${jingle.image}`)
-                                    td
-                                        a(href=`/jingles/${jingle.id}`)= `${jingle.name}`
-                                    td=`${jingle.artist}`
-                                    //- td=`${jingle.avgRating}`
-                                    td
-                                        if (!jingle.avgRating || isNaN(jingle.avgRating))
-                                            span(class="stars" style="--rating: 0")
-                                        else
-                                            span(class="stars" style=`--rating:${jingle.avgRating}`)
-                                    td=`${jingle.createdAt}`
-                                    td
-                                        a(href='/jingles/'+jingle.id+'/reviews' id="jingle-review-link") Write a review
-                                    td(id="delete-container")
-                                        form(method="post" action=`/users/${userId}/jingleLists/${userId}/jingles/${jingle.id}`)
-                                            input(type="hidden" name='_csrf' value=csrfToken)
-                                            input(type='submit' value="✖" id="delete-jingle-from-list")
+                                    th(scope='col') Cover
+                                    th(scope='col') Title
+                                    th(scope='col') Artist
+                                    th(scope='col') Rating
+                                    th(scope='col') Date Added
+                                    th(scope='col')
+                                    th(scope='col')
+                            tbody
+                                each jingle in jinglesFromAList
+                                    tr
+                                        td
+                                            a(href=`/jingles/${jingle.id}`)
+                                                img(src=`${jingle.image}`)
+                                        td
+                                            a(href=`/jingles/${jingle.id}`)= `${jingle.name}`
+                                        td=`${jingle.artist}`
+                                        td
+                                            if (!jingle.avgRating || isNaN(jingle.avgRating))
+                                                span(class="stars" style="--rating: 0")
+                                            else
+                                                span(class="stars" style=`--rating:${jingle.avgRating}`)
+                                        td(id="add-time")=`${jingle.addTime}`
+                                        td
+                                            a(href='/jingles/'+jingle.id+'/reviews' id="jingle-review-link") Write a review
+                                        td(id="delete-container")
+                                            form(method="post" action=`/users/${userId}/jingleLists/${userId}/jingles/${jingle.id}`)
+                                                input(type="hidden" name='_csrf' value=csrfToken)
+                                                input(type='submit' value="✖" id="delete-jingle-from-list")
 
     include footer.pug

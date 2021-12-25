@@ -13,7 +13,6 @@ body {
 }
 
 .lists-and-jingles-container {
-    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -50,20 +49,33 @@ body {
     text-shadow: 0px 0px 0px transparent;
     color: #594c3f;
     display: inline-block;
+    font-size: 10px;
 }
 
 .list-delete:hover {
     color:red;
 }
 
-.lists-container {
-    width: 40%;
+.lists-container th {
+    padding-bottom: 5px;
 }
 
 .lists-container table {
     width: 250px;
     display: flex;
     flex-direction: column;
+}
+
+.add-list-container p {
+    margin: 10px 9px 10px 0px;
+    border-top: 1px solid lightgray;
+    padding-top: 10px;
+
+}
+
+.alert {
+    font-size: 13px;
+    color: red;
 }
 
 #new-list-submit {
@@ -74,16 +86,26 @@ body {
     border-radius: 2px;
     border: 1px solid #877855;
     color: #40362d;
-    font-size: 15px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 #new-list-submit:hover {
     background-color: #d6cfbf;
 }
 
+.explore-container {
+    margin: 10px 9px 10px 0px;
+    border-top: 1px solid lightgray;
+    padding: 10px 0px;
+}
+
 #explore-butt {
-    padding: 10px 0 5px 0;
     text-decoration: none;
+}
+
+#explore-butt:hover {
+    text-decoration: underline;
 }
 
 .sidelinks-container {
@@ -103,12 +125,13 @@ body {
 }
 
 .jingles-container th {
-    width: 20em;
+    width: 100em;
     text-align: left;
 }
 
 .jingles-container td {
     padding-top: 15px;
+    padding-right: 10px;
 }
 
 .jingles-container img {
@@ -116,28 +139,8 @@ body {
     margin-top: 5px;
 }
 
-.column-name-container {
-    border-bottom: 1px solid lightgray;
-    color: rgb(61, 61, 61);
-    display: grid;
-    font-size: 12px;
-    font-weight: bold;
-    grid-template-columns: repeat(6, 1fr);
-    height: 35px;
-    margin-top: 40px;
-}
-
-/* each jingle row */
 img {
     height: 125px;
-    margin-right: 10px;
-}
-
-.jingle-container {
-    align-items: center;
-    border-bottom: 1px solid lightgray;
-    padding-bottom: 10px;
-    padding-top: 10px;
 }
 
 #jingle-review-link {
@@ -146,6 +149,10 @@ img {
     display: inline-block;
     position: relative;
     left:20px;
+}
+
+#jingle-review-link:hover {
+    text-decoration: underline;
 }
 
 #delete-container {
@@ -158,6 +165,10 @@ img {
     box-shadow: 0px 0px 0px transparent;
     border: 0px solid transparent;
     text-shadow: 0px 0px 0px transparent;
+}
+
+#delete-jingle-from-list:hover {
+    color: red;
 }
 
 .stars {
@@ -175,4 +186,8 @@ img {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+}
+
+#empty-list-message {
+    text-align: center;
 }

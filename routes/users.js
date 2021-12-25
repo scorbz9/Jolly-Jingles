@@ -162,7 +162,7 @@ router.post('/sign-out', async (req, res, next) => {
 
 /* GET /users/:userId/jingleLists - Get 'myJingles' page */
 router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
-  const userId = req.session.auth.userId;
+  const userId = req.params.userId;
   const user = await db.User.findByPk(userId);
   const defaultListName = user.defaultList;
 
@@ -179,10 +179,13 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     },
   });
 
-
   const jinglesFromAList = [];
 
   jingles.map(async (jingle) => {
+    let addTime = jingle.createdAt.toString()
+    addTime = addTime.slice(0, 15)
+
+    jingle.Jingle.addTime = addTime;
     jinglesFromAList.push(jingle.Jingle)
   })
 
@@ -191,14 +194,13 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     title: 'My Jingles',
     user,
     userId,
+    defaultListName,
     jinglesFromAList,
     lists,
     view: 'my-Jingles'
   });
 }));
 
-
-// TODO - Add validation to prevent users from adding lists with name format `${name}'s Jingles`
 const addJingleListValidator = [
   check('name')
     .exists({ checkFalsy: true })
@@ -219,7 +221,7 @@ const addJingleListValidator = [
 router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator, asyncHandler(async (req, res, next) => {
 
   const { name } = req.body;
-  const userId = req.session.auth.userId
+  const userId = req.params.userId
 
   const user = await db.User.findByPk(userId);
   const defaultListName = user.defaultList;
@@ -238,6 +240,10 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
   const jinglesFromAList = [];
 
   jingles.map(async (jingle) => {
+    let addTime = jingle.createdAt.toString()
+    addTime = addTime.slice(0, 15)
+
+    jingle.Jingle.addTime = addTime;
     jinglesFromAList.push(jingle.Jingle)
   })
 
@@ -247,7 +253,7 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
 
     await db.List.create({
       name,
-      userId
+      userId,
     });
 
     const lists = await db.List.findAll({ where: { userId } });
@@ -257,6 +263,7 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
       lists,
       userId,
       name,
+      defaultListName,
       jinglesFromAList
     });
 
@@ -271,6 +278,7 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
       lists,
       userId,
       addJingleListError,
+      defaultListName,
       jinglesFromAList
     });
 
@@ -283,6 +291,9 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
 router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const listId = parseInt(req.params.jingleListId, 10);
   const userId = parseInt(req.params.userId, 10)
+
+  const user = await db.User.findByPk(userId);
+  const defaultListName = user.defaultList;
 
   const lists = await db.List.findAll({ where: { userId } })
 
@@ -297,6 +308,10 @@ router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asy
   const jinglesFromAList = [];
 
   jingles.map(async (jingle) => {
+    let addTime = jingle.createdAt.toString()
+    addTime = addTime.slice(0, 15)
+
+    jingle.Jingle.addTime = addTime;
     jinglesFromAList.push(jingle.Jingle)
   })
 
@@ -304,6 +319,7 @@ router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asy
     csrfToken: req.csrfToken(),
     lists,
     userId,
+    defaultListName,
     jinglesFromAList,
     view: "my-Jingles"
   });
@@ -360,7 +376,7 @@ router.post('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)/:jingleId', csrfProt
 
 }))
 
-//DEMO /users/demo/sign-in - Sign-in butt for demo
+// DEMO /users/demo/sign-in - Sign-in butt for demo
 router.post('/demo/sign-in', csrfProtection, signInValidators, asyncHandler(async (req, res, next) => {
   // only pushes in a user with the id of 3, which was hard coded in as the demo user: (May vary based on your database)
     demoUser(req, res)

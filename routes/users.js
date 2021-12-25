@@ -34,9 +34,8 @@ const signUpValidators = [
     }),
   check('email')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide an email.')
+    .withMessage('Please provide a valid email address  .')
     .isLength({ max: 255 })
-    // TODO - Figure out how to make only 1 error message appear for invalid email when submitted empty email field.
     .isEmail()
     .withMessage("Please provide a valid email address.")
     .custom((value) => {
@@ -87,6 +86,8 @@ router.post('/sign-up', csrfProtection, signUpValidators, asyncHandler(async (re
     res.redirect(`/`)
   } else {
     const errors = validationErrors.array().map(error => error.msg)
+    errors.splice(2, 1)
+
     res.render('user-sign-up', {
       csrfToken: req.csrfToken(),
       user,
@@ -109,9 +110,9 @@ router.get('/sign-in', csrfProtection, async (req, res, next) => {
 const signInValidators = [
   check('email')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide an email.')
+    .withMessage('Please provide a valid email address.')
     .isLength({ max: 255 })
-    // TODO - Figure out how to make only 1 error message appear for invalid email when submitted empty email field.
+
     .isEmail()
     .withMessage("Please provide a valid email address."),
   check('password')
@@ -144,6 +145,7 @@ router.post('/sign-in', csrfProtection, signInValidators, asyncHandler(async (re
 
   } else {
     errors = validationErrors.array().map(error => error.msg)
+    errors.splice(1, 1)
   }
 
   res.render('user-sign-in', {

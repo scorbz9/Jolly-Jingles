@@ -162,9 +162,17 @@ router.post('/sign-out', async (req, res, next) => {
 
 /* GET /users/:userId/jingleLists - Get 'myJingles' page */
 router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req, res, next) => {
-  const userId = req.params.userId;
+  const userId = parseInt(req.params.userId, 10);
   const user = await db.User.findByPk(userId);
   const defaultListName = user.defaultList;
+
+  let loggedInUserId = null;
+  let loggedInUser;
+
+  if (req.session.auth) {
+    loggedInUserId = req.session.auth.userId;
+    loggedInUser = await db.User.findByPk(loggedInUserId)
+  }
 
   const lists = await db.List.findAll({ where: { userId } })
 
@@ -195,6 +203,8 @@ router.get('/:userId(\\d+)/jingleLists', csrfProtection, asyncHandler(async (req
     user,
     userId,
     defaultListName,
+    loggedInUserId,
+    loggedInUser,
     jinglesFromAList,
     lists,
     view: 'my-Jingles'
@@ -219,9 +229,16 @@ const addJingleListValidator = [
 
 // POST /users/:userId/jingleLists - add a new jingleList to jingleLists
 router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator, asyncHandler(async (req, res, next) => {
-
   const { name } = req.body;
-  const userId = req.params.userId
+  const userId = parseInt(req.params.userId, 10)
+
+  let loggedInUserId = null;
+  let loggedInUser;
+
+  if (req.session.auth) {
+    loggedInUserId = req.session.auth.userId;
+    loggedInUser = await db.User.findByPk(loggedInUserId)
+  }
 
   const user = await db.User.findByPk(userId);
   const defaultListName = user.defaultList;
@@ -264,7 +281,10 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
       userId,
       name,
       defaultListName,
-      jinglesFromAList
+      loggedInUserId,
+      loggedInUser,
+      jinglesFromAList,
+      view: "my-Jingles"
     });
 
   } else {
@@ -291,10 +311,17 @@ router.post('/:userId(\\d+)/jingleLists', csrfProtection, addJingleListValidator
 router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
   const listId = parseInt(req.params.jingleListId, 10);
   const userId = parseInt(req.params.userId, 10)
-  const loggedInUserId = req.session.auth.userId;
 
   const user = await db.User.findByPk(userId);
   const defaultListName = user.defaultList;
+
+  let loggedInUserId = null;
+  let loggedInUser;
+
+  if (req.session.auth) {
+    loggedInUserId = req.session.auth.userId;
+    loggedInUser = await db.User.findByPk(loggedInUserId)
+  }
 
   const lists = await db.List.findAll({ where: { userId } })
 
@@ -321,6 +348,7 @@ router.get('/:userId(\\d+)/jingleLists/:jingleListId(\\d+)', csrfProtection, asy
     lists,
     userId,
     loggedInUserId,
+    loggedInUser,
     defaultListName,
     jinglesFromAList,
     view: "my-Jingles"

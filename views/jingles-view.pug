@@ -64,10 +64,10 @@ html(lang="en")
               each review in reviews
                 div(class="review")
                 p.text
-                  strong #{review.User.name}
+                   #{review.User.name}
                   |  rated it: #{review.rating}
                 p.text #{review.message}
-                if user.id === review.userId
+                if userId === review.userId
                   form(action='/jingles/'+jingle.id+'/reviews/'+review.id, method="post")
                     input(type='hidden' name='_csrf' value=csrfToken)
                     button(type="submit" id="delete-butt") Delete

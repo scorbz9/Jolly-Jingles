@@ -127,9 +127,9 @@ p {
   color: #1E1915;
 }
 
-/* .text {
-  font-family: Georgia, 'Times New Roman', Times, serif;
-} */
+.text {
+  margin-left: 5px;
+}
 
 /* #description {
   margin-top: 10px;
@@ -168,12 +168,6 @@ p {
   align-items: center;
   margin-top: 10px;
   margin-bottom: 20px;
-}
-
-#avgReviews {
-  font-size: 26px;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  color: #1E1915;
 }
 
 .stars {
@@ -215,10 +209,10 @@ hr.solid {
 }
 
 #avgReviews, #Ratings__title {
-  font-size: 26px;
+  font-size: 20px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   color: #1E1915;
-  margin-bottom: 40px;
+  margin-left: 10px;
 }
 
 

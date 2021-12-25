@@ -21,7 +21,6 @@ html(lang="en")
               each list in lists
                 option(value=list.id)= list.name
             // TO DO: add button to create jinglelist
-            // TO DO: add logged-in user's jinglelists
         div.right__column
           div#jingle__title
             p=jingle.name
@@ -50,7 +49,7 @@ html(lang="en")
               each review in reviews
                 div(class="review")
                 p.text
-                  strong #{user.name}
+                  strong #{review.User.name}
                   |  rated it: #{review.rating}
                 p.text #{review.message}
                 if user.id === review.userId

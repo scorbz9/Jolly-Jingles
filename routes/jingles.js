@@ -84,7 +84,7 @@ router.get('/:id(\\d+)/reviews', csrfProtection, asyncHandler(async(req, res) =>
 
     // Redirects a non logged in user if they click review, will probably change this later to throw an error/alert instead.
     if (!req.session.auth) {
-        res.redirect('/users/sign-in')
+        return res.redirect('/users/sign-in')
     }
 
     if (jingle) {

@@ -117,7 +117,8 @@ body {
 }
 
 .sidelinks-container {
-    width: 225px;
+    width: 100%;
+    max-width: 225px;
     padding: 10px;
     border-right: 1px solid rgba(64, 54, 45, 0.5);
 }
@@ -125,7 +126,7 @@ body {
 .jingles-container {
     display:flex;
     flex-direction: column;
-    width: 1000px;
+    width: 80%;
 }
 
 .jingles-container table {

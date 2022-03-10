@@ -43,7 +43,6 @@ footer {
     display: flex;
     align-items: center;
     padding: 5px 0;
-    /* font-weight: bold; */
 }
 
 .link:hover > a {
@@ -60,6 +59,7 @@ a {
     flex-direction: column;
     font-size: 12px;
     width: 40%;
+    justify-content: flex-end;
 }
 
 .footer-img {
@@ -71,14 +71,15 @@ a {
     color: #a2a19f;
     cursor: pointer;
     font-size: 25px;
-    margin-left: 15px;
-
 }
 
 .footer-jingles {
-    margin-right: 150px
+    margin-right: 150px;
+    font-size: 15px
 }
 
 .social-links {
     color: #a2a19f;
+    padding: 0;
+    margin: 0 5px;
 }

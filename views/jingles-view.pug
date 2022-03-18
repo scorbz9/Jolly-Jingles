@@ -40,12 +40,13 @@ html(lang="en")
             pre#lyrics=jingle.lyrics
             hr.solid#bottom-line
           div.reviews-container
-            p#Ratings__title="Ratings & Reviews"
-            a(href='/jingles/'+jingle.id+'/reviews' id="write-a-review") Write a review
+            div.reviews-header
+              p#Ratings__title="Ratings & Reviews"
+              a(href='/jingles/'+jingle.id+'/reviews' id="write-a-review" class="user-button") Write a review
             div.reviews
               each review in reviews
                 div(class="review")
-                  a(href=`/users/${review.userId}/jingleLists`) #{review.User.name}
+                  a(href=`/users/${review.userId}/jingleLists` id="description") #{review.User.name}
                   span(class="stars" style=`--rating:${review.rating}` id="user-ratings")
                   if loggedInUserId === review.userId
                     form(action='/jingles/'+jingle.id+'/reviews/'+review.id, method="post")

@@ -145,36 +145,6 @@ p {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-/* #description {
-  margin-top: 10px;
-} */
-
-/* #star-rating {
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 5px;
-  font-size: 11px;
-  color:#999999
-} */
-
-/* .lyrics-container {
-  width: 80%;
-  padding: 24px;
-  white-space: pre-line;
-  line-height: 1.75;
-} */
-
-
-
-/* #select {
-  width: 200px;
-} */
-
-/* .heading {
-  font-size: 24px;
-  padding: 10px 0 10px 0;
-} */
-
 .stars__container {
   display: inline-flex;
   flex-direction: row;
@@ -223,7 +193,7 @@ hr.solid {
   margin-bottom: 5px;
 }
 
-#Ratings__title, #lyrics__title {
+#Ratings__title, #lyrics__title, #review__username {
   font-weight: 400;
   font-size: 24px;
   font-family: Georgia, 'Times New Roman', Times, serif;
@@ -257,6 +227,7 @@ hr.solid {
 
 #message {
   display: block;
+  margin-top: 7px;
 }
 
 .review form {
@@ -273,6 +244,7 @@ hr.solid {
   font-weight: bold;
   margin: 0px 0px 0px 1px;
   position: relative;
+  cursor: pointer;
 }
 
 #delete-review:hover {
@@ -288,4 +260,39 @@ hr.solid {
 
 .footer {
   margin-bottom: -10px;
+}
+
+.user-button {
+  background-color: #d6cfbf;
+  padding: 10px;
+  width: 100px;
+  text-decoration: none;
+  color: #594c3f;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Trebuchet MS', Helvetica, sans-serif;
+  font-weight: bold;
+  margin: 10px;
+  border: transparent;
+}
+
+.user-button:hover {
+  background-color: #594c3f;
+  color: #f4f1ea
+}
+
+.reviews-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+
+.reviews-header p {
+  width: 70%;
+}
+
+.reviews-header a {
+  width: 30%;
 }

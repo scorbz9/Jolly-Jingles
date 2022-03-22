@@ -1,8 +1,8 @@
 # Jolly Jingles
-Welcome to [Jolly Jingles](lair--bnb.herokuapp.com), a clone of Airbnb where users can save money by booking exclusively spooky (totally not haunted) houses.
+Welcome to [Jolly Jingles](lair--bnb.herokuapp.com), a clone of GoodReads where users can save, share, and review exclusively happy, upbeat tunes.
 
 ### Welcome Page:
-![Jolly Jingles welcome page](![image](https://user-images.githubusercontent.com/63172733/159382939-e6909f79-f8c2-47f4-ab58-20fa90ecd8cb.png)
+(![Jolly Jingles Welcome Page](https://user-images.githubusercontent.com/63172733/159382939-e6909f79-f8c2-47f4-ab58-20fa90ecd8cb.png)
 
 
 ### Key Functionality

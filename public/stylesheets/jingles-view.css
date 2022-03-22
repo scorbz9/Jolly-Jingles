@@ -317,6 +317,22 @@ hr.solid {
   animation-duration: 3s;
 }
 
+#already_exists_message {
+  margin-left: 550px;
+  position: absolute;
+  font-weight: 900;
+  font-size: 24px;
+  color: red;
+  background-color: rgb(212, 154, 154);
+  padding: 20px 15px;
+  border-radius: 8px;
+  z-index: 102;
+
+  animation-name: fadeInOut;
+  animation-timing-function: ease-in-out;
+  animation-duration: 3s;
+}
+
 @keyframes fadeInOut {
   0% {
       opacity: 0;

@@ -479,7 +479,24 @@ router.post(
       },
     });
 
+    if (exists.length >= 1) {
 
+      res.render('jingles-view', {
+        title: jingle.name,
+        jingle,
+        review: true,
+        reviews,
+        loggedInUserId,
+        loggedInUser,
+        lists,
+        avgReviews,
+        id,
+        csrfToken: req.csrfToken(),
+        view: "Jingle-info",
+        added: false,
+        exists: true,
+    })
+    } else {
 
       await db.Jinglelist.create({
         jingleId,
@@ -500,6 +517,9 @@ router.post(
         view: "Jingle-info",
         added: true,
     })
+    }
+
+
 
 
       // res.redirect(`/jingles/${jingleId}`);

@@ -62,10 +62,16 @@ html(lang="en")
       include footer.pug
 
 script.
-  let message = document.getElementById('success_message')
-  if (message) {
+  let message1 = document.getElementById('success_message')
+  let message2 = document.getElementById('already_exists_message')
+  if (message1) {
     setTimeout(() => {
-      message.classList.add('hide')
+      message1.classList.add('hide')
+      return;
+    }, 3000)
+  } else if (message2) {
+    setTimeout(() => {
+      message2.classList.add('hide')
       return;
     }, 3000)
   }

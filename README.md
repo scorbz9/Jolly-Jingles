@@ -4,6 +4,9 @@ Welcome to [Jolly Jingles](https://jolly-jingles.herokuapp.com/), a clone of Goo
 ### Welcome Page:
 ![Jolly Jingles Welcome Page](https://user-images.githubusercontent.com/63172733/159382939-e6909f79-f8c2-47f4-ab58-20fa90ecd8cb.png)
 
+### Jingle Lists Page:
+![Jolly Jingles Lists Page](https://user-images.githubusercontent.com/63172733/159383609-9f865df6-48d4-4dcc-9265-6c09e74f4f4f.png)
+
 
 ### Key Functionality
  - Users can view information for different songs

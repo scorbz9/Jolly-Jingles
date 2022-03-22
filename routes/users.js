@@ -446,6 +446,31 @@ router.post(
   asyncHandler(async (req, res, next) => {
     const jingleId = req.params.jingleId;
     const listId = req.body.jingleListId;
+    const id = jingleId
+    const jingle = await db.Jingle.findByPk(id);
+
+    const reviews = await db.Review.findAll({
+      include: db.User,
+      where: { jingleId },
+    })
+
+    const sumOfReviews = await db.Review.sum('rating', {where: {jingleId}});
+    const avgReviews = (sumOfReviews / reviews.length).toFixed(2);
+    db.Jingle.update({avgRating: avgReviews}, {
+        where: {
+            id
+        }
+    })
+
+    let loggedInUserId = 0
+    let loggedInUser;
+
+    let lists = []
+    if (req.session.auth) {
+        loggedInUserId = req.session.auth.userId;
+        loggedInUser = await db.User.findByPk(loggedInUserId)
+        lists = await db.List.findAll({ where: { userId:    loggedInUserId } })
+    }
 
     const exists = await db.Jinglelist.findAll({
       where: {
@@ -453,20 +478,32 @@ router.post(
         jingleId,
       },
     });
-   
 
-    if (exists.length >= 1) {
-      // TODO: logic to throw an error
-      console.log("error should be thrown!!");
-      res.redirect(`/jingles/${jingleId}`);
-    } else {
+
+
       await db.Jinglelist.create({
         jingleId,
         listId,
       });
 
-      res.redirect(`/jingles/${jingleId}`);
-    }
+      res.render('jingles-view', {
+        title: jingle.name,
+        jingle,
+        review: true,
+        reviews,
+        loggedInUserId,
+        loggedInUser,
+        lists,
+        avgReviews,
+        id,
+        csrfToken: req.csrfToken(),
+        view: "Jingle-info",
+        added: true,
+    })
+
+
+      // res.redirect(`/jingles/${jingleId}`);
+
   })
 );
 
